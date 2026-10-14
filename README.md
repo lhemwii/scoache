@@ -1,4 +1,4 @@
-# Scoaché — refonte du site · 3 propositions
+# Scoaché — refonte du site · 5 propositions
 
 Maquettes navigables de la refonte de [scoache.com](https://scoache.com). Elles suivent toutes la **sitemap Figma** (page *Sitemap*) :
 
