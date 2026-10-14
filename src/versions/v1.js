@@ -6,6 +6,12 @@ const P = require('../parts');
 const V = {
   id: 'v1', dir: 'v1-evolution', label: 'Évolution', inspiration: 'scoache.com',
   css: 'v1.css',
+  mood: 'Familier · rassurant · continuité',
+  type: 'Hanken Grotesk',
+  pitch: 'On garde ce qui marche sur le site actuel — fond blanc, cartes à liseré de couleur, bouton noir, bandeau Qualiopi — et on modernise : plus d’air, typographie plus fine, photos plus grandes, sélecteur « Quelle est votre situation ? » et la nouvelle arborescence.',
+  pros: 'Continuité totale avec le site actuel : aucune rupture pour les clients, et la migration la plus simple.',
+  watch: 'La moins différenciante : elle reste proche d’un site d’organisme de formation.',
+  palette: [['#FFFFFF', 'Blanc'], ['#16161A', 'Encre'], ['#C2385F', 'Framboise'], ['#3A52B8', 'Bleu'], ['#F6F5F2', 'Grège']],
   fonts: 'https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap',
 };
 
@@ -69,16 +75,16 @@ V.home = (ctx) => {
 <section class="hero">
   <div class="container hero__inner">
     <div class="hero__text">
-      <p class="eyebrow">Des dirigeants sereins. Performants. Engagés.</p>
-      <h1 class="h1 h1--hero">Donnez-vous les moyens de <em>franchir le cap.</em></h1>
-      <p class="lead">Mieux qu’une formation, plus qu’un coaching : Scoaché accompagne dirigeants, équipes de direction et organisations avec une méthode unique, 100 % adaptative.</p>
+      <p class="eyebrow rise">Des dirigeants sereins. Performants. Engagés.</p>
+      <h1 class="h1 h1--hero rise-2">Donnez-vous les moyens de <em>franchir le cap.</em></h1>
+      <p class="lead rise-3">Mieux qu’une formation, plus qu’un coaching : Scoaché accompagne dirigeants, équipes de direction et organisations avec une méthode unique, 100 % adaptative.</p>
       <div class="actions">
         ${P.btn('Le coaching de dirigeant', ctx.href('coaching'))}
         ${P.btn('Nous contacter', ctx.href('contact'), 'btn--ghost', null)}
       </div>
       ${P.ratingBadges(C)}
     </div>
-    <div class="hero__visual">
+    <div class="hero__visual rise-2">
       <figure class="hero__photo"><img src="${ctx.img('photos/hero-3.jpg')}" alt="Un dirigeant réfléchit devant un mur de post-it"></figure>
       <div class="hero__float hero__float--method">
         <p class="hero__float-kicker">La Méthode Scoaché ©</p>
@@ -100,8 +106,8 @@ V.home = (ctx) => {
 
 <section class="section">
   <div class="container">
-    ${P.secHead({ eyebrow: 'Le coaching de dirigeant', title: 'Trois échelles pour franchir un cap.', lead: 'Exercer sa fonction dans une situation à fort enjeu — seul, en équipe de direction ou à l’échelle de toute l’entreprise.' })}
-    ${P.scaleCards(ctx)}
+    ${P.secHead({ eyebrow: 'Le coaching de dirigeant', title: 'Quelle est votre situation ?', lead: 'Trois échelles pour franchir un cap — seul, en équipe de direction ou à l’échelle de toute l’entreprise. Choisissez ce qui vous ressemble.' })}
+    ${P.situationPicker(ctx)}
   </div>
 </section>
 

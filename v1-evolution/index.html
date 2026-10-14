@@ -79,9 +79,9 @@
 <section class="hero">
   <div class="container hero__inner">
     <div class="hero__text">
-      <p class="eyebrow">Des dirigeants sereins. Performants. Engagés.</p>
-      <h1 class="h1 h1--hero">Donnez-vous les moyens de <em>franchir le cap.</em></h1>
-      <p class="lead">Mieux qu’une formation, plus qu’un coaching : Scoaché accompagne dirigeants, équipes de direction et organisations avec une méthode unique, 100 % adaptative.</p>
+      <p class="eyebrow rise">Des dirigeants sereins. Performants. Engagés.</p>
+      <h1 class="h1 h1--hero rise-2">Donnez-vous les moyens de <em>franchir le cap.</em></h1>
+      <p class="lead rise-3">Mieux qu’une formation, plus qu’un coaching : Scoaché accompagne dirigeants, équipes de direction et organisations avec une méthode unique, 100 % adaptative.</p>
       <div class="actions">
         <a class="btn btn--primary" href="coaching-de-dirigeant/index.html"><span>Le coaching de dirigeant</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a class="btn btn--ghost" href="nous-contacter/index.html"><span>Nous contacter</span></a>
@@ -92,7 +92,7 @@
   <li class="badge"><b class="badge__big">94 %</b><span>de satisfaction sur nos formations en 2025</span></li>
 </ul>
     </div>
-    <div class="hero__visual">
+    <div class="hero__visual rise-2">
       <figure class="hero__photo"><img src="../assets/img/photos/hero-3.jpg" alt="Un dirigeant réfléchit devant un mur de post-it"></figure>
       <div class="hero__float hero__float--method">
         <p class="hero__float-kicker">La Méthode Scoaché ©</p>
@@ -117,43 +117,49 @@
     
 <header class="sec-head ">
   <p class="eyebrow">Le coaching de dirigeant</p>
-  <h2 class="h2">Trois échelles pour franchir un cap.</h2>
-  <p class="lead">Exercer sa fonction dans une situation à fort enjeu — seul, en équipe de direction ou à l’échelle de toute l’entreprise.</p>
+  <h2 class="h2">Quelle est votre situation ?</h2>
+  <p class="lead">Trois échelles pour franchir un cap — seul, en équipe de direction ou à l’échelle de toute l’entreprise. Choisissez ce qui vous ressemble.</p>
 </header>
-    <div class="scale-grid">
-<article class="scale-card scale-card--blue">
-  <a class="scale-card__link" href="coaching-de-dirigeant/individuel/index.html">
-    <figure class="scale-card__media"><img src="../assets/img/photos/hero-3.jpg" alt="" loading="lazy"></figure>
-    <div class="scale-card__body">
-      <p class="scale-card__kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5 20a7 7 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Individuel</span></p>
-      <h3 class="h3">Dirigeants et managers, en tête-à-tête</h3>
-      <p class="scale-card__text">Un espace à vous pour traverser une situation à fort enjeu et en sortir plus solide.</p>
-      <p class="scale-card__more"><span>Découvrir · 6 cas d’usage</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
+    
+<div class="picker" data-picker>
+  <div class="picker__tabs" role="tablist" aria-label="Votre situation">
+    <button type="button" role="tab" class="picker__tab picker__tab--blue" id="tab-individuel" aria-controls="panel-individuel" aria-selected="true" tabindex="0"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5 20a7 7 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span><b>Moi, en tant que dirigeant·e</b><small>Individuel · Dirigeants et managers, en tête-à-tête</small></span></button><button type="button" role="tab" class="picker__tab picker__tab--rose" id="tab-collectif" aria-controls="panel-collectif" aria-selected="false" tabindex="-1"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M14 14.2a4.5 4.5 0 0 1 6.5 4.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span><b>Mon équipe de direction</b><small>Collectif · CODIR, COMEX, groupes de pairs</small></span></button><button type="button" role="tab" class="picker__tab picker__tab--violet" id="tab-organisation" aria-controls="panel-organisation" aria-selected="false" tabindex="-1"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5l8-2v17M12 9l8 2v9M3 20h18M7.5 8v.01M7.5 12v.01M7.5 16v.01M16 14v.01M16 17v.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span><b>Mes managers, à l’échelle</b><small>Organisation · Parcours de leadership à l’échelle de l’entreprise</small></span></button>
+  </div>
+  
+  <div class="picker__panel picker__panel--blue" role="tabpanel" id="panel-individuel" aria-labelledby="tab-individuel">
+    <figure class="picker__media"><img src="../assets/img/photos/hero-3.jpg" alt="" loading="lazy"></figure>
+    <div class="picker__body">
+      <p class="picker__kicker">Coaching individuel</p>
+      <h3 class="picker__title">Un espace à vous pour traverser une situation à fort enjeu et en sortir plus solide.</h3>
+      <p class="picker__lead">Prise de poste, décision qui divise, relation bloquée, surcharge : on part de votre situation réelle, on fixe un objectif et des indicateurs, et on avance séance après séance.</p>
+      <p class="picker__sub">Situations typiques</p>
+      <ul class="picker__cases"><li><a href="cas-usage/index.html?echelle=individuel#cas-1"><span>Prendre un poste de direction — les 100 premiers jours</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="cas-usage/index.html?echelle=individuel#cas-2"><span>Passer de manager à dirigeant : changer d’altitude</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="cas-usage/index.html?echelle=individuel#cas-3"><span>Tenir sa place dans un CODIR quand on est le plus jeune</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+      <div class="actions"><a class="btn btn--primary" href="coaching-de-dirigeant/individuel/index.html"><span>Découvrir le coaching individuel</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn btn--ghost" href="cas-usage/index.html?echelle=individuel"><span>Les 6 cas</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     </div>
-  </a>
-</article>
-<article class="scale-card scale-card--rose">
-  <a class="scale-card__link" href="coaching-de-dirigeant/collectif/index.html">
-    <figure class="scale-card__media"><img src="../assets/img/photos/hero-4.jpg" alt="" loading="lazy"></figure>
-    <div class="scale-card__body">
-      <p class="scale-card__kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M14 14.2a4.5 4.5 0 0 1 6.5 4.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Collectif</span></p>
-      <h3 class="h3">CODIR, COMEX, groupes de pairs</h3>
-      <p class="scale-card__text">Faire d’un groupe de dirigeants une équipe de direction qui décide et avance ensemble.</p>
-      <p class="scale-card__more"><span>Découvrir · 5 cas d’usage</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
+  </div>
+  <div class="picker__panel picker__panel--rose" role="tabpanel" id="panel-collectif" aria-labelledby="tab-collectif" hidden>
+    <figure class="picker__media"><img src="../assets/img/photos/hero-4.jpg" alt="" loading="lazy"></figure>
+    <div class="picker__body">
+      <p class="picker__kicker">Coaching collectif</p>
+      <h3 class="picker__title">Faire d’un groupe de dirigeants une équipe de direction qui décide et avance ensemble.</h3>
+      <p class="picker__lead">Un CODIR recomposé, un COMEX à aligner, une tension entre deux directions : on travaille sur la façon dont l’équipe fonctionne, pas seulement sur ce qu’elle produit.</p>
+      <p class="picker__sub">Situations typiques</p>
+      <ul class="picker__cases"><li><a href="cas-usage/index.html?echelle=collectif#cas-7"><span>Souder un CODIR recomposé après un départ</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="cas-usage/index.html?echelle=collectif#cas-8"><span>Aligner un COMEX sur une nouvelle stratégie</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="cas-usage/index.html?echelle=collectif#cas-9"><span>Désamorcer un conflit larvé entre deux directions</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+      <div class="actions"><a class="btn btn--primary" href="coaching-de-dirigeant/collectif/index.html"><span>Découvrir le coaching collectif</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn btn--ghost" href="cas-usage/index.html?echelle=collectif"><span>Les 5 cas</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     </div>
-  </a>
-</article>
-<article class="scale-card scale-card--violet">
-  <a class="scale-card__link" href="coaching-de-dirigeant/organisation/index.html">
-    <figure class="scale-card__media"><img src="../assets/img/photos/hero-2.jpg" alt="" loading="lazy"></figure>
-    <div class="scale-card__body">
-      <p class="scale-card__kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5l8-2v17M12 9l8 2v9M3 20h18M7.5 8v.01M7.5 12v.01M7.5 16v.01M16 14v.01M16 17v.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Organisation</span></p>
-      <h3 class="h3">Parcours de leadership à l’échelle de l’entreprise</h3>
-      <p class="scale-card__text">Un socle de leadership commun, déployé à l’échelle de toute l’entreprise.</p>
-      <p class="scale-card__more"><span>Découvrir · 4 cas d’usage</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
+  </div>
+  <div class="picker__panel picker__panel--violet" role="tabpanel" id="panel-organisation" aria-labelledby="tab-organisation" hidden>
+    <figure class="picker__media"><img src="../assets/img/photos/hero-2.jpg" alt="" loading="lazy"></figure>
+    <div class="picker__body">
+      <p class="picker__kicker">Coaching organisation</p>
+      <h3 class="picker__title">Un socle de leadership commun, déployé à l’échelle de toute l’entreprise.</h3>
+      <p class="picker__lead">Réorganisation, croissance rapide, managers promus en interne : on conçoit des parcours qui mêlent coaching et formation pour toute une population de managers.</p>
+      <p class="picker__sub">Situations typiques</p>
+      <ul class="picker__cases"><li><a href="cas-usage/index.html?echelle=organisation#cas-12"><span>Déployer un socle de leadership commun à tous les managers</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="cas-usage/index.html?echelle=organisation#cas-13"><span>Traverser une réorganisation sans perdre les managers intermédiaires</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="cas-usage/index.html?echelle=organisation#cas-14"><span>Installer une culture du feedback à l’échelle de l’entreprise</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+      <div class="actions"><a class="btn btn--primary" href="coaching-de-dirigeant/organisation/index.html"><span>Découvrir le coaching organisation</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn btn--ghost" href="cas-usage/index.html?echelle=organisation"><span>Les 4 cas</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
     </div>
-  </a>
-</article></div>
+  </div>
+</div>
   </div>
 </section>
 
@@ -430,7 +436,7 @@
     <div class="container footer-legal"><span>Scoaché © 2026</span><a href="#">Mentions légales</a><a href="#">Politique de cookies</a></div>
   </div>
 </footer>
-<nav class="proposal-switch" aria-label="Changer de proposition"><a class="proposal-switch__home" href="../index.html" title="Vue d’ensemble des propositions">Propositions</a><a href="../v1-evolution/index.html" aria-current="true" title="Évolution — inspirée de scoache.com"><b>1</b><span>Évolution</span></a><a href="../v2-conseil/index.html" title="Conseil — inspirée de bcg.com"><b>2</b><span>Conseil</span></a><a href="../v3-studio/index.html" title="Studio — inspirée de wjystudios.com"><b>3</b><span>Studio</span></a></nav>
+<nav class="proposal-switch" aria-label="Changer de proposition"><a class="proposal-switch__home" href="../index.html" title="Vue d’ensemble des propositions">Propositions</a><a href="../v1-evolution/index.html" aria-current="true" title="Évolution — inspirée de scoache.com"><b>1</b><span>Évolution</span></a><a href="../v2-conseil/index.html" title="Conseil — inspirée de bcg.com"><b>2</b><span>Conseil</span></a><a href="../v3-studio/index.html" title="Studio — inspirée de wjystudios.com"><b>3</b><span>Studio</span></a><a href="../v4-signature/index.html" title="Signature — inspirée de le logo Scoaché"><b>4</b><span>Signature</span></a><a href="../v5-serenite/index.html" title="Sérénité — inspirée de betterup.com"><b>5</b><span>Sérénité</span></a></nav>
 <script src="../assets/js/site.js" defer></script>
 </body>
 </html>

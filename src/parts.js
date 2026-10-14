@@ -264,6 +264,31 @@ const caseList = (ctx) => `
   <p class="case-empty" hidden>Aucun cas ne correspond à cette combinaison. <button type="button" class="link" data-reset>Réinitialiser les filtres</button></p>
 </div>`;
 
+
+// Sélecteur « Quelle est votre situation ? » — oriente vers la bonne échelle
+const pickerLabels = { individuel: 'Moi, en tant que dirigeant·e', collectif: 'Mon équipe de direction', organisation: 'Mes managers, à l’échelle' };
+const situationPicker = (ctx, { media = true } = {}) => `
+<div class="picker" data-picker>
+  <div class="picker__tabs" role="tablist" aria-label="Votre situation">
+    ${ctx.C.scales.map((s, i) => `<button type="button" role="tab" class="picker__tab picker__tab--${s.color}" id="tab-${s.slug}" aria-controls="panel-${s.slug}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${scaleIcon[s.slug]}<span><b>${pickerLabels[s.slug]}</b><small>${s.name} · ${s.short}</small></span></button>`).join('')}
+  </div>
+  ${ctx.C.scales.map((s, i) => {
+    const list = casesOf(ctx.C, s.slug);
+    return `
+  <div class="picker__panel picker__panel--${s.color}" role="tabpanel" id="panel-${s.slug}" aria-labelledby="tab-${s.slug}"${i ? ' hidden' : ''}>
+    ${media ? `<figure class="picker__media"><img src="${ctx.img(s.image)}" alt="" loading="lazy"></figure>` : ''}
+    <div class="picker__body">
+      <p class="picker__kicker">Coaching ${s.name.toLowerCase()}</p>
+      <h3 class="picker__title">${s.promise}</h3>
+      <p class="picker__lead">${s.lead}</p>
+      <p class="picker__sub">Situations typiques</p>
+      <ul class="picker__cases">${list.slice(0, 3).map((c) => `<li><a href="${ctx.href('cas', `?echelle=${s.slug}#${caseId(c, ctx.C)}`)}"><span>${c.title}</span>${icons.arrow}</a></li>`).join('')}</ul>
+      <div class="actions">${btn('Découvrir le coaching ' + s.name.toLowerCase(), ctx.href('scale:' + s.slug))}${btn(`Les ${list.length} cas`, ctx.href('cas', `?echelle=${s.slug}`), 'btn--ghost')}</div>
+    </div>
+  </div>`;
+  }).join('')}
+</div>`;
+
 // ——— Navigation (contenu des méga-menus, commun aux trois propositions) ———
 const megaOffre = (ctx) => `
 <div class="mega__col">
@@ -336,5 +361,5 @@ module.exports = {
   scaleCard, scaleCards, caseCard, caseGrid, featuredCases, formationCard, formationGrid,
   stars, ratingBadges, stats, avatar, quote, testimonialSlider, logoMarquee, qualiopi, methodPillars,
   steps, facts, faqList, ctaBlock, contactForm, coordinates, caseFilters, caseList,
-  megaOffre, megaCas, navBar, footerLinks, crumbs,
+  megaOffre, megaCas, navBar, footerLinks, crumbs, situationPicker,
 };

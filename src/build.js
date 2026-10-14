@@ -8,7 +8,7 @@ const pages = require('./pages');
 const overview = require('./overview');
 
 const ROOT = path.resolve(__dirname, '..');
-const versions = [require('./versions/v1'), require('./versions/v2'), require('./versions/v3')];
+const versions = [require('./versions/v1'), require('./versions/v2'), require('./versions/v3'), require('./versions/v4'), require('./versions/v5')];
 
 const routes = [
   { key: 'home', path: '', title: 'Coaching de dirigeant' },

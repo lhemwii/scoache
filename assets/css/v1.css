@@ -254,3 +254,15 @@ body { font-size: 17px; }
 .footer-legal { display: flex; gap: 24px; flex-wrap: wrap; padding-block: 28px 88px; margin-top: 48px; border-top: 1px solid rgba(255,255,255,.1); font-size: 14px; }
 .footer-legal a { text-decoration: none; }
 @media (max-width: 860px) { .footer-main__inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-band .coords { grid-auto-flow: row; } }
+
+/* Sélecteur de situation */
+.picker__tab { border-radius: 16px; border: 1.5px solid var(--line); background: #fff; }
+.picker__tab .ico { width: 38px; height: 38px; padding: 9px; border-radius: 50%; background: var(--alt); }
+.picker__tab--blue { --c: var(--blue); --cs: var(--blue-soft); } .picker__tab--rose { --c: var(--accent); --cs: var(--accent-soft); } .picker__tab--violet { --c: var(--violet); --cs: var(--violet-soft); }
+.picker__tab[aria-selected="true"] { border-color: var(--c); box-shadow: 0 0 0 3px var(--cs); }
+.picker__tab[aria-selected="true"] .ico { background: var(--c); color: #fff; }
+.picker__panel { border-radius: var(--radius-lg); border: 1.5px solid var(--line); background: #fff; }
+.picker__panel--blue { border-top: 4px solid var(--blue); } .picker__panel--rose { border-top: 4px solid var(--accent); } .picker__panel--violet { border-top: 4px solid var(--violet); }
+.picker__kicker { font-weight: 700; font-size: 14px; color: var(--accent); }
+.picker__title { font-size: clamp(26px, 2.6vw, 36px); font-weight: 500; letter-spacing: -.02em; line-height: 1.15; }
+.picker__lead { color: var(--muted); }

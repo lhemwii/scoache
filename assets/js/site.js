@@ -122,6 +122,49 @@
     }
   }
 
+  // Sélecteur de situation (onglets accessibles)
+  $$('[data-picker]').forEach((picker) => {
+    const tabs = $$('[role="tab"]', picker);
+    const select = (tab, focus) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) tab.focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (d) { e.preventDefault(); select(tabs[(i + d + tabs.length) % tabs.length], true); }
+      });
+    });
+  });
+
+  // Compteurs animés (4,9/5 · 94 % · 15)
+  const counters = $$('.stat dd, [data-countup]');
+  if (counters.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const run = (el) => {
+      const txt = el.textContent;
+      const m = txt.match(/\d+(?:,\d+)?/);
+      if (!m) return;
+      const target = parseFloat(m[0].replace(',', '.'));
+      const dec = (m[0].split(',')[1] || '').length;
+      const t0 = performance.now();
+      const tick = (t) => {
+        const k = Math.min(1, (t - t0) / 1200);
+        const v = (target * (1 - Math.pow(1 - k, 3))).toFixed(dec).replace('.', ',');
+        el.textContent = txt.replace(m[0], v);
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } }), { threshold: 0.6 });
+    counters.forEach((c) => io.observe(c));
+  }
+
   // Formulaire de contact (maquette : pas d’envoi)
   $$('[data-form]').forEach((form) => {
     form.addEventListener('submit', (e) => {

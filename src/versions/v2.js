@@ -5,6 +5,12 @@ const P = require('../parts');
 const V = {
   id: 'v2', dir: 'v2-conseil', label: 'Conseil', inspiration: 'bcg.com',
   css: 'v2.css',
+  mood: 'Institutionnel · éditorial · haut de gamme',
+  type: 'Newsreader + Instrument Sans',
+  pitch: 'La rigueur d’un cabinet de conseil. Titres en serif, grands blocs arrondis bleu nuit, cartes photo à étiquettes vitrées, boutons-pastilles. Le rouge devient framboise et rose poudré, le bleu devient bleu nuit : on parle aux COMEX.',
+  pros: 'Crédibilité maximale auprès des COMEX ; très premium, et cohérente avec le recentrage sur le coaching de dirigeant.',
+  watch: 'Plus sage. Elle demande de belles photos, idéalement un shooting.',
+  palette: [['#F4F1EB', 'Ivoire'], ['#151C3F', 'Bleu nuit'], ['#B93A5F', 'Framboise'], ['#F3C3D0', 'Rose poudré'], ['#DDE3F6', 'Bleu glacier']],
   fonts: 'https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Instrument+Sans:wght@400;500;600;700&display=swap',
 };
 
@@ -92,14 +98,14 @@ V.home = (ctx) => {
 <section class="hero">
   <div class="container">
     <div class="hero__head">
-      <h1 class="h1 h1--hero">Franchir les caps qui comptent, sans les traverser seul.</h1>
-      <div class="hero__side">
+      <h1 class="h1 h1--hero rise">Franchir les caps qui comptent, sans les traverser seul.</h1>
+      <div class="hero__side rise-2">
         <p class="lead">Coaching de dirigeant individuel, collectif et à l’échelle de l’organisation. Une méthode 100 % adaptative, entre coaching et formation.</p>
         <div class="actions">${pill('Le coaching de dirigeant', ctx.href('coaching'))}${pill('Nous contacter', ctx.href('contact'), 'btn--ghost', null)}</div>
       </div>
     </div>
   </div>
-  <div class="hero__rail">
+  <div class="hero__rail rise-3">
     ${heroCards.map((h) => h ? glassCard(ctx, h) : `
     <a class="hero__feature" href="${ctx.href('coaching')}">
       <span class="hero__feature-tag">La Méthode Scoaché ©</span>

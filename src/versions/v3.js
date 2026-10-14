@@ -5,6 +5,12 @@ const P = require('../parts');
 const V = {
   id: 'v3', dir: 'v3-studio', label: 'Studio', inspiration: 'wjystudios.com',
   css: 'v3.css',
+  mood: 'Affirmé · contemporain · mémorable',
+  type: 'Archivo (Black / Expanded)',
+  pitch: 'L’énergie d’un studio. Fond noir, typographie géante en capitales, liste de clients monumentale, rail de navigation vertical, bloc pervenche plein écran. Le rouge passe en framboise vive sur noir : fort, mais jamais criard.',
+  pros: 'Mémorable et très contemporaine : Scoaché ne ressemble plus à aucun concurrent.',
+  watch: 'Le fond noir est moins « bienveillant » et peut surprendre une cible RH.',
+  palette: [['#0D0D10', 'Noir'], ['#EC5C85', 'Framboise vive'], ['#A7B4FF', 'Pervenche'], ['#F5ECE0', 'Crème'], ['#3A3A41', 'Graphite']],
   fonts: 'https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap',
 };
 
@@ -149,9 +155,9 @@ V.home = (ctx) => {
   <figure class="hero__photo"><img src="${ctx.img('photos/hero-3.jpg')}" alt=""></figure>
   <div class="hero__inner">
     <h1 class="hero__title">
-      <span class="hero__line">Franchir</span>
-      <span class="hero__line hero__line--indent"><small class="hero__by">Coaching de dirigeant<br>par Ilana Porteret</small>le cap</span>
-      <span class="hero__line">qui compte.</span>
+      <span class="hero__line rise">Franchir</span>
+      <span class="hero__line hero__line--indent rise-2"><small class="hero__by">Coaching de dirigeant<br>par Ilana Porteret</small>le cap</span>
+      <span class="hero__line rise-3">qui compte.</span>
     </h1>
     <a class="hero__scroll" href="#preuves">Défiler pour découvrir</a>
   </div>
@@ -186,6 +192,8 @@ V.home = (ctx) => {
     <ol class="approach__cols">${C.method.pillars.map((p, i) => `<li><span>${n2(i + 1)}</span><h3>${p.key}</h3><p>${p.text}</p></li>`).join('')}</ol>
   </div>
 </section>
+
+<div class="band" aria-hidden="true"><div class="band__track">${'<span>Franchir le cap</span><span>Prendre de l’altitude</span><span>Décider sans se perdre</span><span>Refaire équipe</span>'.repeat(2)}</div><div class="band__track">${'<span>Franchir le cap</span><span>Prendre de l’altitude</span><span>Décider sans se perdre</span><span>Refaire équipe</span>'.repeat(2)}</div></div>
 
 <section class="expertise" id="offre">
   <div class="container expertise__inner">

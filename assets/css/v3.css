@@ -25,7 +25,7 @@ body { font-size: 17px; font-variation-settings: "wdth" 100; }
 
 .display, .h1, .h2, .hero__title, .cta__giant, .expertise__title, .proof__text, .clients__list, .row__title { font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; line-height: .88; font-variation-settings: "wdth" 104; }
 .h1 { font-size: clamp(48px, 8vw, 128px); }
-.h2 { font-size: clamp(40px, 5.6vw, 84px); margin-bottom: clamp(32px, 4vw, 56px); }
+.h2 { font-size: clamp(34px, 5.6vw, 84px); margin-bottom: clamp(32px, 4vw, 56px); hyphens: auto; }
 .h3, .h4 { font-weight: 700; letter-spacing: -.01em; line-height: 1.15; }
 .h3 { font-size: 26px; }
 .h4 { font-size: 21px; }
@@ -340,3 +340,9 @@ body.nav-open { overflow: hidden; }
 /* Titres dans les colonnes : plus contenus */
 .split .h2, .coach .h2 { font-size: clamp(32px, 3.6vw, 56px); }
 .door .h2 { margin: 0; }
+
+/* Bandeau typographique défilant */
+.band { display: flex; overflow: hidden; background: var(--accent); color: var(--bg); padding-block: 18px; border-block: 1px solid var(--accent); }
+.band__track { display: flex; flex: none; animation: marquee 30s linear infinite; }
+.band span { font-size: clamp(28px, 3.4vw, 52px); font-weight: 800; text-transform: uppercase; letter-spacing: -.02em; line-height: 1; padding-right: 48px; white-space: nowrap; font-variation-settings: "wdth" 104; }
+.band span::after { content: "✦"; margin-left: 48px; font-size: .6em; vertical-align: middle; }
