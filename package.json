@@ -1,0 +1,8 @@
+{
+  "name": "scoache-refonte",
+  "private": true,
+  "description": "Maquettes de la refonte de scoache.com — trois propositions de direction artistique",
+  "scripts": {
+    "build": "node src/build.js"
+  }
+}
