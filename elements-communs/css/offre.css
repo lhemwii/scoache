@@ -448,3 +448,8 @@
 
   .page-offre .of-carte__titre--22 { font-size: 20px; }
 }
+
+/* Lien « Nous contacter » des cartes d'échelle : pré-remplit le formulaire de la page */
+.page-offre .of-echelle__contact { align-self: flex-start; margin-top: 2px; color: var(--texte-2); }
+.page-offre .of-onglets__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; margin: 0; }
+.page-offre .of-onglets__actions .link-caps + .link-caps { color: var(--texte-2); }

@@ -4,7 +4,7 @@
     <div class="contact__intro">
       <p class="contact__eyebrow">Nous contacter</p>
       <h2 class="contact__title" id="contact-titre">Parlons de votre situation</h2>
-      <p class="contact__lead">Un premier échange de 30 minutes, confidentiel et sans engagement, pour comprendre ce qui se joue.</p>
+      <p class="contact__lead">Un premier échange de 30 minutes, confidentiel, pour cerner votre situation et voir si nous sommes les bons interlocuteurs.</p>
       <ul class="checks">
         <li><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-check"/></svg>Réponse sous 48 h</li>
         <li><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-check"/></svg>Confidentiel</li>
@@ -12,14 +12,16 @@
       </ul>
     </div>
 
-    <form class="contact-card" id="contact-form" novalidate>
+    <form class="contact-card" id="contact-form" novalidate data-formulaire-contact>
       <fieldset class="chips">
-        <legend class="contact-card__title">Qu’est-ce qui vous amène ?</legend>
+        <legend class="contact-card__title">Sur quel sujet souhaitez-vous échanger ?</legend>
         <div class="chips__list">
-          <label class="chip"><input type="radio" name="motif" value="Je prends un poste" checked><span>Je prends un poste</span></label>
-          <label class="chip"><input type="radio" name="motif" value="Mon équipe se recompose"><span>Mon équipe se recompose</span></label>
-          <label class="chip"><input type="radio" name="motif" value="Mon entreprise se transforme"><span>Mon entreprise se transforme</span></label>
-          <label class="chip"><input type="radio" name="motif" value="Autre chose"><span>Autre chose</span></label>
+          <label class="chip"><input type="radio" name="sujet" value="Une prise de fonction au COMEX" data-sujet="prise-de-fonction"><span>Une prise de fonction au COMEX</span></label>
+          <label class="chip"><input type="radio" name="sujet" value="Mon influence et ma posture de dirigeant" data-sujet="posture"><span>Mon influence et ma posture de dirigeant</span></label>
+          <label class="chip"><input type="radio" name="sujet" value="Un comité de direction à aligner" data-sujet="comite"><span>Un comité de direction à aligner</span></label>
+          <label class="chip"><input type="radio" name="sujet" value="Une transformation à piloter" data-sujet="transformation"><span>Une transformation à piloter</span></label>
+          <label class="chip"><input type="radio" name="sujet" value="Accompagner des dirigeants de mon équipe" data-sujet="equipe"><span>Accompagner des dirigeants de mon équipe</span></label>
+          <label class="chip"><input type="radio" name="sujet" value="Autre sujet" data-sujet="autre"><span>Autre sujet</span></label>
         </div>
       </fieldset>
 
@@ -38,7 +40,7 @@
 
       <div class="field">
         <label class="field__label" for="f-message">Votre message</label>
-        <textarea class="field__input field__input--area" id="f-message" name="message" rows="4" placeholder="Bonjour, je prends un poste de direction et j’aimerais en parler…"></textarea>
+        <textarea class="field__input field__input--area" id="f-message" name="message" rows="4" data-message placeholder="Quelques lignes sur votre contexte : votre rôle, ce qui évolue, l’horizon de décision."></textarea>
       </div>
 
       <div class="contact-card__footer">

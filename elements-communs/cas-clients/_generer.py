@@ -6,7 +6,7 @@ Usage : python3 cas-clients/_generer.py   (depuis le dossier elements-communs)
 Les textes viennent mot pour mot du document de la cliente (« Document de référence
 pour la conception de la future page Cas clients »). Seules adaptations : apostrophes
 typographiques, séparateurs des lignes de métadonnées remplacés par des virgules,
-graphie « Scoaché » et « Biborg ». Les 15 cas sont présentés au même niveau.
+graphie « Scoaché » et « Biborg ». Tous les cas sont présentés au même niveau.
 Échelle, chiffre clé, photos et cas proches : Figma F329a0sXQJxBKyrLljpb2F, pages 07 à 22.
 """
 import html
@@ -833,11 +833,14 @@ PIED = '''
 '''
 
 
-def barre(texte):
+def barre(texte, slug=None):
+    # Avec un slug, le bouton pré-remplit le formulaire de contact (data-prefill, voir script.js).
+    lien = (f'href="/nous-contacter?cas={slug}" data-prefill data-prefill-cas="{slug}"' if slug
+            else 'href="/nous-contacter"')
     return f'''<div class="plateau">
         <div class="barre">
           <p class="barre__texte"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-message"/></svg>{e(texte)}</p>
-          <a class="btn btn--noir" href="/nous-contacter">Nous contacter {FLECHE.format(16)}</a>
+          <a class="btn btn--noir" {lien}>Nous contacter {FLECHE.format(16)}</a>
         </div>
       </div>'''
 
@@ -886,7 +889,7 @@ def page_liste():
           <div class="cas-hero__intro">
             <p class="eyebrow eyebrow--lg">Cas clients</p>
             <h1 class="cas-hero__titre" id="titre-page">Nos accompagnements, de CHANEL à ManoMano</h1>
-            <p class="cas-hero__lead">Dirigeants, équipes de direction, populations de managers : pour chaque cas, la situation, ce qui se jouait, l’accompagnement et les évolutions observées.</p>
+            <p class="cas-hero__lead">Dirigeants, équipes de direction, populations de managers : pour chaque cas, la situation, les enjeux, l’accompagnement et les évolutions observées.</p>
             <a class="btn btn--noir btn--lg" href="/nous-contacter">Nous contacter {FLECHE.format(18)}</a>
           </div>
           <p class="hero__preuve"><svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>4,9/5 sur Google, 94 % de satisfaction en 2025</p>
@@ -936,7 +939,7 @@ def page_liste():
 </script>
 '''
     sortie = (tete('Cas clients, Scoaché',
-                   'Nos accompagnements de dirigeants, d’équipes de direction et de populations de managers, de CHANEL à ManoMano : la situation, ce qui se jouait, l’accompagnement et les évolutions observées.',
+                   'Nos accompagnements de dirigeants, d’équipes de direction et de populations de managers, de CHANEL à ManoMano : la situation, les enjeux, l’accompagnement et les évolutions observées.',
                    '/cas-clients')
               + corps + PIED + script + '</body>\n</html>\n')
     with open(os.path.join(RACINE, 'cas-clients.html'), 'w', encoding='utf-8') as f:
@@ -1015,7 +1018,7 @@ def page_cas(cas):
     <section class="section" aria-labelledby="titre-enjeux">
       <div class="section-head">
         <div class="section-head__text">
-          <p class="eyebrow">Ce qui se jouait</p>
+          <p class="eyebrow">Enjeux</p>
           <h2 class="section-head__title" id="titre-enjeux">Les enjeux de départ</h2>
         </div>
       </div>
@@ -1064,7 +1067,7 @@ def page_cas(cas):
       <ul class="cas-proches">
 {proches}
       </ul>
-      {barre('Votre situation ressemble à celle-ci ? Parlons-en.')}
+      {barre('Votre situation ressemble à celle-ci ? Parlons-en.', cas['slug'])}
     </section>
 '''
     titre_page = f'{cas["nom"]}, cas client, Scoaché'

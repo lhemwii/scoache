@@ -311,3 +311,27 @@ Boutons `btn btn--noir` (et `btn--lg`), lien majuscule souligné `link-caps`, é
 - Texte en **français**, apostrophes typographiques (’) et espaces avant « : ? ! ».
 - Accessibilité : un seul `h1` par page, titres dans l'ordre, `alt` vide pour les photos
   décoratives, `alt` = nom du client pour un logo, liens explicites.
+
+## 6. Mouvement et interactions partagés (script.js, styles.css)
+
+Tout respecte « réduire les animations » (rien ne bouge) et reste visible sans JavaScript.
+
+- **Apparitions au défilement** : automatiques sur les blocs principaux de chaque page
+  (en-têtes de section, plateaux, cartes, barres, témoignages, footer). Un bloc propre à une page
+  peut recevoir `data-reveal` à la main ; `data-no-reveal` sur un conteneur l'exclut. Les blocs
+  déjà visibles au chargement ne bougent pas.
+- **Chiffres** : chaque `.stat__valeur` simple (« 94 % », « 4,9/5 », « +200 ») compte jusqu'à
+  sa valeur à l'apparition ; dans un texte, entourer le nombre : `<span data-compte>94</span> %`.
+- **Bandeau de logos** : `<div class="marquee" data-marquee tabindex="0" aria-label="…"><div class="marquee__defile"><ul class="marquee__piste">…</ul></div></div>`,
+  plus le bouton `[data-marquee-pause]` (voir l'accueil). Boucle continue, pause au survol, au
+  focus et sur demande ; rangée statique sinon.
+- **Carrousel automatique** : `data-carrousel-auto="5000"` sur `[data-carrousel]`. Pause au survol,
+  au focus et onglet masqué ; arrêt définitif dès que l'utilisateur agit.
+- **Aperçu de cas** : une carte `data-cas-apercu="<slug>"` ouvre un dialogue (au lieu de naviguer)
+  si la page contient `<script type="application/json" id="cas-apercus">` (voir l'accueil).
+- **Pré-remplissage du contact** : tout lien `data-prefill="<sujet>"` (et/ou
+  `data-prefill-cas="<slug>"`, `data-prefill-message="…"`) fait défiler jusqu'au formulaire de la
+  page et le pré-remplit. Son `href` doit pointer vers `/nous-contacter?sujet=…&cas=…`, qui
+  pré-remplit aussi à l'arrivée. Sujets : `prise-de-fonction`, `posture`, `comite`,
+  `transformation`, `equipe`, `autre`. Le formulaire porte `data-formulaire-contact`, ses puces
+  `data-sujet`, son message `data-message`.
