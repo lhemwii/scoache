@@ -1325,9 +1325,19 @@
     }
     return sortie.replace(/[’']/g, "'");
   }
+  var MOTS_VIDES = ['de', 'du', 'des', 'la', 'le', 'les', 'un', 'une', 'et', 'en', 'au', 'aux', 'a', 'd', 'l',
+    'pour', 'par', 'sur', 'avec', 'dans', 'son', 'sa', 'ses', 'mon', 'ma', 'mes', 'je', 'nous', 'vous', 'qui', 'que'];
   function motsDe(requete) {
-    return plier(requete).split(/[^a-z0-9']+/).map(function (m) { return m.replace(/^'+|'+$/g, ''); })
+    var mots = plier(requete).split(/[^a-z0-9]+/)
       .filter(function (m) { return m.length > 1 || /\d/.test(m); });
+    var pleins = mots.filter(function (m) { return MOTS_VIDES.indexOf(m) < 0; });
+    return pleins.length ? pleins : mots;
+  }
+  // Position du mot en début de mot (« reseau » trouve « réseau », pas « leadership » pour « de »).
+  function trouver(texte, mot, depuis) {
+    var i = texte.indexOf(mot, depuis || 0);
+    while (i > 0 && /[a-z0-9]/.test(texte.charAt(i - 1))) i = texte.indexOf(mot, i + 1);
+    return i;
   }
   function preparer(index) {
     return index.map(function (p) {
@@ -1340,15 +1350,24 @@
       };
     });
   }
-  function scorer(e, mots) {
+  function scorer(e, mots, phrase) {
     var total = 0;
+    // Bonus si l'expression entière figure telle quelle (« prise de parole »).
+    if (phrase && mots.length > 1) {
+      if (e.titre.indexOf(phrase) >= 0) total += 14;
+      else if (e.inter.indexOf(phrase) >= 0 || e.texte.indexOf(phrase) >= 0) total += 6;
+    }
     for (var i = 0; i < mots.length; i += 1) {
       var m = mots[i], s = 0;
-      var it = e.titre.indexOf(m), ih = e.inter.indexOf(m), ix = e.texte.indexOf(m);
+      var it = trouver(e.titre, m), ih = trouver(e.inter, m), ix = trouver(e.texte, m);
       if (it < 0 && ih < 0 && ix < 0) return 0;
-      if (it >= 0) s += (it === 0 || e.titre.charAt(it - 1) === ' ') ? 12 : 8;
+      if (it >= 0) s += it === 0 ? 12 : 10;
       if (ih >= 0) s += 4;
-      if (ix >= 0) s += 1 + Math.min(3, e.texte.split(m).length - 1) * 0.5;
+      if (ix >= 0) {
+        var n = 0, k = ix;
+        while (k >= 0 && n < 4) { n += 1; k = trouver(e.texte, m, k + m.length); }
+        s += 1 + n * 0.5;
+      }
       total += s;
     }
     return total;
@@ -1357,7 +1376,7 @@
   function extrait(e, mots) {
     var source = (e.p.description || '') + ' ' + e.p.texte;
     var plie = plier(source), pos = -1;
-    for (var i = 0; i < mots.length && pos < 0; i += 1) pos = plie.indexOf(mots[i]);
+    for (var i = 0; i < mots.length && pos < 0; i += 1) pos = trouver(plie, mots[i]);
     if (pos < 0) return e.p.description || e.p.texte.slice(0, 150);
     var debut = Math.max(0, pos - 60), fin = Math.min(source.length, pos + 120);
     while (debut > 0 && source.charAt(debut) !== ' ') debut -= 1;
@@ -1368,8 +1387,8 @@
   function surligner(el, texte, mots) {
     var plie = plier(texte), zones = [];
     mots.forEach(function (m) {
-      var i = plie.indexOf(m);
-      while (i >= 0) { zones.push([i, i + m.length]); i = plie.indexOf(m, i + m.length); }
+      var i = trouver(plie, m);
+      while (i >= 0) { zones.push([i, i + m.length]); i = trouver(plie, m, i + m.length); }
     });
     zones.sort(function (a, b) { return a[0] - b[0]; });
     var curseur = 0;
@@ -1466,7 +1485,8 @@
       return;
     }
     if (!r.index) { r.statut.textContent = 'Chargement de l’index…'; return; }
-    var trouves = r.index.map(function (e) { return { e: e, s: scorer(e, mots) }; })
+    var phrase = plier(requete).replace(/\s+/g, ' ');
+    var trouves = r.index.map(function (e) { return { e: e, s: scorer(e, mots, phrase) }; })
       .filter(function (x) { return x.s > 0; })
       .sort(function (a, b) { return b.s - a.s; });
     if (!trouves.length) {

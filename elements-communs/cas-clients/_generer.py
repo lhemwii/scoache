@@ -1234,7 +1234,8 @@ def page_cas(cas):
 
     # En 30 secondes : uniquement des extraits mot pour mot du cas
     defi = premiere_phrase(paragraphes(cas['situation'])[0])
-    fait = '\n'.join(f'            <li>{e(titre)}</li>' for titre, _ in cas['etapes'][:4])
+    fait = '\n'.join(f'            <li><span class="cas-30__pastille" aria-hidden="true">{i:02d}</span>{e(titre)}</li>'
+                     for i, (titre, _) in enumerate(cas['etapes'][:4], 1))
     premiere_evol = premiere_phrase(next(b for b in blocs_evol if isinstance(b, str)))
     if cas['kpi']:
         change = (f'<p class="cas-30__kpi"><span class="cas-30__valeur">{e(cas["kpi"][0])}</span>'
@@ -1282,29 +1283,27 @@ def page_cas(cas):
       <p class="eyebrow cas-30__eyebrow" aria-hidden="true">En 30 secondes</p>
       <div class="plateau cas-30__plateau">
         <div class="carte cas-30__carte">
-          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">01</span>Le défi</h3>
+          <h3 class="cas-30__label">Le défi</h3>
           <p class="cas-30__texte">{e(defi)}</p>
         </div>
         <div class="carte cas-30__carte">
-          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">02</span>Ce que nous avons fait</h3>
-          <ul class="cas-30__liste">
+          <h3 class="cas-30__label">Ce que nous avons fait</h3>
+          <ol class="cas-30__liste">
 {fait}
-          </ul>
+          </ol>
         </div>
         <div class="carte cas-30__carte">
-          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">03</span>Ce qui a changé</h3>
+          <h3 class="cas-30__label">Ce qui a changé</h3>
           {change}
         </div>
       </div>
     </section>
 
-    <!-- Ce que ce cas démontre : grand énoncé, sans aplat bleu -->
+    <!-- Ce que ce cas démontre : carte blanche bordée, filet d'accent de 3 px, énoncé de 30 px -->
     <section class="section cas-demontre-bloc" aria-labelledby="titre-demontre">
-      <div class="plateau">
-        <div class="carte cas-demontre">
-          <h2 class="cas-surtitre-13" id="titre-demontre">Ce que ce cas démontre</h2>
-          <p class="cas-demontre__texte">{e(cas['demontre'])}</p>
-        </div>
+      <div class="cas-demontre">
+        <h2 class="cas-surtitre-13" id="titre-demontre">Ce que ce cas démontre</h2>
+        <p class="cas-demontre__texte">{e(cas['demontre'])}</p>
       </div>
     </section>
 
@@ -1312,8 +1311,8 @@ def page_cas(cas):
     <section class="section" aria-labelledby="titre-situation">
       <div class="section-head">
         <div class="section-head__text">
-          <p class="eyebrow">Le détail du cas</p>
-          <h2 class="section-head__title" id="titre-situation">Situation</h2>
+          <p class="eyebrow">Situation</p>
+          <h2 class="section-head__title" id="titre-situation">La situation de départ</h2>
         </div>
       </div>
       <div class="plateau">
@@ -1351,15 +1350,11 @@ def page_cas(cas):
       </ol>
     </section>
 
+    <!-- Évolutions : pleine largeur (Figma) -->
     <section class="section cas-section-evolutions" aria-labelledby="titre-evolutions">
-      <div class="section-head">
-        <div class="section-head__text">
-          <p class="eyebrow">Ce qui a changé</p>
-          <h2 class="section-head__title" id="titre-evolutions">{e(titre_evolutions)}</h2>
-        </div>
-      </div>
       <div class="plateau">
-        <div class="carte cas-evolutions__carte">{chiffre}
+        <div class="carte cas-evolutions__carte">
+          <h2 class="cas-surtitre-13" id="titre-evolutions">{e(titre_evolutions)}</h2>{chiffre}
 {evolutions}
         </div>
       </div>
