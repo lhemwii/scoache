@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nous contacter, Scoaché</title>
+  <meta name="description" content="Parlons de votre situation : un premier échange de 30 minutes, confidentiel et sans engagement. Réponse sous 48 h.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/css/institutionnel.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="/include.js" defer></script>
+  <script src="/script.js" defer></script>
+</head>
+<body class="page-contact">
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<div class="page">
+  <div data-include="header"></div>
+
+  <main id="contenu" tabindex="-1">
+    <nav class="fil-ariane" aria-label="Fil d’Ariane">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li aria-current="page">Nous contacter</li>
+      </ol>
+    </nav>
+
+    <!-- Hero et formulaire (Figma 1178:5651) -->
+    <section class="section section--plateau" aria-labelledby="titre-page">
+      <div class="plateau inst-hero">
+        <div class="inst-hero__texte">
+          <div class="inst-hero__intro">
+            <p class="eyebrow eyebrow--lg">Nous contacter</p>
+            <h1 class="inst-titre-hero" id="titre-page">Parlons de votre situation</h1>
+            <p class="inst-lead">Un premier échange de 30 minutes, confidentiel et sans engagement, pour comprendre ce qui se joue et voir si nous pouvons vous aider.</p>
+            <ul class="inst-checks">
+              <li><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-check"/></svg>Réponse sous 48 h</li>
+              <li><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-check"/></svg>Confidentiel</li>
+              <li><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-check"/></svg>Sans engagement</li>
+            </ul>
+          </div>
+          <ul class="ct-coordonnees" aria-label="Nous écrire directement">
+            <li>
+              <a class="ct-coordonnee" href="mailto:coaching@scoache.com">
+                <span class="pastille"><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-mail"/></svg></span>
+                <span class="ct-coordonnee__texte"><span class="ct-coordonnee__titre">coaching@scoache.com</span></span>
+                <svg class="ico ct-coordonnee__fleche" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="ct-coordonnee" href="https://www.linkedin.com/company/scoache/" target="_blank" rel="noopener">
+                <span class="pastille"><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-linkedin"/></svg></span>
+                <span class="ct-coordonnee__texte"><span class="ct-coordonnee__titre">Scoaché sur LinkedIn<span class="visually-hidden"> (nouvel onglet)</span></span></span>
+                <svg class="ico ct-coordonnee__fleche" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <form class="carte ct-form" id="form-contact" novalidate aria-labelledby="titre-form">
+          <h2 class="titre-3 ct-form__titre" id="titre-form">Votre message</h2>
+
+          <div class="fields-row">
+            <div class="field">
+              <label class="field__label" for="c-nom">Prénom et nom</label>
+              <input class="field__input" id="c-nom" name="nom" type="text" autocomplete="name" placeholder="Camille Martin" required aria-describedby="c-nom-erreur">
+              <p class="field__error" id="c-nom-erreur" hidden>Indiquez votre prénom et votre nom.</p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="c-email">E-mail professionnel</label>
+              <input class="field__input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="camille@entreprise.fr" required aria-describedby="c-email-erreur">
+              <p class="field__error" id="c-email-erreur" hidden>Indiquez une adresse e-mail valide, par exemple camille@entreprise.fr.</p>
+            </div>
+          </div>
+
+          <div class="fields-row">
+            <div class="field">
+              <label class="field__label" for="c-entreprise">Entreprise <span class="field__facultatif">(facultatif)</span></label>
+              <input class="field__input" id="c-entreprise" name="entreprise" type="text" autocomplete="organization" placeholder="Nom de l’entreprise">
+            </div>
+            <div class="field">
+              <label class="field__label" for="c-fonction">Fonction <span class="field__facultatif">(facultatif)</span></label>
+              <input class="field__input" id="c-fonction" name="fonction" type="text" autocomplete="organization-title" placeholder="Directrice des opérations">
+            </div>
+          </div>
+
+          <fieldset class="ct-besoin">
+            <legend>Votre besoin</legend>
+            <div class="ct-choix">
+              <label class="ct-choix__item"><input type="radio" name="besoin" value="individuel" checked><span>Individuel</span></label>
+              <label class="ct-choix__item"><input type="radio" name="besoin" value="collectif"><span>Collectif</span></label>
+              <label class="ct-choix__item"><input type="radio" name="besoin" value="organisation"><span>Organisation</span></label>
+              <label class="ct-choix__item"><input type="radio" name="besoin" value="je-ne-sais-pas"><span>Je ne sais pas encore</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field__label" for="c-message">Votre situation, en quelques mots <span class="field__facultatif">(facultatif)</span></label>
+            <textarea class="field__input field__input--area" id="c-message" name="message" rows="5" placeholder="Ce qui se passe, ce qui doit changer, l’échéance éventuelle…"></textarea>
+          </div>
+
+          <div class="ct-consentement">
+            <label class="ct-consentement__ligne">
+              <input type="checkbox" id="c-accord" name="accord" required aria-describedby="c-accord-erreur">
+              <span>J’accepte que Scoaché utilise ces informations pour me recontacter. <a href="/confidentialite">En savoir plus</a></span>
+            </label>
+            <p class="field__error" id="c-accord-erreur" hidden>Cochez cette case pour que nous puissions vous répondre.</p>
+          </div>
+
+          <div class="ct-envoi">
+            <button type="submit" class="btn btn--noir btn--lg">Envoyer <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-arrow-bold"/></svg></button>
+            <p class="ct-envoi__note">Réponse sous 48 h, en toute confidentialité.</p>
+          </div>
+
+          <div class="form-confirmation" id="ct-confirmation" role="status" aria-live="polite" tabindex="-1"></div>
+
+          <p class="ct-agenda">
+            <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+            Vous préférez choisir un créneau ?
+            <a href="https://calendly.com/scoache-ilanaporteret/coaching-je-reserve-ma-seance" target="_blank" rel="noopener">Réserver directement avec Ilana sur Calendly<span class="visually-hidden"> (nouvel onglet)</span><svg class="ico" width="13" height="13" aria-hidden="true"><use href="/assets/icones.svg#i-external"/></svg></a>
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Ce qui se passe ensuite (Figma 1178:5729) -->
+    <section class="section" aria-labelledby="titre-ensuite">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Après votre message</p>
+          <h2 class="section-head__title" id="titre-ensuite">Ce qui se passe ensuite</h2>
+        </div>
+      </div>
+      <div class="plateau">
+        <ol class="ct-etapes">
+          <li class="carte ct-etape">
+            <span class="inst-num inst-num--noir">01</span>
+            <h3 class="titre-4">Nous vous répondons sous 48 h</h3>
+            <p>Nous revenons vers vous pour fixer un premier échange, en visio ou en présentiel.</p>
+          </li>
+          <li class="carte ct-etape">
+            <span class="inst-num">02</span>
+            <h3 class="titre-4">Un premier échange de 30 minutes</h3>
+            <p>Confidentiel et sans engagement, pour comprendre la situation et ce qui doit changer.</p>
+          </li>
+          <li class="carte ct-etape">
+            <span class="inst-num">03</span>
+            <h3 class="titre-4">Une proposition sur mesure</h3>
+            <p>Un dispositif adapté à votre contexte, avec un objectif, des indicateurs et un devis.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- FAQ (Figma 1178:5750) -->
+    <section class="section section--serre" aria-labelledby="titre-faq">
+      <div class="plateau" data-faq>
+        <div class="faq__intro">
+          <h2 class="titre-3" id="titre-faq">Questions fréquentes</h2>
+          <p class="texte-petit">Les réponses aux questions qu’on nous pose avant de démarrer.</p>
+        </div>
+        <div class="carte faq__liste">
+          <div class="faq__item is-open">
+            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="true" aria-controls="faq-1">
+              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
+              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
+              Coaching ou formation : quelle différence chez Scoaché ?
+            </button></h3>
+            <div class="faq__reponse" id="faq-1"><p>Aucune obligation de choisir. La Méthode Scoaché © part d’un objectif de coaching, mesuré par des indicateurs, et y ajoute les apports de formation dont vous avez besoin. Chaque parcours mêle les deux, dans les proportions que votre situation demande.</p></div>
+          </div>
+          <div class="faq__item">
+            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-2">
+              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
+              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
+              Comment financer un accompagnement ?
+            </button></h3>
+            <div class="faq__reponse" id="faq-2" hidden><p>Le coaching de dirigeant est en général pris en charge par l’entreprise. Nos formations sont certifiées Qualiopi : elles peuvent être financées par votre OPCO dans le cadre du plan de développement des compétences. Nous vous aidons à monter le dossier.</p></div>
+          </div>
+          <div class="faq__item">
+            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-3">
+              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
+              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
+              Les séances ont-elles lieu en présentiel ou à distance ?
+            </button></h3>
+            <div class="faq__reponse" id="faq-3" hidden><p>Les deux. En présentiel à Paris ou dans vos locaux, et à distance sur Zoom, avec des ateliers visuels sur Mural.</p></div>
+          </div>
+          <div class="faq__item">
+            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-4">
+              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
+              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
+              Combien de temps dure un accompagnement ?
+            </button></h3>
+            <div class="faq__reponse" id="faq-4" hidden><p>En individuel, de 4 à 12 sessions d’une heure, sur quelques semaines à quelques mois. En collectif et à l’échelle d’une organisation, le dispositif est construit sur mesure après un premier échange.</p></div>
+          </div>
+          <div class="faq__item">
+            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-5">
+              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
+              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
+              Qu’est-ce qui reste confidentiel ?
+            </button></h3>
+            <div class="faq__reponse" id="faq-5" hidden><p>Le contenu des séances reste entre vous et votre coach. Seuls l’objectif et les indicateurs de progrès sont partagés avec votre manager ou vos RH, si vous le souhaitez et selon ce qui a été convenu au départ.</p></div>
+          </div>
+          <div class="faq__item">
+            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-6">
+              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
+              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
+              Sous quel délai peut-on démarrer ?
+            </button></h3>
+            <div class="faq__reponse" id="faq-6" hidden><p>Un premier échange sous 48 h, puis un démarrage en général sous 2 à 4 semaines, plus vite si la situation l’exige, par exemple avant une prise de poste.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+</div>
+
+<script>
+/* Formulaire « Votre message » : validation en ligne et confirmation (pas de backend). */
+(function () {
+  'use strict';
+  var form = document.getElementById('form-contact');
+  if (!form) return;
+  var confirmation = document.getElementById('ct-confirmation');
+  var champs = [
+    { el: document.getElementById('c-nom'), ok: function (el) { return el.value.trim().length > 1; } },
+    { el: document.getElementById('c-email'), ok: function (el) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(el.value.trim()); } },
+    { el: document.getElementById('c-accord'), ok: function (el) { return el.checked; } }
+  ];
+
+  // Besoin pré-sélectionné depuis l'URL : /nous-contacter?besoin=collectif
+  var besoin = new URLSearchParams(window.location.search).get('besoin');
+  if (besoin) {
+    var radio = form.querySelector('input[name="besoin"][value="' + besoin.replace(/[^a-z-]/g, '') + '"]');
+    if (radio) radio.checked = true;
+  }
+
+  function verifier(c) {
+    var valide = c.ok(c.el);
+    var erreur = document.getElementById(c.el.id + '-erreur');
+    c.el.setAttribute('aria-invalid', valide ? 'false' : 'true');
+    if (erreur) erreur.hidden = valide;
+    return valide;
+  }
+
+  champs.forEach(function (c) {
+    var evt = c.el.type === 'checkbox' ? 'change' : 'blur';
+    c.el.addEventListener(evt, function () {
+      if (c.el.type === 'checkbox' || c.el.value !== '' || c.el.getAttribute('aria-invalid') === 'true') verifier(c);
+    });
+    if (c.el.type !== 'checkbox') {
+      c.el.addEventListener('input', function () {
+        if (c.el.getAttribute('aria-invalid') === 'true') verifier(c);
+      });
+    }
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var premier = null;
+    champs.forEach(function (c) { if (!verifier(c) && !premier) premier = c.el; });
+    if (premier) { confirmation.textContent = ''; premier.focus(); return; }
+
+    var prenom = champs[0].el.value.trim().split(/\s+/)[0];
+    confirmation.innerHTML =
+      '<span class="pastille" aria-hidden="true"><svg class="ico" width="16" height="16"><use href="/assets/icones.svg#i-check"/></svg></span>' +
+      '<span><strong></strong>Ilana vous répond sous 48 h pour fixer un premier échange.</span>';
+    confirmation.querySelector('strong').textContent = 'Merci ' + prenom + ', votre message a bien été pris en compte.';
+    form.querySelectorAll('.field__input').forEach(function (el) { el.value = ''; el.removeAttribute('aria-invalid'); });
+    champs[2].el.checked = false;
+    champs[2].el.removeAttribute('aria-invalid');
+    confirmation.focus();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accessibilité, Scoaché</title>
+  <meta name="description" content="Accessibilité des formations Scoaché et de ce site : référente handicap et signalement d’une difficulté.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/css/institutionnel.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="/include.js" defer></script>
+  <script src="/script.js" defer></script>
+</head>
+<body class="page-legal">
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<div class="page">
+  <div data-include="header"></div>
+
+  <main id="contenu" tabindex="-1">
+    <nav class="fil-ariane" aria-label="Fil d’Ariane">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li aria-current="page">Accessibilité</li>
+      </ol>
+    </nav>
+
+    <section class="section section--plateau" aria-labelledby="titre-page">
+      <div class="plateau inst-hero">
+        <div class="inst-hero__texte">
+          <div class="inst-hero__intro">
+            <p class="eyebrow eyebrow--lg">Informations légales</p>
+            <h1 class="inst-titre-hero" id="titre-page">Accessibilité</h1>
+            <p class="texte">L’accessibilité de nos formations et de ce site.</p>
+            <p class="lg-maj">Dernière mise à jour : [à compléter]</p>
+          </div>
+        </div>
+        <nav class="carte lg-sommaire" aria-labelledby="sommaire-titre">
+          <h2 class="lg-sommaire__titre" id="sommaire-titre">Sommaire</h2>
+          <ol>
+            <li><a href="#formations"><span>01</span>Nos formations</a></li>
+            <li><a href="#referente-handicap"><span>02</span>Référente handicap</a></li>
+            <li><a href="#site"><span>03</span>Accessibilité du site</a></li>
+            <li><a href="#signaler"><span>04</span>Signaler une difficulté</a></li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <div class="lg-contenu">
+      <section class="lg-bloc" id="formations" aria-labelledby="formations-titre">
+        <h2 class="lg-bloc__titre" id="formations-titre"><span class="inst-num inst-num--sm inst-num--noir" aria-hidden="true">01</span>Nos formations</h2>
+        <div class="lg-bloc__texte">
+          <p>Nos formations sont accessibles aux personnes en situation de handicap. Contactez notre référente handicap pour étudier ensemble les adaptations nécessaires : rythme, format, supports.</p>
+        </div>
+      </section>
+      <section class="lg-bloc" id="referente-handicap" aria-labelledby="referente-handicap-titre">
+        <h2 class="lg-bloc__titre" id="referente-handicap-titre"><span class="inst-num inst-num--sm" aria-hidden="true">02</span>Référente handicap</h2>
+        <div class="lg-bloc__texte">
+          <p>[Nom à compléter]. Contact : <a href="mailto:coaching@scoache.com">coaching@scoache.com</a>.</p>
+        </div>
+      </section>
+      <section class="lg-bloc" id="site" aria-labelledby="site-titre">
+        <h2 class="lg-bloc__titre" id="site-titre"><span class="inst-num inst-num--sm" aria-hidden="true">03</span>Accessibilité du site</h2>
+        <div class="lg-bloc__texte">
+          <p>[Niveau de conformité RGAA et date de l’audit à compléter].</p>
+        </div>
+      </section>
+      <section class="lg-bloc" id="signaler" aria-labelledby="signaler-titre">
+        <h2 class="lg-bloc__titre" id="signaler-titre"><span class="inst-num inst-num--sm" aria-hidden="true">04</span>Signaler une difficulté</h2>
+        <div class="lg-bloc__texte">
+          <p>Si vous ne parvenez pas à accéder à un contenu, écrivez-nous à <a href="mailto:coaching@scoache.com">coaching@scoache.com</a> : nous vous répondrons sous 48 h.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div data-include="footer"></div>
+</div>
+</body>
+</html>
