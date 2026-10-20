@@ -1,0 +1,455 @@
+/* Scoaché, cas clients : /cas-clients et /cas-clients/<slug>
+   Figma F329a0sXQJxBKyrLljpb2F, page 07 (1186:5334) et pages 08 à 22 (1187:5443...).
+   Tous les sélecteurs sont préfixés par .page-cas. */
+
+.page-cas .section { padding-top: 40px; }
+.page-cas .section--plateau { padding-top: 0; }
+
+/* ---------- Surtitres ---------- */
+.page-cas .cas-surtitre {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.page-cas .cas-surtitre-13 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* =====================================================================
+   PAGE LISTE /cas-clients
+   ===================================================================== */
+
+/* ---------- Hero et mur de logos ---------- */
+.page-cas .cas-hero__texte {
+  display: flex;
+  flex: 0 0 600px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-width: 0;
+  padding: 44px 32px 32px;
+}
+.page-cas .cas-hero__intro { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.page-cas .cas-hero__titre {
+  max-width: 536px;
+  margin: 0;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.78px;
+}
+.page-cas .cas-hero__lead { max-width: 520px; font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+
+.page-cas .cas-hero__carte {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+}
+
+.page-cas .cas-mur {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--bordure);
+  border-left: 1px solid var(--bordure);
+}
+.page-cas .cas-mur li {
+  display: flex;
+  border-right: 1px solid var(--bordure);
+  border-bottom: 1px solid var(--bordure);
+}
+.page-cas .cas-mur a {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: 92px;
+  padding: 18px;
+  transition: background-color 0.15s ease;
+}
+.page-cas .cas-mur img {
+  max-width: 100%;
+  height: auto;
+  filter: grayscale(1) contrast(1.25) brightness(0.55);
+  opacity: 0.92;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.page-cas .cas-mur a:hover { background: var(--gris-clair); }
+.page-cas .cas-mur a:hover img { filter: none; opacity: 1; }
+
+/* ---------- Filtres ---------- */
+.page-cas .cas-filtres .filtre {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--gris-clair);
+}
+.page-cas .cas-filtres .filtre:hover { background: var(--greige); }
+.page-cas .cas-filtres .filtre[aria-pressed="true"] { background: var(--noir); color: var(--blanc); }
+
+/* ---------- Liste éditoriale ---------- */
+.page-cas .cas-liste {
+  margin: 0 36px;
+  border-top: 1px solid var(--noir);
+}
+.page-cas .cas-ligne {
+  display: flex;
+  align-items: flex-start;
+  gap: 44px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--bordure);
+}
+.page-cas .cas-ligne[hidden] { display: none; }
+
+.page-cas .cas-ligne__marque {
+  display: flex;
+  flex: 0 0 230px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+.page-cas .cas-ligne__logo { display: flex; align-items: center; height: 48px; }
+.page-cas .cas-ligne__logo img { max-width: 100%; height: auto; }
+.page-cas .cas-ligne__echelle { font-size: 13px; font-weight: 600; color: var(--accent); }
+.page-cas .cas-ligne__meta { font-size: 13px; line-height: 1.45; color: var(--texte-2); }
+
+.page-cas .cas-ligne__corps {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+.page-cas .cas-ligne__titre {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.14px;
+}
+.page-cas .cas-ligne__titre a { text-decoration: none; }
+.page-cas .cas-ligne__titre a:hover { text-decoration: underline; text-underline-position: from-font; text-decoration-thickness: 1px; }
+.page-cas .cas-ligne__resume { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+
+.page-cas .cas-ligne__photo {
+  flex: 0 0 300px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 210px;
+  padding: 14px;
+}
+
+/* Puce logo et chiffre clé posés sur les photos */
+.page-cas .cas-puce { padding: 12px 16px; border-radius: 12px; }
+.page-cas .cas-puce img { width: auto; height: auto; max-width: 120px; object-fit: contain; }
+.page-cas .photo .stat { align-self: flex-start; }
+
+.page-cas .cas-section-barre { padding-top: 40px; padding-bottom: 0; }
+
+/* =====================================================================
+   PAGE CAS /cas-clients/<slug>
+   ===================================================================== */
+
+/* ---------- Hero ---------- */
+.page-cas .cas-fiche__texte {
+  display: flex;
+  flex: 0 0 640px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  min-width: 0;
+  padding: 36px 32px 32px;
+}
+.page-cas .cas-fiche__intro { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.page-cas .cas-fiche__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 206px;
+  height: 76px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--blanc);
+}
+.page-cas .cas-fiche__logo img { max-width: 100%; height: auto; }
+.page-cas .cas-fiche__titre {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.72px;
+}
+.page-cas .cas-pastilles { display: flex; flex-wrap: wrap; gap: 8px; }
+.page-cas .cas-pastilles li {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--blanc);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.page-cas .cas-fiche__carte { display: flex; flex: 1; padding: 8px; }
+.page-cas .cas-fiche__photo {
+  flex: 1;
+  min-height: 600px;
+  border-radius: 8px;
+}
+.page-cas .cas-fiche__photo::after { border-radius: 8px; }
+.page-cas .cas-situation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+}
+.page-cas .cas-situation__titre {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.page-cas .cas-situation__texte { font-size: 16px; font-weight: 500; line-height: 1.45; }
+
+/* ---------- Les enjeux de départ ---------- */
+.page-cas .cas-enjeux { flex: 1; padding: 12px 32px; }
+.page-cas .cas-enjeux__liste {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 48px;
+}
+.page-cas .cas-enjeux__liste li {
+  position: relative;
+  padding: 20px 0 20px 22px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.page-cas .cas-enjeux__liste li:nth-child(n + 3) { border-top: 1px solid var(--bordure); }
+.page-cas .cas-enjeux__liste li::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+}
+
+/* ---------- Axes de travail ---------- */
+.page-cas .cas-etapes { margin: 0; list-style: none; }
+.page-cas .cas-etape {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.page-cas .cas-etape__num {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--gris-clair);
+  font-size: 14px;
+  font-weight: 600;
+}
+.page-cas .cas-etape:first-child .cas-etape__num { background: var(--noir); color: var(--blanc); }
+.page-cas .cas-etape__titre {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.11px;
+}
+.page-cas .cas-etape__texte { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
+
+/* ---------- Évolutions et enseignement ---------- */
+.page-cas .cas-evolutions > .carte { flex: 1 1 0; padding: 36px; }
+.page-cas .cas-evolutions__carte { display: flex; flex-direction: column; gap: 16px; }
+.page-cas .cas-evolutions__texte { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-chiffre { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px 14px; }
+.page-cas .cas-chiffre__valeur {
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.84px;
+  color: var(--accent);
+}
+.page-cas .cas-chiffre__libelle {
+  padding-bottom: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+}
+.page-cas .cas-demontre {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-left: 0;
+  position: relative;
+}
+.page-cas .cas-demontre::before {
+  content: "";
+  position: absolute;
+  top: 36px;
+  bottom: 36px;
+  left: 36px;
+  width: 4px;
+  background: var(--accent);
+}
+.page-cas .cas-demontre > * { margin-left: 28px; }
+.page-cas .cas-demontre__texte {
+  font-size: 26px;
+  line-height: 1.32;
+  letter-spacing: -0.13px;
+}
+
+/* ---------- Autres cas clients ---------- */
+.page-cas .cas-proches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 36px 24px;
+}
+.page-cas .cas-carte { height: 460px; }
+.page-cas .cas-carte .logo-puce,
+.page-cas .cas-carte .stat { align-self: flex-start; }
+.page-cas .cas-carte__verre { gap: 8px; }
+.page-cas .cas-carte__surtitre {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+}
+.page-cas .cas-carte__titre { font-size: 19px; line-height: 1.28; }
+.page-cas .cas-carte__lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.65px;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-position: from-font;
+  color: var(--accent);
+}
+.page-cas .cas-carte:hover .cas-carte__lien .ico { transform: translateX(3px); }
+.page-cas .cas-carte__lien .ico { transition: transform 0.2s ease; }
+
+/* =====================================================================
+   Écrans intermédiaires
+   ===================================================================== */
+@media (max-width: 1240px) {
+  .page-cas .cas-hero__texte { flex-basis: 480px; }
+  .page-cas .cas-hero__titre { font-size: 46px; }
+  .page-cas .cas-fiche__texte { flex-basis: 520px; }
+  .page-cas .cas-fiche__titre { font-size: 42px; }
+  .page-cas .cas-ligne { gap: 32px; }
+  .page-cas .cas-ligne__marque { flex-basis: 190px; }
+  .page-cas .cas-ligne__photo { flex-basis: 260px; height: 190px; }
+  .page-cas .cas-ligne__titre { font-size: 25px; }
+}
+
+@media (max-width: 1100px) {
+  .page-cas .cas-hero,
+  .page-cas .cas-fiche { flex-direction: column; }
+  .page-cas .cas-hero__texte,
+  .page-cas .cas-fiche__texte { flex-basis: auto; }
+  .page-cas .cas-hero__titre { max-width: 680px; }
+  .page-cas .cas-fiche__titre { max-width: 760px; }
+  .page-cas .cas-fiche__photo { min-height: 520px; }
+  .page-cas .cas-etapes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page-cas .cas-proches { gap: 12px; }
+  .page-cas .cas-carte { height: 440px; }
+  .page-cas .cas-carte__titre { font-size: 17px; }
+  .page-cas .cas-demontre__texte { font-size: 23px; }
+}
+
+/* =====================================================================
+   Mobile, moins de 900 px
+   ===================================================================== */
+@media (max-width: 900px) {
+  .page-cas .section { padding-top: 32px; }
+  .page-cas .section--plateau { padding-top: 0; }
+
+  .page-cas .cas-hero__texte,
+  .page-cas .cas-fiche__texte { gap: 24px; padding: 28px 20px 20px; }
+  .page-cas .cas-hero__titre { font-size: 38px; }
+  .page-cas .cas-fiche__titre { font-size: 34px; }
+  .page-cas .cas-hero__carte { padding: 20px 16px; }
+  .page-cas .cas-mur a { height: 76px; padding: 12px; }
+
+  .page-cas .cas-liste { margin: 0 12px; }
+  .page-cas .cas-ligne {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "photo" "marque" "corps";
+    gap: 16px;
+    padding: 24px 0;
+  }
+  .page-cas .cas-ligne__marque { grid-area: marque; gap: 8px; }
+  .page-cas .cas-ligne__corps { grid-area: corps; }
+  .page-cas .cas-ligne__photo { grid-area: photo; width: 100%; height: auto; aspect-ratio: 16 / 10; }
+  .page-cas .cas-ligne__logo { height: 40px; }
+  .page-cas .cas-ligne__titre { font-size: 23px; }
+
+  .page-cas .cas-fiche__carte { padding: 6px; }
+  .page-cas .cas-fiche__photo { min-height: 460px; padding: 12px; }
+  .page-cas .cas-situation { padding: 16px; }
+  .page-cas .cas-situation__texte { font-size: 15px; }
+  .page-cas .cas-fiche__logo { min-width: 0; height: 64px; }
+
+  .page-cas .cas-enjeux { padding: 4px 20px; }
+  .page-cas .cas-enjeux__liste { grid-template-columns: minmax(0, 1fr); }
+  .page-cas .cas-enjeux__liste li { padding: 16px 0 16px 22px; font-size: 16px; }
+  .page-cas .cas-enjeux__liste li::before { top: 23px; }
+  .page-cas .cas-enjeux__liste li:nth-child(n + 2) { border-top: 1px solid var(--bordure); }
+
+  .page-cas .cas-etapes { grid-template-columns: minmax(0, 1fr); }
+  .page-cas .cas-etape { gap: 12px; }
+  .page-cas .cas-etape__titre { font-size: 20px; }
+
+  .page-cas .cas-evolutions > .carte { padding: 24px 20px; }
+  .page-cas .cas-chiffre__valeur { font-size: 46px; }
+  .page-cas .cas-demontre::before { top: 24px; bottom: 24px; left: 20px; }
+  .page-cas .cas-demontre > * { margin-left: 20px; }
+  .page-cas .cas-demontre__texte { font-size: 21px; }
+
+  .page-cas .cas-proches { grid-template-columns: minmax(0, 1fr); margin: 0 12px 16px; }
+  .page-cas .cas-carte { height: 400px; }
+}
+
+@media (max-width: 600px) {
+  .page-cas .cas-hero__titre { font-size: 34px; }
+  .page-cas .cas-fiche__titre { font-size: 30px; }
+  .page-cas .cas-fiche__photo { min-height: 420px; }
+  .page-cas .cas-mur a { height: 64px; padding: 10px; }
+  .page-cas .cas-carte { height: 380px; }
+}
+
+/* La barre occupe toute la largeur du plateau */
+.page-cas .plateau > .barre { flex: 1; min-width: 0; }
+
+/* Liste éditoriale sur tablette : colonnes latérales plus étroites */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .page-cas .cas-ligne { gap: 28px; }
+  .page-cas .cas-ligne__marque { flex-basis: 160px; }
+  .page-cas .cas-ligne__logo img { max-width: 150px; }
+  .page-cas .cas-ligne__photo { flex-basis: 220px; height: 160px; }
+  .page-cas .cas-ligne__titre { font-size: 23px; }
+}
