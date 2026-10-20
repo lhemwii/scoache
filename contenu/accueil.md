@@ -1,7 +1,6 @@
 # Accueil Scoaché : texte de la landing
 
-Ce fichier est la source du texte de la page d’accueil (déroulé resserré en 7 blocs).
-On modifie ici, puis je reporte les changements dans Figma, section « Accueil C-level ».
+Ce texte vit désormais dans Figma, section « Accueil C-level », dans le cadre « Texte de la landing (source) », à droite de la maquette en 7 blocs. C’est cette version Figma qui fait foi ; ce fichier en est une copie au 20 octobre 2026.
 
 ## Mode d’emploi
 
