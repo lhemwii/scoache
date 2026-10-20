@@ -89,15 +89,62 @@
       </div>
     </section>
 
+    <!-- Situations typiques (les enjeux d’Ilana Porteret, repris de l’accueil), chacune avec un cas client -->
+    <section class="section of-bloc" aria-labelledby="situations-titre">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Situations typiques</p>
+          <h2 class="section-head__title" id="situations-titre">Quand toute une population de managers est concernée</h2>
+        </div>
+      </div>
+      <div class="plateau">
+        <ul class="grille grille--3 of-situations" role="list">
+          <li class="carte of-situation">
+            <span class="pastille"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-building"/></svg></span>
+            <h3 class="of-situation__titre">Mobiliser les dirigeants et leurs équipes dans les transformations</h3>
+            <p class="of-situation__texte">Une transformation engage autant les personnes que l’organisation du travail.</p>
+            <a class="of-situation__cas" href="/cas-clients/groupe-nice-matin">
+              <span class="of-situation__logo"><img src="/assets/cas/logos/groupe-nice-matin.png" alt="" width="70" height="18" loading="lazy" decoding="async"></span>
+              <span class="of-situation__lien">Voir le cas Groupe Nice-Matin <svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            </a>
+          </li>
+          <li class="carte of-situation">
+            <span class="pastille"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-users-round"/></svg></span>
+            <h3 class="of-situation__titre">Faire évoluer les pratiques managériales pour mieux mobiliser</h3>
+            <p class="of-situation__texte">L’enjeu est de conjuguer exigence de performance, autonomie et engagement des équipes.</p>
+            <a class="of-situation__cas" href="/cas-clients/schoolab">
+              <span class="of-situation__logo"><img src="/assets/cas/logos/schoolab.png" alt="" width="78" height="16" loading="lazy" decoding="async"></span>
+              <span class="of-situation__lien">Voir le cas Schoolab <svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            </a>
+          </li>
+          <li class="carte of-situation">
+            <span class="pastille"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-compass"/></svg></span>
+            <h3 class="of-situation__titre">Renforcer la posture et l’influence des dirigeants</h3>
+            <p class="of-situation__texte">Au-delà de l’expertise, certaines responsabilités exigent de peser davantage dans les échanges et les décisions.</p>
+            <a class="of-situation__cas" href="/cas-clients/manomano">
+              <span class="of-situation__logo"><img src="/assets/cas/logos/manomano.png" alt="" width="75" height="16" loading="lazy" decoding="async"></span>
+              <span class="of-situation__lien">Voir le cas ManoMano <svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
     <!-- Le déroulé (Figma 1173:4924) -->
     <section class="section of-bloc" aria-labelledby="deroule-titre">
       <div class="section-head">
         <div class="section-head__text">
-          <p class="eyebrow">Le déroulé</p>
-          <h2 class="section-head__title" id="deroule-titre">Comment se passe un accompagnement</h2>
+          <p class="eyebrow">Comment ça se passe</p>
+          <h2 class="section-head__title" id="deroule-titre">Format, durée et étapes</h2>
         </div>
       </div>
       <div class="plateau plateau--colonne">
+        <dl class="of-formats">
+          <div><dt>Format</dt><dd>Parcours mixtes coaching et formation</dd></div>
+          <div><dt>Déploiement</dt><dd>Par cohortes, sur plusieurs mois</dd></div>
+          <div><dt>Intervenants</dt><dd>Réseau de coachs certifiés</dd></div>
+          <div><dt>Financement</dt><dd>Plan de développement des compétences, OPCO</dd></div>
+        </dl>
         <ol class="grille grille--4" role="list">
           <li class="carte of-carte">
             <span class="pastille" aria-hidden="true">01</span>
@@ -120,59 +167,65 @@
             <p class="of-carte__texte">Indicateurs par talent, validés par les managers, consolidés à l’échelle de l’organisation.</p>
           </li>
         </ol>
-        <dl class="of-formats">
-          <div><dt>Format</dt><dd>Parcours mixtes coaching et formation</dd></div>
-          <div><dt>Déploiement</dt><dd>Par cohortes, sur plusieurs mois</dd></div>
-          <div><dt>Intervenants</dt><dd>Réseau de coachs certifiés</dd></div>
-          <div><dt>Financement</dt><dd>Plan de développement des compétences, OPCO</dd></div>
-        </dl>
       </div>
     </section>
 
-    <!-- Cas clients (Figma 1173:4964) -->
-    <section class="section of-bloc" aria-labelledby="cas-titre">
-      <div class="section-head">
-        <div class="section-head__text">
-          <p class="eyebrow">Cas clients, coaching d’organisation</p>
-          <h2 class="section-head__title" id="cas-titre">Ils nous ont confié une situation proche</h2>
+    <section class="section of-bloc of-cas-carrousel" aria-labelledby="cas-titre">
+      <div data-carrousel data-carrousel-auto="5000">
+        <div class="section-head">
+          <div class="section-head__text">
+            <p class="eyebrow">La preuve, cas clients</p>
+            <h2 class="section-head__title" id="cas-titre">Ils nous ont confié une situation proche</h2>
+          </div>
         </div>
-        <a class="link-caps section-head__link" href="/cas-clients/organisation">Voir les cas, coaching d’organisation</a>
+        <div class="carrousel">
+          <ul class="carrousel__piste" tabindex="0" aria-label="Cas clients, faire défiler horizontalement">
+            <li class="carrousel__item" data-echelle="organisation">
+              <a class="photo carte-photo" href="/cas-clients/manomano">
+                <img src="/assets/cas/photos/manomano-m.jpg" alt="" width="900" height="600" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/manomano.png" alt="ManoMano" width="96" height="32" loading="lazy" decoding="async"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Organisation, depuis 2020</span>
+                  <span class="carte-verre__titre">Accompagner dans la durée des enjeux de leadership et d’influence</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> ManoMano</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="organisation">
+              <a class="photo carte-photo" href="/cas-clients/schoolab">
+                <img src="/assets/cas/photos/schoolab-m.jpg" alt="" width="900" height="600" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/schoolab.png" alt="Schoolab" width="96" height="32" loading="lazy" decoding="async"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Organisation, population stratégique</span>
+                  <span class="carte-verre__titre">Déployer un coaching individualisé à l’échelle d’une population stratégique</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Schoolab</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="organisation">
+              <a class="photo carte-photo" href="/cas-clients/groupe-nice-matin">
+                <img src="/assets/cas/photos/groupe-nice-matin-m.jpg" alt="" width="900" height="600" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/groupe-nice-matin.png" alt="Groupe Nice-Matin" width="96" height="32" loading="lazy" decoding="async"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Organisation, managers clés</span>
+                  <span class="carte-verre__titre">Faire évoluer la posture de managers clés dans un contexte de transformation</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Groupe Nice-Matin</span></span>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="carrousel__pied">
+            <div class="carrousel__progression" aria-hidden="true"><span></span></div>
+            <div class="carrousel__commandes">
+              <div class="carrousel__fleches">
+                <button type="button" class="fleche" data-carrousel-prec aria-label="Cas précédents"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-left"/></svg></button>
+                <button type="button" class="fleche" data-carrousel-suiv aria-label="Cas suivants"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-right"/></svg></button>
+              </div>
+              <a class="link-caps" href="/cas-clients/organisation">Voir les cas, coaching d’organisation</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <ul class="of-cas">
-        <li>
-          <a class="photo photo--entre of-cas__carte" href="/cas-clients/manomano">
-            <img src="/assets/cas/manomano.jpg" alt="" width="564" height="800" loading="lazy">
-            <span class="logo-puce"><img src="/assets/cas/logos/manomano.png" alt="ManoMano" width="120" height="34"></span>
-            <span class="carte-verre">
-              <span class="carte-verre__eyebrow">Cas client, ManoMano</span>
-              <span class="carte-verre__titre">Accompagner dans la durée des enjeux de leadership et d’influence</span>
-              <span class="carte-verre__lien">Lire le cas <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="photo photo--entre of-cas__carte" href="/cas-clients/schoolab">
-            <img src="/assets/offre/cas-schoolab.jpg" alt="" width="1100" height="733" loading="lazy">
-            <span class="logo-puce"><img src="/assets/cas/logos/schoolab.png" alt="Schoolab" width="120" height="34"></span>
-            <span class="carte-verre">
-              <span class="carte-verre__eyebrow">Cas client, Schoolab</span>
-              <span class="carte-verre__titre">Déployer un coaching individualisé à l’échelle d’une population stratégique</span>
-              <span class="carte-verre__lien">Lire le cas <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="photo photo--entre of-cas__carte" href="/cas-clients/groupe-nice-matin">
-            <img src="/assets/offre/cas-groupe-nice-matin.jpg" alt="" width="900" height="1350" loading="lazy">
-            <span class="logo-puce"><img src="/assets/offre/logo-groupe-nice-matin.png" alt="Groupe Nice-Matin" width="120" height="34"></span>
-            <span class="carte-verre">
-              <span class="carte-verre__eyebrow">Cas client, Groupe Nice-Matin</span>
-              <span class="carte-verre__titre">Faire évoluer la posture de managers clés dans un contexte de transformation</span>
-              <span class="carte-verre__lien">Lire le cas <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
-            </span>
-          </a>
-        </li>
-      </ul>
     </section>
 
     <div data-include="temoignages"></div>
