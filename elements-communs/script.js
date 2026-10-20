@@ -235,8 +235,7 @@
       var nom = champs[0].input.value.trim().split(/\s+/)[0];
       confirmation.innerHTML =
         '<span class="pastille" aria-hidden="true"><svg class="ico" width="16" height="16"><use href="#i-check"/></svg></span>' +
-        '<span><strong></strong>Ilana vous répond personnellement sous 48 h.' +
-        '<small>Maquette : aucun message n’est réellement envoyé pour l’instant.</small></span>';
+        '<span><strong></strong>Ilana vous répond sous 48 h.</span>';
       confirmation.querySelector('strong').textContent = 'Merci ' + nom + ', votre message a bien été pris en compte.';
 
       formulaire.querySelectorAll('.field__input').forEach(function (input) {
