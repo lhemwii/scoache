@@ -11,29 +11,390 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/css/home.css">
   <script>document.documentElement.classList.add('js');</script>
   <script src="/include.js" defer></script>
   <script src="/script.js" defer></script>
 </head>
-<body>
+<body class="page-home">
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 <div class="page">
   <div data-include="header"></div>
 
   <main id="contenu" tabindex="-1">
-    <!-- PAGE D'ACCUEIL : contenu à écrire par l'agent « accueil » (fichier css/accueil.css).
-         Garder les placeholders header, temoignages, contact et footer. -->
-    <section class="section section--serre" aria-labelledby="titre-page">
+
+    <!-- Hero (Figma 1222:7937) -->
+    <section class="section section--plateau" aria-labelledby="hero-titre">
+      <div class="plateau hero">
+        <div class="hero__texte">
+          <div class="hero__intro">
+            <p class="eyebrow eyebrow--lg">Coaching de dirigeant, transitions de leadership</p>
+            <h1 class="titre-1 hero__titre" id="hero-titre">Prendre sa place, pas seulement un poste.</h1>
+            <p class="chapo hero__lead">Prise de poste, entrée au CODIR, équipe à réaligner : un accompagnement sur mesure pour celles et ceux qui dirigent.</p>
+            <div class="hero__actions">
+              <a class="btn btn--noir btn--lg" href="/nous-contacter">Nous contacter <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
+              <a class="link-caps" href="/offre">Découvrir l’offre</a>
+            </div>
+          </div>
+          <p class="hero__preuve"><svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>4,9/5 sur Google, 94 % de satisfaction en 2025</p>
+        </div>
+        <div class="carte hero__carte">
+          <div class="hero__carte-contenu">
+            <h2 class="eyebrow titre-reset home-hero__eyebrow">Les situations que nous accompagnons</h2>
+            <p class="titre-4 home-hero__accroche">Exercer sa fonction dans une situation à fort enjeu.</p>
+            <ul class="mega-links">
+              <li><a class="mega-link" href="/coaching-de-dirigeant/individuel"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-user-round"/></svg><span class="mega-link__text"><span class="mega-link__title">Prendre un poste de direction</span><span class="mega-link__sub">Coaching individuel</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+              <li><a class="mega-link" href="/coaching-de-dirigeant/collectif"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-users-round"/></svg><span class="mega-link__text"><span class="mega-link__title">Souder un CODIR recomposé</span><span class="mega-link__sub">Coaching collectif</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+              <li><a class="mega-link" href="/coaching-de-dirigeant/organisation"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-building"/></svg><span class="mega-link__text"><span class="mega-link__title">Traverser une réorganisation</span><span class="mega-link__sub">Coaching d’organisation</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+            </ul>
+            <a class="link-caps" href="/cas-clients">Voir tous les cas clients</a>
+          </div>
+          <a class="photo hero__photo" href="/cas-clients">
+            <img src="/assets/hero-accueil.jpg" alt="" width="680" height="940" fetchpriority="high" decoding="async">
+            <span class="carte-verre">
+              <span class="carte-verre__eyebrow">Cas clients</span>
+              <span class="carte-verre__titre">De CHANEL à HomeExchange, nos accompagnements racontés</span>
+              <span class="carte-verre__lien">Lire les cas</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logos clients (Figma 1222:7982) -->
+    <section class="home-logos" aria-labelledby="logos-titre">
+      <h2 class="home-logos__titre" id="logos-titre">Ils nous font confiance</h2>
+      <ul class="home-logos__liste">
+        <li><img src="/assets/home/logos/chanel.png" alt="CHANEL" width="224" height="96" loading="lazy" decoding="async"></li>
+        <li><img src="/assets/home/logos/vinci-airports.png" alt="VINCI Airports" width="224" height="96" loading="lazy" decoding="async"></li>
+        <li><img src="/assets/home/logos/mazars.png" alt="Mazars" width="224" height="96" loading="lazy" decoding="async"></li>
+        <li class="home-logos__pale"><img src="/assets/home/logos/cic.png" alt="CIC" width="224" height="96" loading="lazy" decoding="async"></li>
+        <li><img src="/assets/home/logos/croix-rouge-francaise.png" alt="Croix-Rouge française" width="224" height="96" loading="lazy" decoding="async"></li>
+        <li><img src="/assets/home/logos/michael-page.png" alt="Michael Page" width="224" height="96" loading="lazy" decoding="async"></li>
+        <li><img src="/assets/home/logos/manomano.png" alt="ManoMano" width="224" height="96" loading="lazy" decoding="async"></li>
+        <li><img src="/assets/home/logos/schoolab.png" alt="Schoolab" width="224" height="96" loading="lazy" decoding="async"></li>
+        <li><img src="/assets/home/logos/homeexchange.png" alt="HomeExchange" width="224" height="96" loading="lazy" decoding="async"></li>
+      </ul>
+    </section>
+
+    <!-- Vos enjeux (Figma 1222:8351) -->
+    <section class="section section--plateau home-enjeux" aria-labelledby="enjeux-titre">
       <div class="plateau">
         <div class="plateau__texte">
           <div class="plateau__intro">
-            <p class="eyebrow eyebrow--lg">Coaching de dirigeant, transitions de leadership</p>
-            <h1 class="titre-1" id="titre-page">Prendre sa place, pas seulement un poste.</h1>
-            <p class="chapo">Page d’accueil en cours de construction.</p>
+            <p class="eyebrow eyebrow--lg">Vos enjeux</p>
+            <h2 class="titre-2" id="enjeux-titre">Qu’est-ce qui change pour vous en ce moment ?</h2>
+            <p class="chapo">Choisissez votre situation : nous vous montrons comment nous accompagnons celles et ceux qui la vivent.</p>
           </div>
         </div>
-        <div class="carte carte--flex">
-          <p class="texte">Les autres pages du site arrivent progressivement.</p>
+        <ul class="grille grille--2 home-enjeux__grille">
+          <li><a class="carte-lien" href="/coaching-de-dirigeant/individuel">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-user-round"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Je prends un poste de direction</span><span class="carte-lien__texte">Passer d’expert à dirigeant, asseoir sa légitimité, réussir les 100 premiers jours.</span></span>
+          </a></li>
+          <li><a class="carte-lien" href="/coaching-de-dirigeant/individuel">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-compass"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Je dois tenir ma position face au COMEX</span><span class="carte-lien__texte">Influence, assertivité, décisions qui divisent.</span></span>
+          </a></li>
+          <li><a class="carte-lien" href="/coaching-de-dirigeant/collectif">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-users-round"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Mon équipe de direction se recompose</span><span class="carte-lien__texte">Un départ, une arrivée, un CODIR à ressouder.</span></span>
+          </a></li>
+          <li><a class="carte-lien" href="/coaching-de-dirigeant/organisation">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-building"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Mon entreprise se transforme</span><span class="carte-lien__texte">Réorganisation, croissance, managers à embarquer.</span></span>
+          </a></li>
+          <li><a class="carte-lien carte-lien--accent" href="/coaching-de-dirigeant">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-sparkle"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">L’IA transforme mon métier de dirigeant</span><span class="carte-lien__texte">Décider, embarquer et rester légitime quand l’IA rebat les cartes.</span></span>
+          </a></li>
+          <li><a class="carte-lien carte-lien--accent" href="/coaching-de-dirigeant">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-gauge"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Je dois tenir sous pression, dans la durée</span><span class="carte-lien__texte">Concentration, pression, récupération : les méthodes du sport de haut niveau.</span></span>
+          </a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Offre : trois échelles, expertises, barre, formations discrètes (Figma 1222:7994) -->
+    <section class="section home-offre" aria-labelledby="offre-titre">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Le cœur de l’offre</p>
+          <h2 class="section-head__title" id="offre-titre">Le coaching de dirigeant, à trois échelles</h2>
+        </div>
+        <a class="link-caps section-head__link" href="/offre">Toute l’offre</a>
+      </div>
+
+      <div class="plateau plateau--colonne">
+        <div class="grille grille--3">
+          <article class="home-echelle" aria-labelledby="echelle-individuel">
+            <div class="photo home-echelle__photo"><img src="/assets/home/offre-individuel.jpg" alt="" width="900" height="422" loading="lazy" decoding="async"></div>
+            <div class="home-echelle__corps">
+              <p class="home-echelle__type"><span class="pastille pastille--noir"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-user-round"/></svg></span><span class="eyebrow">Individuel</span></p>
+              <h3 class="home-echelle__titre" id="echelle-individuel">Coaching individuel</h3>
+              <p class="home-echelle__texte">Dirigeants et managers, en tête-à-tête, pour traverser une situation à fort enjeu.</p>
+              <ul class="mega-links home-echelle__liens">
+                <li><a class="mega-link" href="/coaching-de-dirigeant/individuel"><span class="mega-link__text"><span class="mega-link__title">Prendre un poste de direction</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+                <li><a class="mega-link" href="/coaching-de-dirigeant/individuel"><span class="mega-link__text"><span class="mega-link__title">Porter une décision difficile</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+                <li><a class="mega-link" href="/coaching-de-dirigeant/individuel"><span class="mega-link__text"><span class="mega-link__title">Passer de manager à dirigeant</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+              </ul>
+              <a class="link-caps home-echelle__decouvrir" href="/coaching-de-dirigeant/individuel">Découvrir<span class="visually-hidden"> le coaching individuel</span></a>
+            </div>
+          </article>
+          <article class="home-echelle" aria-labelledby="echelle-collectif">
+            <div class="photo home-echelle__photo"><img src="/assets/home/offre-collectif.jpg" alt="" width="900" height="422" loading="lazy" decoding="async"></div>
+            <div class="home-echelle__corps">
+              <p class="home-echelle__type"><span class="pastille pastille--noir"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-users-round"/></svg></span><span class="eyebrow">Collectif</span></p>
+              <h3 class="home-echelle__titre" id="echelle-collectif">Coaching collectif</h3>
+              <p class="home-echelle__texte">CODIR, COMEX et groupes de pairs : faire d’un groupe une équipe qui décide.</p>
+              <ul class="mega-links home-echelle__liens">
+                <li><a class="mega-link" href="/coaching-de-dirigeant/collectif"><span class="mega-link__text"><span class="mega-link__title">Souder un CODIR recomposé</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+                <li><a class="mega-link" href="/coaching-de-dirigeant/collectif"><span class="mega-link__text"><span class="mega-link__title">Aligner un COMEX sur une stratégie</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+                <li><a class="mega-link" href="/coaching-de-dirigeant/collectif"><span class="mega-link__text"><span class="mega-link__title">Désamorcer un conflit entre directions</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+              </ul>
+              <a class="link-caps home-echelle__decouvrir" href="/coaching-de-dirigeant/collectif">Découvrir<span class="visually-hidden"> le coaching collectif</span></a>
+            </div>
+          </article>
+          <article class="home-echelle" aria-labelledby="echelle-organisation">
+            <div class="photo home-echelle__photo"><img src="/assets/home/offre-organisation.jpg" alt="" width="900" height="422" loading="lazy" decoding="async"></div>
+            <div class="home-echelle__corps">
+              <p class="home-echelle__type"><span class="pastille pastille--noir"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-building"/></svg></span><span class="eyebrow">Organisation</span></p>
+              <h3 class="home-echelle__titre" id="echelle-organisation">Coaching d’organisation</h3>
+              <p class="home-echelle__texte">Un socle de leadership commun, déployé à l’échelle de l’entreprise.</p>
+              <ul class="mega-links home-echelle__liens">
+                <li><a class="mega-link" href="/coaching-de-dirigeant/organisation"><span class="mega-link__text"><span class="mega-link__title">Déployer un socle de leadership commun</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+                <li><a class="mega-link" href="/coaching-de-dirigeant/organisation"><span class="mega-link__text"><span class="mega-link__title">Traverser une réorganisation</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+                <li><a class="mega-link" href="/coaching-de-dirigeant/organisation"><span class="mega-link__text"><span class="mega-link__title">Installer une culture du feedback</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+              </ul>
+              <a class="link-caps home-echelle__decouvrir" href="/coaching-de-dirigeant/organisation">Découvrir<span class="visually-hidden"> le coaching d’organisation</span></a>
+            </div>
+          </article>
+        </div>
+
+        <ul class="grille grille--2 home-expertises" aria-label="Expertises">
+          <li><a class="home-expertise" href="/coaching-de-dirigeant">
+            <span class="pastille pastille--lg pastille--accent"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-sparkle"/></svg></span>
+            <span class="home-expertise__texte">
+              <span class="home-expertise__eyebrow">Expertise</span>
+              <span class="home-expertise__titre">Coach de dirigeants et IA</span>
+              <span class="home-expertise__desc">Décider, embarquer ses équipes et rester légitime quand l’IA transforme l’organisation.</span>
+            </span>
+            <svg class="ico home-expertise__fleche" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
+          </a></li>
+          <li><a class="home-expertise" href="/coaching-de-dirigeant">
+            <span class="pastille pastille--lg pastille--accent"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-gauge"/></svg></span>
+            <span class="home-expertise__texte">
+              <span class="home-expertise__eyebrow">Expertise</span>
+              <span class="home-expertise__titre">Préparation mentale de haut niveau</span>
+              <span class="home-expertise__desc">Les méthodes des sportifs de haut niveau, appliquées aux dirigeants.</span>
+            </span>
+            <svg class="ico home-expertise__fleche" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
+          </a></li>
+        </ul>
+
+        <div class="barre">
+          <p class="barre__texte"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-message"/></svg>Vous hésitez entre deux échelles ? Parlons-en, sans engagement.</p>
+          <a class="btn btn--noir" href="/nous-contacter">Nous contacter <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
+        </div>
+      </div>
+
+      <p class="home-formations">Également : <a href="/formations">formations certifiées Qualiopi</a> et <a href="/formations">bilan de compétences</a></p>
+    </section>
+
+    <!-- Cas clients : carrousel de tous les cas (Figma 1222:8081) -->
+    <section class="section home-cas" aria-labelledby="cas-titre">
+      <div data-carrousel>
+        <div class="section-head">
+          <div class="section-head__text">
+            <p class="eyebrow">Cas clients</p>
+            <h2 class="section-head__title" id="cas-titre">Ils nous ont confié leurs dirigeants</h2>
+          </div>
+          <div class="filtres" role="group" aria-label="Filtrer les cas par échelle">
+            <button type="button" class="filtre" aria-pressed="true" data-carrousel-filtre="tous">Tous</button>
+            <button type="button" class="filtre" aria-pressed="false" data-carrousel-filtre="individuel">Individuel</button>
+            <button type="button" class="filtre" aria-pressed="false" data-carrousel-filtre="collectif">Collectif</button>
+            <button type="button" class="filtre" aria-pressed="false" data-carrousel-filtre="organisation">Organisation</button>
+          </div>
+        </div>
+        <div class="carrousel">
+          <ul class="carrousel__piste" tabindex="0" aria-label="Cas clients, faire défiler horizontalement">
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/chanel">
+                <img src="/assets/cas/chanel.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-chanel.png" alt="CHANEL" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeante senior</span>
+                  <span class="carte-verre__titre">Renforcer l’influence d’une dirigeante dans des interactions à forts enjeux</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> CHANEL</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="collectif">
+              <a class="photo carte-photo" href="/cas-clients/mazars">
+                <img src="/assets/cas/mazars.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-mazars.png" alt="Mazars" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Collectif, 27 nouveaux associés</span>
+                  <span class="carte-verre__titre">Accompagner le passage à un nouveau rôle de leadership</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Mazars</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="organisation">
+              <a class="photo carte-photo" href="/cas-clients/manomano">
+                <img src="/assets/cas/manomano.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-manomano.png" alt="ManoMano" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Organisation, depuis 2020</span>
+                  <span class="carte-verre__titre">Accompagner dans la durée des enjeux de leadership et d’influence</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> ManoMano</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/vinci-airports">
+                <img src="/assets/cas/vinci-airports.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-vinci-airports.png" alt="VINCI Airports" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeant senior</span>
+                  <span class="carte-verre__titre">Prendre pleinement sa place de leader au niveau exécutif</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> VINCI Airports</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="collectif">
+              <a class="photo carte-photo" href="/cas-clients/croix-rouge-francaise">
+                <img src="/assets/cas/croix-rouge-francaise.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-croix-rouge-francaise.png" alt="Croix-Rouge française" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Collectif, leaders territoriaux</span>
+                  <span class="carte-verre__titre">Renforcer la posture de leaders territoriaux dans un environnement complexe</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Croix-Rouge française</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="collectif">
+              <a class="photo carte-photo" href="/cas-clients/cic">
+                <img src="/assets/home/cas/cic.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-cic.png" alt="CIC" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Collectif, directeurs d’agence</span>
+                  <span class="carte-verre__titre">Accompagner des leaders de proximité dans la conduite d’une transformation du réseau</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> CIC</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/michael-page">
+                <img src="/assets/home/cas/michael-page.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-michael-page.png" alt="Michael Page" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, manager à responsabilités</span>
+                  <span class="carte-verre__titre">Faire évoluer sa posture de leader pour renforcer l’engagement et la performance collective</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Michael Page</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/ilek">
+                <img src="/assets/home/cas/ilek.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-ilek.png" alt="Ilek" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, leaders en croissance</span>
+                  <span class="carte-verre__titre">Faire évoluer la posture de leaders dans un contexte de croissance et de transformation</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Ilek</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/biborg">
+                <img src="/assets/home/cas/biborg.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-biborg.png" alt="Biborg" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, depuis 2022</span>
+                  <span class="carte-verre__titre">Accompagner des leaders dans les passages de seuil de leur trajectoire</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Biborg</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/le-lab-rh">
+                <img src="/assets/home/cas/le-lab-rh.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-le-lab-rh.png" alt="Le Lab RH" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeant</span>
+                  <span class="carte-verre__titre">Assumer pleinement sa place de dirigeant dans une organisation en développement</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Le Lab RH</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/fintecture">
+                <img src="/assets/home/cas/fintecture.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-fintecture.png" alt="Fintecture" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, directeur commercial</span>
+                  <span class="carte-verre__titre">Faire évoluer son leadership sous forte pression sans renoncer à l’exigence de performance</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Fintecture</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="organisation">
+              <a class="photo carte-photo" href="/cas-clients/schoolab">
+                <img src="/assets/home/cas/schoolab.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-schoolab.png" alt="Schoolab" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Organisation, population stratégique</span>
+                  <span class="carte-verre__titre">Déployer un coaching individualisé à l’échelle d’une population stratégique</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Schoolab</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/jobteaser">
+                <img src="/assets/home/cas/jobteaser.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-jobteaser.png" alt="Jobteaser" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeant</span>
+                  <span class="carte-verre__titre">Préserver son impact et sa capacité d’action dans un environnement sous tension</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Jobteaser</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="organisation">
+              <a class="photo carte-photo" href="/cas-clients/groupe-nice-matin">
+                <img src="/assets/home/cas/groupe-nice-matin.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-groupe-nice-matin.png" alt="Groupe Nice-Matin" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Organisation, managers clés</span>
+                  <span class="carte-verre__titre">Faire évoluer la posture de managers clés dans un contexte de transformation</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Groupe Nice-Matin</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item" data-echelle="individuel">
+              <a class="photo carte-photo" href="/cas-clients/homeexchange">
+                <img src="/assets/home/cas/homeexchange.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/home/cas/logo-homeexchange.png" alt="HomeExchange" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeante fonctionnelle</span>
+                  <span class="carte-verre__titre">Trouver son alignement pour asseoir son leadership et mieux embarquer ses équipes</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> HomeExchange</span></span>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="carrousel__pied">
+            <div class="carrousel__progression" aria-hidden="true"><span></span></div>
+            <div class="carrousel__commandes">
+              <div class="carrousel__fleches">
+                <button type="button" class="fleche" data-carrousel-prec aria-label="Cas précédents"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-left"/></svg></button>
+                <button type="button" class="fleche" data-carrousel-suiv aria-label="Cas suivants"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-right"/></svg></button>
+              </div>
+              <a class="link-caps" href="/cas-clients">Voir tous les cas clients</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
