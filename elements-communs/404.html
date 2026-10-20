@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page introuvable, Scoaché</title>
+  <meta name="description" content="Cette page n’existe pas ou n’est pas encore publiée.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="/include.js" defer></script>
+  <script src="/script.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<div class="page">
+  <div data-include="header"></div>
+
+  <main id="contenu" tabindex="-1">
+    <section class="section section--serre" aria-labelledby="titre-page">
+      <div class="plateau">
+        <div class="plateau__texte">
+          <div class="plateau__intro">
+            <p class="eyebrow eyebrow--lg">Erreur 404</p>
+            <h1 class="titre-2" id="titre-page">Cette page n’est pas disponible.</h1>
+            <p class="chapo">Elle a peut-être changé d’adresse, ou elle n’est pas encore publiée.</p>
+            <a class="btn btn--noir btn--lg" href="/">Retour à l’accueil
+              <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="carte carte--flex">
+          <ul class="mega-links">
+            <li><a class="mega-link" href="/coaching-de-dirigeant"><span class="mega-link__text"><span class="mega-link__title">Coaching de dirigeant</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+            <li><a class="mega-link" href="/cas-clients"><span class="mega-link__text"><span class="mega-link__title">Cas clients</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+            <li><a class="mega-link" href="/a-propos"><span class="mega-link__text"><span class="mega-link__title">À propos</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+</div>
+</body>
+</html>

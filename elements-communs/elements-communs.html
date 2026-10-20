@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scoaché, éléments communs</title>
+  <meta name="description" content="Navbar, menus, bloc contact, footer et composants de section du nouveau site Scoaché, partagés par toutes les pages.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="/include.js" defer></script>
+  <script src="/script.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<div class="page">
+  <div data-include="header"></div>
+
+  <main id="contenu" tabindex="-1">
+
+    <!-- Zone neutre -->
+    <section class="filler" aria-labelledby="titre-page">
+      <div class="filler__tray">
+        <div class="filler__text">
+          <p class="eyebrow">Maquette de travail</p>
+          <h1 class="filler__title" id="titre-page">Éléments communs</h1>
+          <p class="filler__lead">Navbar, menus au survol, bloc contact et footer, partagés par toutes les pages.</p>
+          <p class="filler__hint">Survolez « Offre » ou « Cas clients » pour ouvrir les menus. Plus bas, les composants de section à réutiliser dans les pages (voir PAGES.md).</p>
+        </div>
+        <div class="filler__blocks" aria-hidden="true">
+          <div class="skeleton"><span class="skeleton__dot"></span><span class="skeleton__line skeleton__line--w70"></span><span class="skeleton__line"></span><span class="skeleton__line skeleton__line--w50"></span></div>
+          <div class="skeleton"><span class="skeleton__dot"></span><span class="skeleton__line skeleton__line--w60"></span><span class="skeleton__line"></span><span class="skeleton__line skeleton__line--w40"></span></div>
+          <div class="skeleton"><span class="skeleton__dot"></span><span class="skeleton__line skeleton__line--w80"></span><span class="skeleton__line"></span><span class="skeleton__line skeleton__line--w50"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Composant : fil d'Ariane -->
+    <nav class="fil-ariane" aria-label="Fil d’Ariane" style="margin-top:24px">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/offre">Offre</a></li>
+        <li aria-current="page">Éléments communs</li>
+      </ol>
+    </nav>
+
+    <!-- Composant : hero -->
+    <section class="section section--plateau" aria-labelledby="demo-hero">
+      <div class="plateau hero">
+        <div class="hero__texte">
+          <div class="hero__intro">
+            <p class="eyebrow eyebrow--lg">Coaching de dirigeant, transitions de leadership</p>
+            <h2 class="titre-1 hero__titre" id="demo-hero">Prendre sa place, pas seulement un poste.</h2>
+            <p class="chapo hero__lead">Prise de poste, entrée au CODIR, équipe à réaligner : un accompagnement sur mesure pour celles et ceux qui dirigent.</p>
+            <div class="hero__actions">
+              <a class="btn btn--noir btn--lg" href="/nous-contacter">Nous contacter <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
+              <a class="link-caps" href="/offre">Découvrir l’offre</a>
+            </div>
+          </div>
+          <p class="hero__preuve"><svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>4,9/5 sur Google, 94 % de satisfaction en 2025</p>
+        </div>
+        <div class="carte hero__carte">
+          <div class="hero__carte-contenu">
+            <p class="eyebrow">Les situations que nous accompagnons</p>
+            <p class="titre-4">Exercer sa fonction dans une situation à fort enjeu.</p>
+            <ul class="mega-links">
+              <li><a class="mega-link" href="/coaching-de-dirigeant/individuel"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-user-round"/></svg><span class="mega-link__text"><span class="mega-link__title">Prendre un poste de direction</span><span class="mega-link__sub">Coaching individuel</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+              <li><a class="mega-link" href="/coaching-de-dirigeant/collectif"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-users-round"/></svg><span class="mega-link__text"><span class="mega-link__title">Souder un CODIR recomposé</span><span class="mega-link__sub">Coaching collectif</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+              <li><a class="mega-link" href="/coaching-de-dirigeant/organisation"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-building"/></svg><span class="mega-link__text"><span class="mega-link__title">Traverser une réorganisation</span><span class="mega-link__sub">Coaching d’organisation</span></span><svg class="ico mega-link__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a></li>
+            </ul>
+            <a class="link-caps" href="/cas-clients">Voir tous les cas clients</a>
+          </div>
+          <a class="photo hero__photo" href="/cas-clients">
+            <img src="/assets/hero-accueil.jpg" alt="" width="680" height="940" loading="lazy" decoding="async">
+            <span class="carte-verre">
+              <span class="carte-verre__eyebrow">Cas clients</span>
+              <span class="carte-verre__titre">De CHANEL à HomeExchange, nos accompagnements racontés</span>
+              <span class="carte-verre__lien">Lire les cas</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Composant : plateau texte + grille de cartes liens (pastilles) -->
+    <section class="section section--plateau" aria-labelledby="demo-enjeux">
+      <div class="plateau">
+        <div class="plateau__texte">
+          <div class="plateau__intro">
+            <p class="eyebrow eyebrow--lg">Vos enjeux</p>
+            <h2 class="titre-2" id="demo-enjeux">Qu’est-ce qui change pour vous en ce moment ?</h2>
+            <p class="chapo">Choisissez votre situation : nous vous montrons comment nous accompagnons celles et ceux qui la vivent.</p>
+          </div>
+        </div>
+        <div class="grille grille--2">
+          <a class="carte-lien" href="/coaching-de-dirigeant/individuel">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-user-round"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Je prends un poste de direction</span><span class="carte-lien__texte">Passer d’expert à dirigeant, asseoir sa légitimité, réussir les 100 premiers jours.</span></span>
+          </a>
+          <a class="carte-lien" href="/coaching-de-dirigeant/individuel">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-compass"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Je dois tenir ma position face au COMEX</span><span class="carte-lien__texte">Influence, assertivité, décisions qui divisent.</span></span>
+          </a>
+          <a class="carte-lien" href="/coaching-de-dirigeant/collectif">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-users-round"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Mon équipe de direction se recompose</span><span class="carte-lien__texte">Un départ, une arrivée, un CODIR à ressouder.</span></span>
+          </a>
+          <a class="carte-lien" href="/coaching-de-dirigeant/organisation">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-building"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Mon entreprise se transforme</span><span class="carte-lien__texte">Réorganisation, croissance, managers à embarquer.</span></span>
+          </a>
+          <a class="carte-lien carte-lien--accent" href="/coaching-de-dirigeant">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-sparkle"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">L’IA transforme mon métier de dirigeant</span><span class="carte-lien__texte">Décider, embarquer et rester légitime quand l’IA rebat les cartes.</span></span>
+          </a>
+          <a class="carte-lien carte-lien--accent" href="/coaching-de-dirigeant">
+            <span class="carte-lien__haut"><span class="pastille pastille--lg"><svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-gauge"/></svg></span><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
+            <span class="carte-lien__corps"><span class="carte-lien__titre">Je dois tenir sous pression, dans la durée</span><span class="carte-lien__texte">Concentration, pression, récupération : les méthodes du sport de haut niveau.</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Composant : en-tête de section + carrousel de cartes photo (filtres, progression, flèches) -->
+    <section class="section" aria-labelledby="demo-cas">
+      <div data-carrousel>
+        <div class="section-head">
+          <div class="section-head__text">
+            <p class="eyebrow">Cas clients</p>
+            <h2 class="section-head__title" id="demo-cas">Ils nous ont confié leurs dirigeants</h2>
+          </div>
+          <div class="filtres" role="group" aria-label="Filtrer par échelle">
+            <button type="button" class="filtre" aria-pressed="true" data-carrousel-filtre="tous">Tous</button>
+            <button type="button" class="filtre" aria-pressed="false" data-carrousel-filtre="individuel">Individuel</button>
+            <button type="button" class="filtre" aria-pressed="false" data-carrousel-filtre="collectif">Collectif</button>
+            <button type="button" class="filtre" aria-pressed="false" data-carrousel-filtre="organisation">Organisation</button>
+          </div>
+        </div>
+        <div class="carrousel">
+          <ul class="carrousel__piste" tabindex="0" aria-label="Cas clients">
+          <li class="carrousel__item" data-echelle="individuel">
+            <a class="photo carte-photo" href="/cas-clients/chanel">
+              <img src="/assets/cas/chanel.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+              <span class="logo-puce"><img src="/assets/cas/logo-chanel.png" alt="CHANEL" width="96" height="32" loading="lazy"></span>
+              <span class="carte-verre">
+                <span class="carte-verre__eyebrow">Individuel, dirigeante senior</span>
+                <span class="carte-verre__titre">Renforcer l’influence d’une dirigeante dans des interactions à forts enjeux</span>
+                <span class="carte-verre__lien">Lire le cas</span>
+              </span>
+            </a>
+          </li>
+          <li class="carrousel__item" data-echelle="collectif">
+            <a class="photo carte-photo" href="/cas-clients/mazars">
+              <img src="/assets/cas/mazars.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+              <span class="logo-puce"><img src="/assets/cas/logo-mazars.png" alt="Mazars" width="96" height="32" loading="lazy"></span>
+              <span class="carte-verre">
+                <span class="carte-verre__eyebrow">Collectif, 27 nouveaux associés</span>
+                <span class="carte-verre__titre">Accompagner le passage à un nouveau rôle de leadership</span>
+                <span class="carte-verre__lien">Lire le cas</span>
+              </span>
+            </a>
+          </li>
+          <li class="carrousel__item" data-echelle="organisation">
+            <a class="photo carte-photo" href="/cas-clients/manomano">
+              <img src="/assets/cas/manomano.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+              <span class="logo-puce"><img src="/assets/cas/logo-manomano.png" alt="ManoMano" width="96" height="32" loading="lazy"></span>
+              <span class="carte-verre">
+                <span class="carte-verre__eyebrow">Organisation, depuis 2020</span>
+                <span class="carte-verre__titre">Accompagner dans la durée des enjeux de leadership et d’influence</span>
+                <span class="carte-verre__lien">Lire le cas</span>
+              </span>
+            </a>
+          </li>
+          <li class="carrousel__item" data-echelle="individuel">
+            <a class="photo carte-photo" href="/cas-clients/vinci-airports">
+              <img src="/assets/cas/vinci-airports.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+              <span class="logo-puce"><img src="/assets/cas/logo-vinci-airports.png" alt="VINCI Airports" width="96" height="32" loading="lazy"></span>
+              <span class="carte-verre">
+                <span class="carte-verre__eyebrow">Individuel, dirigeant senior</span>
+                <span class="carte-verre__titre">Prendre pleinement sa place de leader au niveau exécutif</span>
+                <span class="carte-verre__lien">Lire le cas</span>
+              </span>
+            </a>
+          </li>
+          <li class="carrousel__item" data-echelle="collectif">
+            <a class="photo carte-photo" href="/cas-clients/croix-rouge-francaise">
+              <img src="/assets/cas/croix-rouge-francaise.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+              <span class="logo-puce"><img src="/assets/cas/logo-croix-rouge-francaise.png" alt="Croix-Rouge française" width="96" height="32" loading="lazy"></span>
+              <span class="carte-verre">
+                <span class="carte-verre__eyebrow">Collectif, leaders territoriaux</span>
+                <span class="carte-verre__titre">Renforcer la posture de leaders territoriaux dans un environnement complexe</span>
+                <span class="carte-verre__lien">Lire le cas</span>
+              </span>
+            </a>
+          </li>
+          </ul>
+          <div class="carrousel__pied">
+            <div class="carrousel__progression" aria-hidden="true"><span></span></div>
+            <div class="carrousel__commandes">
+              <div class="carrousel__fleches">
+                <button type="button" class="fleche" data-carrousel-prec aria-label="Cas précédents"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-left"/></svg></button>
+                <button type="button" class="fleche" data-carrousel-suiv aria-label="Cas suivants"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-right"/></svg></button>
+              </div>
+              <a class="link-caps" href="/cas-clients">Voir tous les cas clients</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Composants : barre et cartes chiffre -->
+    <section class="section section--serre" aria-label="Barre et chiffres">
+      <div class="plateau plateau--colonne">
+        <div class="grille grille--3">
+          <div class="stat stat--lg"><span class="stat__valeur">4,9/5</span><span class="stat__libelle">sur Google</span></div>
+          <div class="stat stat--lg"><span class="stat__valeur">94 %</span><span class="stat__libelle">de satisfaction en 2025</span></div>
+          <div class="stat stat--lg"><span class="stat__valeur">48 h</span><span class="stat__libelle">pour vous répondre</span></div>
+        </div>
+        <div class="barre">
+          <p class="barre__texte"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-message"/></svg>Une situation à discuter ? Parlons-en, sans engagement.</p>
+          <a class="btn btn--noir" href="/nous-contacter">Nous contacter <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Composant : FAQ -->
+    <section class="section section--serre" aria-labelledby="demo-faq">
+      <div class="plateau" data-faq>
+        <div class="faq__intro">
+          <h2 class="titre-3" id="demo-faq">Questions fréquentes</h2>
+          <p class="texte-petit">Les réponses aux questions qu’on nous pose avant de démarrer.</p>
+          <a class="mega-item is-active" href="/nous-contacter">
+            <span class="pastille"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-message"/></svg></span>
+            <span class="mega-item__label">Poser une question</span>
+            <svg class="ico mega-item__arrow" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
+          </a>
+        </div>
+        <div class="carte faq__liste">
+          <div class="faq__item is-open">
+            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="true" aria-controls="faq-r1">
+              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
+              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
+              Coaching ou formation : quelle différence chez Scoaché ?
+            </button></h3>
+            <div class="faq__reponse" id="faq-r1"><p>Aucune obligation de choisir. La Méthode Scoaché © part d’un objectif de coaching, mesuré par des indicateurs, et y ajoute les apports de formation dont vous avez besoin. Chaque parcours mêle les deux, dans les proportions que votre situation demande.</p></div>
+          </div>
+          <div class="faq__item">
+            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-r2">
+              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
+              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
+              Comment financer un accompagnement ?
+            </button></h3>
+            <div class="faq__reponse" id="faq-r2" hidden><p>Le coaching de dirigeant est en général pris en charge par l’entreprise. Nous vous aidons à monter le dossier.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div data-include="temoignages"></div>
+    <div data-include="contact"></div>
+  </main>
+
+  <div data-include="footer"></div>
+</div>
+</body>
+</html>

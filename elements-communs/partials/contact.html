@@ -1,0 +1,55 @@
+<!-- Partiel partagé : bloc « Parlons de votre situation » avec formulaire. -->
+<section class="contact" id="contact" aria-labelledby="contact-titre">
+  <div class="contact__tray">
+    <div class="contact__intro">
+      <p class="contact__eyebrow">Nous contacter</p>
+      <h2 class="contact__title" id="contact-titre">Parlons de votre situation</h2>
+      <p class="contact__lead">Un premier échange de 30 minutes, confidentiel et sans engagement, pour comprendre ce qui se joue.</p>
+      <ul class="checks">
+        <li><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-check"/></svg>Réponse sous 48 h</li>
+        <li><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-check"/></svg>Confidentiel</li>
+        <li><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-check"/></svg>Sans engagement</li>
+      </ul>
+    </div>
+
+    <form class="contact-card" id="contact-form" novalidate>
+      <fieldset class="chips">
+        <legend class="contact-card__title">Qu’est-ce qui vous amène ?</legend>
+        <div class="chips__list">
+          <label class="chip"><input type="radio" name="motif" value="Je prends un poste" checked><span>Je prends un poste</span></label>
+          <label class="chip"><input type="radio" name="motif" value="Mon équipe se recompose"><span>Mon équipe se recompose</span></label>
+          <label class="chip"><input type="radio" name="motif" value="Mon entreprise se transforme"><span>Mon entreprise se transforme</span></label>
+          <label class="chip"><input type="radio" name="motif" value="Autre chose"><span>Autre chose</span></label>
+        </div>
+      </fieldset>
+
+      <div class="fields-row">
+        <div class="field">
+          <label class="field__label" for="f-nom">Nom</label>
+          <input class="field__input" id="f-nom" name="nom" type="text" autocomplete="name" placeholder="Votre nom" required aria-describedby="f-nom-erreur">
+          <p class="field__error" id="f-nom-erreur" hidden>Indiquez votre nom.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="f-email">E-mail professionnel</label>
+          <input class="field__input" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nom@entreprise.com" required aria-describedby="f-email-erreur">
+          <p class="field__error" id="f-email-erreur" hidden>Indiquez une adresse e-mail valide.</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="f-message">Votre message</label>
+        <textarea class="field__input field__input--area" id="f-message" name="message" rows="4" placeholder="Bonjour, je prends un poste de direction et j’aimerais en parler…"></textarea>
+      </div>
+
+      <div class="contact-card__footer">
+        <p class="contact-card__note">Ilana vous répond personnellement.</p>
+        <button type="submit" class="btn btn--noir">
+          Envoyer
+          <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow-bold"/></svg>
+        </button>
+      </div>
+
+      <div class="form-confirmation" id="form-confirmation" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
