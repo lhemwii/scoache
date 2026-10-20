@@ -20,6 +20,14 @@
     return Array.prototype.slice.call((racine || document).querySelectorAll(sel));
   }
 
+  /* ---------- Navbar flottante : pastille du logo une fois la page défilée ---------- */
+
+  function majEntete() {
+    var entete = document.querySelector('.site-header');
+    if (entete) entete.classList.toggle('is-scrolled', window.scrollY > 8);
+  }
+  window.addEventListener('scroll', majEntete, { passive: true });
+
   /* ---------- Menus déroulants (desktop) ---------- */
 
   var itemOuvert = null;
@@ -285,6 +293,7 @@
   else if (ecranLarge.addListener) ecranLarge.addListener(surChangement);
 
   function init() {
+    majEntete();
     initMenus();
     initMobile();
     initFormulaire();

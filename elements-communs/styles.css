@@ -167,7 +167,8 @@ main:focus { outline: none; }
   padding: 24px var(--bloc-x);
   background: transparent;
 }
-.navbar > * { pointer-events: auto; }
+.navbar > *,
+.mobile-panel { pointer-events: auto; }
 
 .navbar__logo {
   display: flex;
