@@ -31,59 +31,68 @@
 /* ---------- Vos enjeux ---------- */
 .home-enjeux .chapo { max-width: 430px; font-size: 17px; }
 .home-enjeux .plateau__texte { justify-content: flex-start; }
-.home-enjeux__grille { align-content: start; margin: 0; padding: 0; list-style: none; }
-
-/* Carte d'enjeu : s'ouvre sur place (pleine largeur) pour montrer les cas liés */
-.enjeu {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  border-radius: 12px;
-  background: var(--blanc);
-  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
-}
-.enjeu--accent { background: #e9e8f8; }
-.enjeu.is-ouvert { grid-column: 1 / -1; }
+/* Grille des enjeux. Chaque li.enjeu s'efface (display: contents) : sa carte (le bouton)
+   et son panneau sont des cases de la grille. script.js les ordonne (order) pour que le
+   panneau occupe une rangée pleine largeur sous la rangée de sa carte : la carte ne change
+   jamais de taille ni de place, seule la hauteur du panneau s'anime (0fr vers 1fr). */
+.home-enjeux__grille { align-content: start; row-gap: 0; margin: 0 0 -8px; padding: 0; list-style: none; }
+.enjeu { display: contents; }
 .enjeu__bouton {
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  min-width: 0;
+  margin: 0 0 8px;
   padding: 26px 26px 22px;
   border: 0;
   border-radius: 12px;
-  background: transparent;
+  background: var(--blanc);
   color: var(--noir);
   font: inherit;
   text-align: left;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
 }
+.enjeu--accent .enjeu__bouton { background: #e9e8f8; }
+.enjeu.is-ouvert .enjeu__bouton { box-shadow: 0 0 0 1px rgba(71, 68, 193, 0.45); }
 .enjeu .pastille { transition: background-color 0.3s ease, color 0.3s ease; }
 .enjeu .pastille .ico { transition: transform 0.4s cubic-bezier(0.3, 1.4, 0.5, 1); }
 .enjeu--accent .pastille { background: var(--accent); color: var(--blanc); }
-.enjeu__chevron { transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.enjeu__chevron { transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .enjeu.is-ouvert .enjeu__chevron { transform: rotate(180deg); }
 @media (hover: hover) and (pointer: fine) {
-  .enjeu:not(.is-ouvert):hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(13, 13, 26, 0.08); }
-  .enjeu:not(.enjeu--accent):hover .pastille { background: var(--noir); color: var(--blanc); }
-  .enjeu:hover .pastille .ico { transform: rotate(-8deg) scale(1.1); }
+  .enjeu:not(.is-ouvert) .enjeu__bouton:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(13, 13, 26, 0.08); }
+  .enjeu:not(.enjeu--accent) .enjeu__bouton:hover .pastille { background: var(--noir); color: var(--blanc); }
+  .enjeu__bouton:hover .pastille .ico { transform: rotate(-8deg) scale(1.1); }
 }
 .enjeu__bouton:active { transform: scale(0.995); }
-.enjeu.is-invite { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(71, 68, 193, 0.4), 0 12px 26px rgba(13, 13, 26, 0.07); }
+.enjeu.is-invite .enjeu__bouton { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(71, 68, 193, 0.4), 0 12px 26px rgba(13, 13, 26, 0.07); }
 
-.enjeu__panneau { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.enjeu__panneau {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-rows: 0fr;
+  min-width: 0;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
 .enjeu.is-ouvert .enjeu__panneau { grid-template-rows: 1fr; }
-.enjeu__interieur {
+.enjeu__interieur { min-height: 0; overflow: hidden; }
+.enjeu__contenu {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  min-height: 0;
-  padding: 0 26px;
-  overflow: hidden;
+  margin: 0 0 8px;
+  padding: 20px 26px 26px;
+  border-radius: 12px;
+  background: var(--blanc);
   opacity: 0;
-  transition: opacity 0.3s ease, padding 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.enjeu.is-ouvert .enjeu__interieur { padding: 0 26px 26px; opacity: 1; transition: opacity 0.4s ease 0.15s, padding 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.enjeu__label { padding-top: 16px; border-top: 1px solid var(--bordure); font-size: 13px; font-weight: 600; color: var(--accent); }
+.enjeu--accent .enjeu__contenu { background: #e9e8f8; }
+.enjeu.is-ouvert .enjeu__contenu { opacity: 1; transform: none; transition: opacity 0.35s ease 0.08s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.enjeu__label { font-size: 13px; font-weight: 600; color: var(--accent); }
 .enjeu__cas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
 .enjeu-cas {
   display: flex;
@@ -258,7 +267,7 @@
 
   .home-enjeux .chapo { font-size: 16px; }
   .enjeu__bouton { padding: 22px 20px 20px; }
-  .enjeu__interieur, .enjeu.is-ouvert .enjeu__interieur { padding-left: 20px; padding-right: 20px; }
+  .enjeu__contenu { padding: 18px 20px 22px; }
   .enjeu__cas { grid-template-columns: minmax(0, 1fr); }
   .home-enjeux .carte-lien__titre { font-size: 20px; }
 

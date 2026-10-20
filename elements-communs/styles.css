@@ -1601,39 +1601,50 @@ a.photo:hover > img { scale: 1.04; }
 .marquee__piste a { display: flex; align-items: center; border-radius: 6px; transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .marquee__piste a:hover { transform: scale(1.08); }
 
-/* ---------- Carrousel : carte de cas qui s'élargit sur place ---------- */
+/* ---------- Carrousel : carte de cas qui s'élargit sur place ----------
+   Grand écran : la largeur finale est posée d'un coup (classe is-ouvert), puis script.js
+   anime seulement des transform sur les cartes suivantes et un clip-path sur le détail.
+   Aucune transition de largeur ou de hauteur : pas de recalcul de mise en page à chaque image.
+   Hauteur fixe de 400 px, le corps du détail défile si besoin. */
 .carrousel__piste { align-items: flex-start; transition: opacity 0.22s ease; }
 .carrousel__piste.is-filtrage { opacity: 0; }
-.carrousel__item {
-  display: flex;
-  gap: 16px;
-  overflow: hidden;
-  transition: flex-basis 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
+.carrousel__piste.is-anime { scroll-snap-type: none; }
+.carrousel__piste.is-anime > .carrousel__item { will-change: transform; }
+.carrousel__item { display: flex; gap: 16px; overflow: hidden; }
 .carrousel__item > .photo { flex: 0 0 282px; }
 .carrousel__item.is-ouvert { flex-basis: 708px; }
-.cas-detail {
-  position: relative;
+.cas-detail { flex: 0 0 410px; height: 400px; }
+.cas-detail.is-anime { will-change: clip-path; }
+.cas-detail__interieur { height: 100%; }
+.cas-detail__boite {
   display: flex;
-  flex: 0 0 410px;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  height: 400px;
-  padding: 22px 24px 20px;
+  height: 100%;
   overflow: hidden;
   border-radius: 12px;
   background: var(--gris-clair);
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
-.carrousel__item.is-ouvert .cas-detail { height: auto; min-height: 400px; opacity: 1; transition: opacity 0.4s ease 0.2s; }
-.carrousel__item.is-ouvert > .carte-photo { align-self: stretch; height: auto; min-height: 400px; }
+.cas-detail__haut { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 18px 16px 8px 24px; }
+.cas-detail__corps {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 0;
+  padding: 0 24px 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  /* Fondu en bas : indique qu'il reste du texte à faire défiler */
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+}
+.cas-detail__corps:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .cas-detail__fermer {
-  position: absolute;
-  top: 14px;
-  right: 14px;
   display: grid;
+  flex: none;
   place-items: center;
   width: 34px;
   height: 34px;
@@ -1642,19 +1653,27 @@ a.photo:hover > img { scale: 1.04; }
   border-radius: 9px;
   background: var(--blanc);
   color: var(--noir);
+  cursor: pointer;
 }
 .cas-detail__fermer:hover { background: var(--greige); }
-.cas-detail__meta { display: flex; flex-direction: column; gap: 2px; padding-right: 40px; font-size: 12px; color: var(--texte-2); }
-.cas-detail__titre { margin: 2px 0 4px; font-size: 19px; font-weight: 400; line-height: 1.25; letter-spacing: -0.1px; }
+.cas-detail__meta { display: flex; flex-direction: column; gap: 2px; padding-top: 4px; font-size: 12px; color: var(--texte-2); }
 .cas-detail__label { margin-top: 4px; font-size: 12px; font-weight: 600; color: var(--accent); }
 .cas-detail__texte { font-size: 14px; line-height: 1.45; color: var(--texte-2); }
 .cas-detail__liste { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .cas-detail__liste li { display: flex; gap: 8px; font-size: 14px; line-height: 1.4; }
-.cas-detail__liste .ico { margin-top: 3px; }
+.cas-detail__liste .ico { flex: none; margin-top: 3px; }
 .cas-detail__kpi { margin-top: 4px; }
 .cas-detail__demontre { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 10px; background: var(--blanc); }
 .cas-detail__demontre .cas-detail__texte { color: var(--noir); }
-.cas-detail__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 6px; }
+.cas-detail__actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  padding: 12px 24px 16px;
+  border-top: 1px solid var(--bordure);
+}
 .cas-detail__actions .btn { padding: 10px 16px; font-size: 13px; }
 
 /* Chiffre clé dévoilé au survol de la carte photo */
@@ -1761,21 +1780,33 @@ a.photo:hover > img { scale: 1.04; }
 .footer__list a:hover,
 .footer__legal a:hover { background-size: 100% 1px; text-decoration: none; }
 
-/* ---------- Carrousel ouvrable : mobile, la carte s'allonge vers le bas ---------- */
+/* ---------- Carrousel ouvrable : mobile, la carte s'allonge vers le bas ----------
+   Hauteur animée par grid-template-rows (0fr vers 1fr), interruptible à tout moment. */
 @media (max-width: 900px) {
-  .carrousel__item { flex-direction: column; gap: 8px; transition: none; }
+  .carrousel__item { flex-direction: column; gap: 0; }
   .carrousel__item > .photo { flex: 0 0 400px; width: 100%; }
   .carrousel__item.is-ouvert { flex-basis: 260px; }
   .cas-detail {
+    display: grid;
     flex: none;
+    grid-template-rows: 0fr;
     width: 100%;
     height: auto;
-    max-height: 0;
-    padding: 0 18px;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), padding 0.5s ease, opacity 0.3s ease;
+    transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
-  .carrousel__item.is-ouvert .cas-detail { max-height: 1400px; padding: 20px 18px; }
+  .carrousel__item.is-ouvert .cas-detail { grid-template-rows: 1fr; }
+  .cas-detail__interieur { height: auto; min-height: 0; overflow: hidden; }
+  .cas-detail__boite {
+    height: auto;
+    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .carrousel__item.is-ouvert .cas-detail__boite { opacity: 1; transform: none; transition: opacity 0.35s ease 0.08s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .cas-detail__haut { padding: 16px 12px 6px 18px; }
+  .cas-detail__corps { padding: 0 18px 14px; overflow: visible; -webkit-mask-image: none; mask-image: none; }
+  .cas-detail__actions { padding: 12px 18px 16px; }
 }
 
 /* Citation principale centrée dans sa carte, quelle que soit sa longueur */

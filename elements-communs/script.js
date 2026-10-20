@@ -197,19 +197,59 @@
       entrees.forEach(function (entree) { rappel(entree.isIntersecting); });
     }, { threshold: seuil || 0.3 }).observe(el);
   }
-  // FLIP : anime le déplacement des éléments après un changement de mise en page.
-  function flip(elements, changer) {
-    var avant = elements.map(function (el) { return el.getBoundingClientRect(); });
-    changer();
-    if (mouvementReduit.matches || !Element.prototype.animate) return;
-    elements.forEach(function (el, i) {
-      var apres = el.getBoundingClientRect();
-      var dx = avant[i].left - apres.left, dy = avant[i].top - apres.top;
-      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
-      el.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px)' }, { transform: 'none' }],
-        { duration: 450, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' });
-    });
+  // Courbe d'accélération commune aux ouvertures : cubic-bezier(0.2, 0.7, 0.2, 1).
+  var DUREE_OUVERTURE = 450;
+  function courbe(x1, y1, x2, y2) {
+    function axe(t, p1, p2) { var u = 1 - t; return 3 * p1 * u * u * t + 3 * p2 * u * t * t + t * t * t; }
+    return function (x) {
+      if (x <= 0) return 0;
+      if (x >= 1) return 1;
+      var bas = 0, haut = 1, t = x;
+      for (var i = 0; i < 24; i += 1) {
+        var v = axe(t, x1, x2);
+        if (Math.abs(v - x) < 1e-5) break;
+        if (v < x) bas = t; else haut = t;
+        t = (bas + haut) / 2;
+      }
+      return axe(t, y1, y2);
+    };
   }
+  var adoucir = courbe(0.2, 0.7, 0.2, 1);
+
+  // Pendant qu'un bloc s'ouvre ou se ferme, garde `ancre` immobile à l'écran
+  // (le haut de l'élément reste à sa place), puis la décale de `decalage` px
+  // vers le haut avec la même courbe, pour amener le contenu ouvert dans le champ.
+  // Un geste de l'utilisateur (molette, toucher, clavier) reprend la main.
+  var guidage = null;
+  function guiderFenetre(ancre, decalage, duree) {
+    if (guidage) guidage();
+    var depart = ancre.getBoundingClientRect().top;
+    var racine = document.documentElement;
+    var debut = null, actif = true;
+    var gestes = ['wheel', 'touchstart', 'keydown'];
+    function arreter() {
+      if (!actif) return;
+      actif = false;
+      guidage = null;
+      racine.style.overflowAnchor = '';
+      gestes.forEach(function (g) { window.removeEventListener(g, arreter, true); });
+    }
+    function pas(t) {
+      if (!actif) return;
+      if (debut === null) debut = t;
+      var p = duree > 0 ? Math.min(1, (t - debut) / duree) : 1;
+      // Défilement au pixel entier : évite les oscillations d'un demi-pixel.
+      var ecart = Math.round(ancre.getBoundingClientRect().top - (depart - decalage * adoucir(p)));
+      if (ecart !== 0) window.scrollBy(0, ecart);
+      if (p < 1) window.requestAnimationFrame(pas); else arreter();
+    }
+    racine.style.overflowAnchor = 'none';
+    gestes.forEach(function (g) { window.addEventListener(g, arreter, { capture: true, passive: true }); });
+    guidage = arreter;
+    window.requestAnimationFrame(pas);
+  }
+  // Marge haute à respecter sous la barre de navigation fixe.
+  function margeHaute() { return ecranLarge.matches ? 104 : 84; }
 
   /* ---------- Formulaire de contact (sans backend) ---------- */
 
@@ -329,22 +369,38 @@
   }
 
   // Détail d'un cas, inséré à côté de sa carte photo (textes repris des pages /cas-clients/<slug>).
+  // Structure : .cas-detail > .cas-detail__interieur > .cas-detail__boite
+  // (en-tête, corps qui défile si besoin, actions toujours visibles).
   function construireDetail(slug, d) {
     var bloc = elt('div', 'cas-detail');
     bloc.id = 'cas-detail-' + slug;
+    bloc.setAttribute('data-no-reveal', '');
+    var interieur = elt('div', 'cas-detail__interieur');
+    var boite = elt('div', 'cas-detail__boite');
+    interieur.appendChild(boite);
+    bloc.appendChild(interieur);
+
+    var haut = elt('div', 'cas-detail__haut');
+    var meta = elt('p', 'cas-detail__meta');
+    meta.appendChild(elt('span', 'eyebrow', d.echelle));
+    meta.appendChild(elt('span', null, d.meta));
+    haut.appendChild(meta);
     var fermer = elt('button', 'cas-detail__fermer');
     fermer.type = 'button';
     fermer.setAttribute('aria-label', 'Refermer le cas ' + d.nom);
     fermer.appendChild(icone('x', 18));
-    bloc.appendChild(fermer);
-    var meta = elt('p', 'cas-detail__meta');
-    meta.appendChild(elt('span', 'eyebrow', d.echelle));
-    meta.appendChild(elt('span', null, d.meta));
-    bloc.appendChild(meta);
-    bloc.appendChild(elt('h3', 'cas-detail__titre', d.titre));
-    bloc.appendChild(elt('p', 'cas-detail__label', 'Situation'));
-    bloc.appendChild(elt('p', 'cas-detail__texte', d.situation));
-    bloc.appendChild(elt('p', 'cas-detail__label', 'Les enjeux de départ'));
+    haut.appendChild(fermer);
+    boite.appendChild(haut);
+
+    var corps = elt('div', 'cas-detail__corps');
+    corps.tabIndex = 0;
+    corps.setAttribute('role', 'group');
+    corps.setAttribute('aria-label', 'Aperçu du cas ' + d.nom);
+    // Titre déjà affiché sur la carte photo : gardé pour les lecteurs d'écran seulement.
+    corps.appendChild(elt('h3', 'visually-hidden', d.titre));
+    corps.appendChild(elt('p', 'cas-detail__label', 'Situation'));
+    corps.appendChild(elt('p', 'cas-detail__texte', d.situation));
+    corps.appendChild(elt('p', 'cas-detail__label', 'Les enjeux de départ'));
     var liste = elt('ul', 'cas-detail__liste');
     d.enjeux.slice(0, 3).forEach(function (t) {
       var li = elt('li');
@@ -352,17 +408,19 @@
       li.appendChild(elt('span', null, t));
       liste.appendChild(li);
     });
-    bloc.appendChild(liste);
+    corps.appendChild(liste);
     if (d.kpi) {
       var stat = elt('p', 'stat cas-detail__kpi');
       stat.appendChild(elt('span', 'stat__valeur', d.kpi[0]));
       stat.appendChild(elt('span', 'stat__libelle', d.kpi[1]));
-      bloc.appendChild(stat);
+      corps.appendChild(stat);
     }
     var dem = elt('div', 'cas-detail__demontre');
     dem.appendChild(elt('p', 'cas-detail__label', 'Ce que ce cas démontre'));
     dem.appendChild(elt('p', 'cas-detail__texte', d.demontre));
-    bloc.appendChild(dem);
+    corps.appendChild(dem);
+    boite.appendChild(corps);
+
     var actions = elt('div', 'cas-detail__actions');
     var voir = elt('a', 'btn btn--noir', 'Voir le cas complet ');
     voir.href = '/cas-clients/' + slug;
@@ -372,7 +430,7 @@
     parler.setAttribute('data-prefill-cas', slug);
     actions.appendChild(voir);
     actions.appendChild(parler);
-    bloc.appendChild(actions);
+    boite.appendChild(actions);
     return bloc;
   }
 
@@ -385,7 +443,7 @@
       var barre = racine.querySelector('.carrousel__progression span');
       if (!piste) return;
       var arreterAuto = function () {};
-      var ouvert = null;
+      var voulu = null;
 
       function items() { return toutes('.carrousel__item', piste).filter(function (el) { return !el.hidden; }); }
       function pas() {
@@ -410,36 +468,181 @@
       piste.addEventListener('scroll', function () { window.requestAnimationFrame(maj); }, { passive: true });
       window.addEventListener('resize', maj);
 
-      // Ouverture d'un cas dans le carrousel (cartes [data-cas-carte] + données #cas-apercus)
+      /* Ouverture d'un cas dans le carrousel (cartes [data-cas-carte] + données #cas-apercus).
+         Un seul cas ouvert à la fois ; `voulu` est l'état demandé.
+         Grand écran : la largeur ouverte est posée d'un coup (is-ouvert), puis chaque image
+         ne change que des transform (cartes suivantes) et un clip-path (détail). Chaque item
+         garde sa progression (0 fermé, 1 ouvert) : un double clic ou un clic sur une autre
+         carte en pleine animation repart de la position courante, sans saut.
+         Mobile : la carte s'allonge vers le bas (grid-template-rows, transition CSS). */
       var donnees = lireDonneesCas();
-      function fermerCas(item, sansFocus) {
-        if (!item) return;
-        var carte = item.querySelector('[data-cas-carte]');
-        var detail = item.querySelector('.cas-detail');
-        item.classList.remove('is-ouvert');
-        carte.setAttribute('aria-expanded', 'false');
-        if (detail) detail.inert = true;
-        if (ouvert === item) ouvert = null;
-        if (!sansFocus) carte.focus({ preventScroll: true });
-        setTimeout(maj, 520);
+      var boucle = null;
+      var defil = null;
+      function tousItems() { return toutes('.carrousel__item', piste).filter(function (el) { return el.querySelector('.cas-detail'); }); }
+      function detailDe(item) { return item.querySelector('.cas-detail'); }
+      function carteDe(item) { return item.querySelector('[data-cas-carte]'); }
+      function xContenu(item) { var premier = items()[0]; return item.offsetLeft - (premier ? premier.offsetLeft : 0); }
+
+      function peindre() {
+        var cumul = 0;
+        items().forEach(function (item) {
+          var tx = cumul > 0.01 ? 'translate3d(' + (-cumul).toFixed(2) + 'px,0,0)' : '';
+          if (item.style.transform !== tx) item.style.transform = tx;
+          var o = item._ouv;
+          if (!o) return;
+          var reste = 1 - o.p;
+          var clip = reste > 0.0005 ? 'inset(0 ' + (o.largeur * reste).toFixed(2) + 'px 0 0 round 12px)' : '';
+          var detail = detailDe(item);
+          if (detail.style.clipPath !== clip) detail.style.clipPath = clip;
+          cumul += o.ecart * reste;
+        });
       }
-      function ouvrirCas(item) {
-        if (ouvert && ouvert !== item) fermerCas(ouvert, true);
-        var carte = item.querySelector('[data-cas-carte]');
-        var detail = item.querySelector('.cas-detail');
-        arreterAuto();
-        item.classList.add('is-ouvert');
-        carte.setAttribute('aria-expanded', 'true');
-        detail.inert = false;
-        ouvert = item;
-        // Amène la carte ouverte dans le champ, une fois l'élargissement lancé.
-        setTimeout(function () {
-          var r = item.getBoundingClientRect(), p = piste.getBoundingClientRect();
-          var cible = piste.scrollLeft + (r.left - p.left);
-          if (r.right > p.right || r.left < p.left) piste.scrollTo({ left: Math.max(0, cible), behavior: mouvementReduit.matches ? 'auto' : 'smooth' });
-          maj();
-        }, mouvementReduit.matches ? 0 : 280);
+      function finir() {
+        tousItems().forEach(function (item) {
+          var o = item._ouv;
+          if (o && o.vers === 0) {
+            item.classList.remove('is-ouvert');
+            item._ouv = null;
+            detailDe(item).style.clipPath = '';
+          }
+          detailDe(item).classList.remove('is-anime');
+        });
+        peindre();
+        piste.classList.remove('is-anime');
+        maj();
       }
+      function tick(t) {
+        boucle = null;
+        var encore = false;
+        tousItems().forEach(function (item) {
+          var o = item._ouv;
+          if (!o || o.fini) return;
+          if (o.t0 === null) o.t0 = t;
+          var k = o.duree > 0 ? Math.max(0, Math.min(1, (t - o.t0) / o.duree)) : 1;
+          o.p = o.de + (o.vers - o.de) * adoucir(k);
+          if (k >= 1) { o.p = o.vers; o.fini = true; } else encore = true;
+        });
+        if (defil) {
+          if (defil.t0 === null) defil.t0 = t;
+          var k = defil.duree > 0 ? Math.max(0, Math.min(1, (t - defil.t0) / defil.duree)) : 1;
+          piste.scrollLeft = defil.de + (defil.vers - defil.de) * adoucir(k);
+          if (k >= 1) defil = null; else encore = true;
+        }
+        peindre();
+        if (encore) boucle = window.requestAnimationFrame(tick);
+        else finir();
+      }
+      function relancer() {
+        if (boucle) window.cancelAnimationFrame(boucle);
+        boucle = null;
+        tick(performance.now());
+      }
+      // Cible de défilement horizontal, calculée dans la mise en page finale (seul `cible` ouvert).
+      function defilementVers(cible, duree) {
+        var s = piste.scrollLeft, largeur = piste.clientWidth;
+        var retraitAvant = function (item) {
+          var r = 0;
+          items().some(function (autre) {
+            if (autre === item) return true;
+            if (autre._ouv && autre !== cible) r += autre._ouv.ecart;
+            return false;
+          });
+          return r;
+        };
+        var retraitTotal = 0;
+        items().forEach(function (autre) { if (autre._ouv && autre !== cible) retraitTotal += autre._ouv.ecart; });
+        var max = Math.max(0, piste.scrollWidth - retraitTotal - largeur);
+        var vise = s;
+        if (cible) {
+          var x0 = xContenu(cible) - retraitAvant(cible);
+          if (x0 < s - 1 || x0 + cible.offsetWidth > s + largeur + 1) vise = x0;
+        } else {
+          items().some(function (item) {
+            if (!item._ouv) return false;
+            var xa = xContenu(item) - retraitAvant(item);
+            if (s > xa + 1) vise = xa;
+            return true;
+          });
+        }
+        vise = Math.max(0, Math.min(max, vise));
+        // Un long trajet prend un peu plus de temps, pour garder une vitesse lisible.
+        if (duree > 0) duree = Math.max(duree, Math.min(800, 300 + Math.abs(vise - s) * 0.4));
+        defil = Math.abs(vise - s) > 1 ? { de: s, vers: vise, t0: null, duree: duree } : null;
+      }
+
+      function demander(cible, options) {
+        options = options || {};
+        var instant = options.instant || mouvementReduit.matches;
+        voulu = cible;
+        if (cible) arreterAuto();
+        var large = ecranLarge.matches;
+        var dureeMax = 0;
+        tousItems().forEach(function (item) {
+          var ouvrir = item === cible;
+          var detail = detailDe(item);
+          carteDe(item).setAttribute('aria-expanded', ouvrir ? 'true' : 'false');
+          detail.inert = !ouvrir;
+          if (!large) { item.classList.toggle('is-ouvert', ouvrir); return; }
+          var o = item._ouv;
+          if (ouvrir && !o) {
+            var gap = parseFloat(getComputedStyle(item).columnGap) || 0;
+            o = item._ouv = { p: 0, vers: 0, largeur: detail.offsetWidth, ecart: detail.offsetWidth + gap };
+            item.classList.add('is-ouvert');
+          }
+          if (!o) return;
+          var vers = ouvrir ? 1 : 0;
+          if (o.vers === vers && !o.fini && !instant) { dureeMax = Math.max(dureeMax, o.duree); return; }
+          if (o.vers === vers && o.p === vers) return;
+          o.de = o.p;
+          o.vers = vers;
+          o.t0 = null;
+          o.fini = false;
+          o.duree = instant ? 0 : Math.max(240, DUREE_OUVERTURE * Math.abs(vers - o.p));
+          dureeMax = Math.max(dureeMax, o.duree);
+          detail.classList.add('is-anime');
+        });
+        if (large) {
+          piste.classList.add('is-anime');
+          defilementVers(cible, instant ? 0 : Math.max(dureeMax, 240));
+          relancer();
+        } else if (cible && !instant) {
+          // Mobile : la carte reste dans le champ, le détail aussi si possible.
+          var r = cible.getBoundingClientRect(), p = piste.getBoundingClientRect();
+          if (r.left < p.left - 1 || r.right > p.right + 1) piste.scrollTo({ left: piste.scrollLeft + r.left - p.left, behavior: 'smooth' });
+          var carte = carteDe(cible);
+          var hautCarte = carte.getBoundingClientRect().top;
+          var bas = carte.getBoundingClientRect().bottom + detailDe(cible).querySelector('.cas-detail__interieur').scrollHeight;
+          var decalage = Math.max(0, Math.min(bas - (window.innerHeight - 16), hautCarte - margeHaute()));
+          if (decalage > 1) guiderFenetre(carte, decalage, DUREE_OUVERTURE);
+        } else if (!cible && options.depuis && !instant) {
+          var haut = carteDe(options.depuis).getBoundingClientRect().top;
+          if (haut < margeHaute()) guiderFenetre(carteDe(options.depuis), haut - margeHaute(), DUREE_OUVERTURE);
+        }
+        if (!large) setTimeout(maj, DUREE_OUVERTURE + 50);
+      }
+      // Passage mobile / grand écran : on pose l'état final sans animation.
+      function remettreAPlat() {
+        if (boucle) window.cancelAnimationFrame(boucle);
+        boucle = null;
+        defil = null;
+        tousItems().forEach(function (item) {
+          var ouvrir = item === voulu;
+          item.style.transform = '';
+          detailDe(item).style.clipPath = '';
+          detailDe(item).classList.remove('is-anime');
+          item.classList.toggle('is-ouvert', ouvrir);
+          item._ouv = ouvrir && ecranLarge.matches
+            ? { p: 1, vers: 1, fini: true, largeur: detailDe(item).offsetWidth, ecart: detailDe(item).offsetWidth + (parseFloat(getComputedStyle(item).columnGap) || 0) }
+            : null;
+        });
+        piste.classList.remove('is-anime');
+        maj();
+      }
+      if (ecranLarge.addEventListener) ecranLarge.addEventListener('change', remettreAPlat);
+      ['wheel', 'touchstart'].forEach(function (type) {
+        piste.addEventListener(type, function () { defil = null; }, { passive: true });
+      });
+
       if (donnees) {
         toutes('[data-cas-carte]', piste).forEach(function (carte) {
           var slug = carte.getAttribute('data-cas-carte');
@@ -461,20 +664,32 @@
           carte.addEventListener('click', function (e) {
             if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0) return;
             e.preventDefault();
-            if (item.classList.contains('is-ouvert')) fermerCas(item); else ouvrirCas(item);
+            if (voulu === item) demander(null, { depuis: item }); else demander(item);
           });
-          detail.querySelector('.cas-detail__fermer').addEventListener('click', function () { fermerCas(item); });
+          detail.querySelector('.cas-detail__fermer').addEventListener('click', function () {
+            demander(null, { depuis: item });
+            carte.focus({ preventScroll: true });
+          });
         });
         racine.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape' && ouvert) { e.stopPropagation(); fermerCas(ouvert); }
+          if (e.key !== 'Escape' || !voulu) return;
+          e.stopPropagation();
+          var item = voulu;
+          demander(null, { depuis: item });
+          carteDe(item).focus({ preventScroll: true });
         });
       }
       racine._ouvrirCas = function (slug) {
         var carte = piste.querySelector('[data-cas-carte="' + slug + '"]');
         if (!carte) return false;
         var item = carte.closest('.carrousel__item');
-        if (item.hidden) { var tous = racine.querySelector('[data-carrousel-filtre="tous"]'); if (tous) tous.click(); }
-        ouvrirCas(item);
+        if (item.hidden) {
+          demander(null, { instant: true });
+          toutes('[data-carrousel-filtre]', racine).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-carrousel-filtre') === 'tous' ? 'true' : 'false'); });
+          toutes('.carrousel__item', piste).forEach(function (el) { el.hidden = false; });
+          piste.classList.remove('is-filtrage');
+        }
+        if (voulu !== item) demander(item);
         return true;
       };
 
@@ -484,7 +699,7 @@
         bouton.addEventListener('click', function () {
           var valeur = bouton.getAttribute('data-carrousel-filtre');
           arreterAuto();
-          if (ouvert) fermerCas(ouvert, true);
+          if (voulu) demander(null, { instant: true });
           filtres.forEach(function (b) { b.setAttribute('aria-pressed', b === bouton ? 'true' : 'false'); });
           function appliquer() {
             toutes('.carrousel__item', piste).forEach(function (item) {
@@ -522,7 +737,7 @@
       }
       function planifier() {
         clearTimeout(minuteurAuto);
-        if (arrete || survol || focus || !visible || document.hidden || ouvert) { if (!arrete) figerBarre(); return; }
+        if (arrete || survol || focus || !visible || document.hidden || voulu) { if (!arrete) figerBarre(); return; }
         lancerBarre();
         minuteurAuto = setTimeout(avancer, delai);
       }
@@ -582,21 +797,46 @@
       var cartes = toutes('.enjeu', grille);
       var interagi = false, visible = false, rang = 0, minut = null;
 
-      function basculer(carte, ouvrir) {
-        flip(cartes, function () {
-          cartes.forEach(function (c) {
-            var o = c === carte && ouvrir;
-            c.classList.toggle('is-ouvert', o);
-            c.querySelector('.enjeu__bouton').setAttribute('aria-expanded', o ? 'true' : 'false');
-            c.querySelector('.enjeu__panneau').inert = !o;
-          });
+      // Ordre visuel : la rangée de cartes, puis les panneaux de cette rangée en pleine largeur.
+      // L'ordre du DOM (bouton puis son panneau) reste celui du clavier et des lecteurs d'écran.
+      var colonnes = 0;
+      function ordonner() {
+        var n = getComputedStyle(grille).gridTemplateColumns.split(' ').filter(Boolean).length || 1;
+        if (n === colonnes) return;
+        colonnes = n;
+        cartes.forEach(function (carte, i) {
+          var base = Math.floor(i / n) * (n + 1);
+          carte.querySelector('.enjeu__bouton').style.order = base + (i % n);
+          carte.querySelector('.enjeu__panneau').style.order = base + n;
         });
+      }
+      ordonner();
+      window.addEventListener('resize', function () { window.requestAnimationFrame(ordonner); });
+
+      // Ouvrir ou fermer : seule la classe change, la hauteur du panneau suit en CSS
+      // (grid-template-rows 0fr vers 1fr), interruptible à tout moment. La carte cliquée
+      // reste immobile à l'écran même si un panneau situé au-dessus se referme.
+      function basculer(carte, ouvrir) {
+        var bouton = carte.querySelector('.enjeu__bouton');
+        var hautAvant = bouton.getBoundingClientRect().top;
+        cartes.forEach(function (c) {
+          var o = c === carte && ouvrir;
+          c.classList.toggle('is-ouvert', o);
+          c.querySelector('.enjeu__bouton').setAttribute('aria-expanded', o ? 'true' : 'false');
+          c.querySelector('.enjeu__panneau').inert = !o;
+        });
+        if (mouvementReduit.matches) return;
+        var decalage = 0;
         if (ouvrir) {
-          setTimeout(function () {
-            var r = carte.getBoundingClientRect();
-            if (r.bottom > window.innerHeight || r.top < 80) carte.scrollIntoView({ behavior: mouvementReduit.matches ? 'auto' : 'smooth', block: 'nearest' });
-          }, mouvementReduit.matches ? 0 : 480);
+          // Bas du panneau une fois ouvert, mesuré par rapport à la carte qui ne bouge pas.
+          var panneau = carte.querySelector('.enjeu__panneau');
+          var bas = hautAvant + (panneau.getBoundingClientRect().top - bouton.getBoundingClientRect().top)
+            + carte.querySelector('.enjeu__interieur').scrollHeight;
+          decalage = Math.max(0, Math.min(bas - (window.innerHeight - 24), hautAvant - margeHaute()));
+        } else if (hautAvant < margeHaute()) {
+          decalage = hautAvant - margeHaute();
         }
+        guiderFenetre(bouton, decalage, DUREE_OUVERTURE + 30);
       }
       cartes.forEach(function (carte) {
         var bouton = carte.querySelector('.enjeu__bouton');
@@ -609,7 +849,7 @@
       grille.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
         var ouverte = grille.querySelector('.enjeu.is-ouvert');
-        if (ouverte) { basculer(ouverte, false); ouverte.querySelector('.enjeu__bouton').focus(); }
+        if (ouverte) { basculer(ouverte, false); ouverte.querySelector('.enjeu__bouton').focus({ preventScroll: true }); }
       });
 
       // Invitation discrète : une carte à la fois est mise en avant, jusqu'à la première interaction.
@@ -922,7 +1162,7 @@
 
   var CIBLES_REVEAL = [
     '.section-head', '.plateau__texte', '.hero__texte', '.hero__carte', '.faq__intro', '.faq__liste',
-    '.contact__intro', '.contact-card', '.carte', '.enjeu', '.carte-lien', '.barre', '.stat',
+    '.contact__intro', '.contact-card', '.carte', '.enjeu__bouton', '.carte-lien', '.barre', '.stat',
     '.temoignages__principal', '.temoignages__court', '.carrousel', '.home-logos', '.home-echelle',
     '.home-expertise', '.home-formations', '.footer__brand > img:first-child', '.footer__brand > p',
     '.footer__col', '.filler__text', '.skeleton'

@@ -330,9 +330,15 @@ Durées de 0,3 à 0,6 s ; seuls le zoom du hero et le Ken Burns des cas sont len
 - **Carrousel** : `data-carrousel-auto="5000"` (barre de progression synchronisée, pause au
   survol et au focus, arrêt après action). Une carte `data-cas-carte="<slug>"` s'élargit sur place
   avec situation, enjeux, chiffre clé et « Ce que ce cas démontre » si la page contient
-  `<script type="application/json" id="cas-apercus">` (voir l'accueil).
+  `<script type="application/json" id="cas-apercus">` (voir l'accueil). Grand écran : hauteur
+  fixe de 400 px (le corps du détail défile), animation en transform et clip-path seulement,
+  interruptible (double clic, autre carte pendant l'animation). Mobile : la carte s'allonge vers
+  le bas (grid-template-rows).
 - **Enjeux ouvrables** : `<ul data-enjeux>` de `li.enjeu` (bouton `.enjeu__bouton` +
-  `.enjeu__panneau`), une seule carte ouverte à la fois, mise en avant tournante au repos.
+  `.enjeu__panneau > .enjeu__interieur > .enjeu__contenu`), une seule carte ouverte à la fois,
+  mise en avant tournante au repos. `li.enjeu` est en `display: contents` : script.js place le
+  panneau sur une rangée pleine largeur sous la rangée de sa carte (propriété `order`), la carte
+  ne change jamais de taille et le panneau s'ouvre en grid-template-rows (0fr vers 1fr).
 - **Témoignages** : le partiel tourne seul toutes les 8 s et un clic sur un petit témoignage le
   passe en grand.
 - **Pré-remplissage du contact** : tout lien `data-prefill="<sujet>"` (et/ou
