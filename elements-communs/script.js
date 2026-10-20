@@ -5,6 +5,13 @@
   var survolPossible = window.matchMedia('(hover: hover) and (pointer: fine)');
   var ecranLarge = window.matchMedia('(min-width: 901px)');
 
+  /* ---------- Navbar flottante : pastille du logo une fois la page défilée ---------- */
+
+  var entete = document.querySelector('.site-header');
+  function majEntete() { if (entete) entete.classList.toggle('is-scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', majEntete, { passive: true });
+  majEntete();
+
   /* ---------- Menus déroulants (desktop) ---------- */
 
   var items = Array.prototype.slice.call(document.querySelectorAll('[data-menu-item]'));
