@@ -642,7 +642,10 @@
   /* ---------- Hero : le titre apparaît ligne par ligne ([data-lignes]) ---------- */
 
   function initLignes() {
-    if (mouvementReduit.matches) return;
+    if (mouvementReduit.matches) {
+      toutes('[data-lignes]').forEach(function (t) { t.classList.add('lignes-pret'); });
+      return;
+    }
     toutes('[data-lignes]').forEach(function (titre) {
       if (!une(titre, 'lignes')) return;
       var texte = titre.textContent.trim();
@@ -670,6 +673,7 @@
         l.appendChild(interieur);
         titre.appendChild(l);
       });
+      titre.classList.add('lignes-pret');
       // Une fois l'animation finie, on rend un titre normal (retour à la ligne libre).
       setTimeout(function () {
         titre.textContent = texte;
@@ -1035,7 +1039,6 @@
     majEntete();
     initMenus();
     initMobile();
-    initLignes();
     initFormulaire();
     initCoches();
     initFrappe();
@@ -1049,6 +1052,16 @@
     initReveal();
     preremplirDepuisUrl();
   }
+
+  // Le titre du hero est dans la page : on l'anime sans attendre les partiels, police chargée.
+  function lancerLignes() {
+    var pret = false;
+    function go() { if (pret) return; pret = true; initLignes(); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
+    setTimeout(go, 700);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', lancerLignes);
+  else lancerLignes();
 
   window.Scoache = { init: init };
 

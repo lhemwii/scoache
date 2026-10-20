@@ -1574,6 +1574,11 @@ a.photo:hover > img { scale: 1.04; }
   [data-cascade] > :nth-child(3) { animation-delay: 0.71s; }
   [data-cascade] > :nth-child(4) { animation-delay: 0.84s; }
 }
+@media (prefers-reduced-motion: no-preference) {
+  /* Le titre attend d'être découpé ; filet de sécurité : visible après 2,5 s quoi qu'il arrive */
+  html.js [data-lignes]:not(.lignes-pret) { opacity: 0; animation: lignes-secours 0.01s linear 2.5s forwards; }
+}
+@keyframes lignes-secours { to { opacity: 1; } }
 @keyframes ligne-entree { from { transform: translateY(105%); opacity: 0; } to { transform: none; opacity: 1; } }
 @keyframes cascade-entree { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
