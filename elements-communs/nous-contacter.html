@@ -67,13 +67,13 @@
           <div class="fields-row">
             <div class="field">
               <label class="field__label" for="c-nom">Prénom et nom</label>
-              <input class="field__input" id="c-nom" name="nom" type="text" autocomplete="name" placeholder="Camille Martin" required aria-describedby="c-nom-erreur">
+              <div class="field__saisie"><input class="field__input" id="c-nom" name="nom" type="text" autocomplete="name" placeholder="Claire Martin" data-frappe="Claire Martin" required aria-describedby="c-nom-erreur"><span class="field__ok" aria-hidden="true"><svg class="ico" width="16" height="16"><use href="/assets/icones.svg#i-check"/></svg></span></div>
               <p class="field__error" id="c-nom-erreur" hidden>Indiquez votre prénom et votre nom.</p>
             </div>
             <div class="field">
               <label class="field__label" for="c-email">E-mail professionnel</label>
-              <input class="field__input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="camille@entreprise.fr" required aria-describedby="c-email-erreur">
-              <p class="field__error" id="c-email-erreur" hidden>Indiquez une adresse e-mail valide, par exemple camille@entreprise.fr.</p>
+              <div class="field__saisie"><input class="field__input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="claire.martin@entreprise.com" data-frappe="claire.martin@entreprise.com" required aria-describedby="c-email-erreur"><span class="field__ok" aria-hidden="true"><svg class="ico" width="16" height="16"><use href="/assets/icones.svg#i-check"/></svg></span></div>
+              <p class="field__error" id="c-email-erreur" hidden>Indiquez une adresse e-mail valide, par exemple claire.martin@entreprise.com.</p>
             </div>
           </div>
 
@@ -88,21 +88,9 @@
             </div>
           </div>
 
-          <fieldset class="ct-besoin">
-            <legend>Sur quel sujet souhaitez-vous échanger ?</legend>
-            <div class="ct-choix">
-              <label class="ct-choix__item"><input type="radio" name="sujet" value="Une prise de fonction au COMEX" data-sujet="prise-de-fonction"><span>Une prise de fonction au COMEX</span></label>
-              <label class="ct-choix__item"><input type="radio" name="sujet" value="Mon influence et ma posture de dirigeant" data-sujet="posture"><span>Mon influence et ma posture de dirigeant</span></label>
-              <label class="ct-choix__item"><input type="radio" name="sujet" value="Un comité de direction à aligner" data-sujet="comite"><span>Un comité de direction à aligner</span></label>
-              <label class="ct-choix__item"><input type="radio" name="sujet" value="Une transformation à piloter" data-sujet="transformation"><span>Une transformation à piloter</span></label>
-              <label class="ct-choix__item"><input type="radio" name="sujet" value="Accompagner des dirigeants de mon équipe" data-sujet="equipe"><span>Accompagner des dirigeants de mon équipe</span></label>
-              <label class="ct-choix__item"><input type="radio" name="sujet" value="Autre sujet" data-sujet="autre"><span>Autre sujet</span></label>
-            </div>
-          </fieldset>
-
           <div class="field">
             <label class="field__label" for="c-message">Votre situation, en quelques mots <span class="field__facultatif">(facultatif)</span></label>
-            <textarea class="field__input field__input--area" id="c-message" name="message" rows="5" data-message placeholder="Quelques lignes sur votre contexte : votre rôle, ce qui évolue, l’horizon de décision."></textarea>
+            <textarea class="field__input field__input--area" id="c-message" name="message" rows="5" data-message placeholder="Je prends la direction générale d’une filiale en janvier et je veux structurer mes 100 premiers jours." data-frappe="Je prends la direction générale d’une filiale en janvier et je veux structurer mes 100 premiers jours.||Notre comité de direction peine à arbitrer ; j’aimerais un regard extérieur.||Nous lançons une transformation et je veux embarquer mes managers.||Je rejoins le COMEX d’un groupe international et je veux y prendre pleinement ma place.||Je souhaite proposer un accompagnement à un membre de mon comité de direction."></textarea>
           </div>
 
           <div class="ct-consentement">
@@ -114,7 +102,7 @@
           </div>
 
           <div class="ct-envoi">
-            <button type="submit" class="btn btn--noir btn--lg">Envoyer <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-arrow-bold"/></svg></button>
+            <button type="submit" class="btn btn--noir btn--lg btn-envoi"><span class="btn-envoi__texte">Envoyer <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-arrow-bold"/></svg></span><span class="btn-envoi__ok" aria-hidden="true"><svg class="ico" width="16" height="16"><use href="/assets/icones.svg#i-check"/></svg>Envoyé</span></button>
             <p class="ct-envoi__note">Réponse sous 48 h, en toute confidentialité.</p>
           </div>
 
@@ -271,7 +259,14 @@
     form.querySelectorAll('.field__input').forEach(function (el) { el.value = ''; el.removeAttribute('aria-invalid'); });
     champs[2].el.checked = false;
     champs[2].el.removeAttribute('aria-invalid');
+    var bouton = form.querySelector('.btn-envoi');
+    if (bouton) bouton.classList.add('is-envoye');
+    form.querySelectorAll('.field.is-valide').forEach(function (f) { f.classList.remove('is-valide'); });
     confirmation.focus();
+  });
+  form.addEventListener('input', function () {
+    var bouton = form.querySelector('.btn-envoi');
+    if (bouton) bouton.classList.remove('is-envoye');
   });
 })();
 </script>

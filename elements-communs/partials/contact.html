@@ -13,42 +13,27 @@
     </div>
 
     <form class="contact-card" id="contact-form" novalidate data-formulaire-contact>
-      <fieldset class="chips">
-        <legend class="contact-card__title">Sur quel sujet souhaitez-vous échanger ?</legend>
-        <div class="chips__list">
-          <label class="chip"><input type="radio" name="sujet" value="Une prise de fonction au COMEX" data-sujet="prise-de-fonction"><span>Une prise de fonction au COMEX</span></label>
-          <label class="chip"><input type="radio" name="sujet" value="Mon influence et ma posture de dirigeant" data-sujet="posture"><span>Mon influence et ma posture de dirigeant</span></label>
-          <label class="chip"><input type="radio" name="sujet" value="Un comité de direction à aligner" data-sujet="comite"><span>Un comité de direction à aligner</span></label>
-          <label class="chip"><input type="radio" name="sujet" value="Une transformation à piloter" data-sujet="transformation"><span>Une transformation à piloter</span></label>
-          <label class="chip"><input type="radio" name="sujet" value="Accompagner des dirigeants de mon équipe" data-sujet="equipe"><span>Accompagner des dirigeants de mon équipe</span></label>
-          <label class="chip"><input type="radio" name="sujet" value="Autre sujet" data-sujet="autre"><span>Autre sujet</span></label>
-        </div>
-      </fieldset>
-
       <div class="fields-row">
         <div class="field">
           <label class="field__label" for="f-nom">Nom</label>
-          <input class="field__input" id="f-nom" name="nom" type="text" autocomplete="name" placeholder="Votre nom" required aria-describedby="f-nom-erreur">
+          <div class="field__saisie"><input class="field__input" id="f-nom" name="nom" type="text" autocomplete="name" placeholder="Claire Martin" data-frappe="Claire Martin" required aria-describedby="f-nom-erreur"><span class="field__ok" aria-hidden="true"><svg class="ico" width="16" height="16"><use href="/assets/icones.svg#i-check"/></svg></span></div>
           <p class="field__error" id="f-nom-erreur" hidden>Indiquez votre nom.</p>
         </div>
         <div class="field">
           <label class="field__label" for="f-email">E-mail professionnel</label>
-          <input class="field__input" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nom@entreprise.com" required aria-describedby="f-email-erreur">
+          <div class="field__saisie"><input class="field__input" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="claire.martin@entreprise.com" data-frappe="claire.martin@entreprise.com" required aria-describedby="f-email-erreur"><span class="field__ok" aria-hidden="true"><svg class="ico" width="16" height="16"><use href="/assets/icones.svg#i-check"/></svg></span></div>
           <p class="field__error" id="f-email-erreur" hidden>Indiquez une adresse e-mail valide.</p>
         </div>
       </div>
 
       <div class="field">
         <label class="field__label" for="f-message">Votre message</label>
-        <textarea class="field__input field__input--area" id="f-message" name="message" rows="4" data-message placeholder="Quelques lignes sur votre contexte : votre rôle, ce qui évolue, l’horizon de décision."></textarea>
+        <textarea class="field__input field__input--area" id="f-message" name="message" rows="4" data-message placeholder="Je prends la direction générale d’une filiale en janvier et je veux structurer mes 100 premiers jours." data-frappe="Je prends la direction générale d’une filiale en janvier et je veux structurer mes 100 premiers jours.||Notre comité de direction peine à arbitrer ; j’aimerais un regard extérieur.||Nous lançons une transformation et je veux embarquer mes managers.||Je rejoins le COMEX d’un groupe international et je veux y prendre pleinement ma place.||Je souhaite proposer un accompagnement à un membre de mon comité de direction."></textarea>
       </div>
 
       <div class="contact-card__footer">
         <p class="contact-card__note">Ilana vous répond personnellement.</p>
-        <button type="submit" class="btn btn--noir">
-          Envoyer
-          <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow-bold"/></svg>
-        </button>
+        <button type="submit" class="btn btn--noir btn-envoi"><span class="btn-envoi__texte">Envoyer <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow-bold"/></svg></span><span class="btn-envoi__ok" aria-hidden="true"><svg class="ico" width="16" height="16"><use href="/assets/icones.svg#i-check"/></svg>Envoyé</span></button>
       </div>
 
       <div class="form-confirmation" id="form-confirmation" role="status" aria-live="polite"></div>

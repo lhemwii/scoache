@@ -315,23 +315,32 @@ Boutons `btn btn--noir` (et `btn--lg`), lien majuscule souligné `link-caps`, é
 ## 6. Mouvement et interactions partagés (script.js, styles.css)
 
 Tout respecte « réduire les animations » (rien ne bouge) et reste visible sans JavaScript.
+Durées de 0,3 à 0,6 s ; seuls le zoom du hero et le Ken Burns des cas sont lents et continus.
 
-- **Apparitions au défilement** : automatiques sur les blocs principaux de chaque page
-  (en-têtes de section, plateaux, cartes, barres, témoignages, footer). Un bloc propre à une page
-  peut recevoir `data-reveal` à la main ; `data-no-reveal` sur un conteneur l'exclut. Les blocs
-  déjà visibles au chargement ne bougent pas.
-- **Chiffres** : chaque `.stat__valeur` simple (« 94 % », « 4,9/5 », « +200 ») compte jusqu'à
-  sa valeur à l'apparition ; dans un texte, entourer le nombre : `<span data-compte>94</span> %`.
-- **Bandeau de logos** : `<div class="marquee" data-marquee tabindex="0" aria-label="…"><div class="marquee__defile"><ul class="marquee__piste">…</ul></div></div>`,
-  plus le bouton `[data-marquee-pause]` (voir l'accueil). Boucle continue, pause au survol, au
-  focus et sur demande ; rangée statique sinon.
-- **Carrousel automatique** : `data-carrousel-auto="5000"` sur `[data-carrousel]`. Pause au survol,
-  au focus et onglet masqué ; arrêt définitif dès que l'utilisateur agit.
-- **Aperçu de cas** : une carte `data-cas-apercu="<slug>"` ouvre un dialogue (au lieu de naviguer)
-  si la page contient `<script type="application/json" id="cas-apercus">` (voir l'accueil).
+- **Apparitions au défilement** : automatiques sur les blocs principaux (en-têtes de section,
+  plateaux, cartes, barres, témoignages, footer), en cascade. À la main : `data-reveal`
+  (montée) ou `data-reveal="glisse"` (entrée latérale) ; `data-no-reveal` exclut un conteneur.
+- **Titre ligne par ligne** : `data-lignes` sur un titre en texte simple.
+- **Liste en cascade au chargement** : `data-cascade` sur une liste.
+- **Chiffres** : chaque `.stat__valeur` simple compte jusqu'à sa valeur ; dans un texte,
+  `<span data-compte>94</span> %`.
+- **Bandeau de logos** : `<div class="marquee" data-marquee><div class="marquee__defile"><ul class="marquee__piste">…</ul></div></div>`,
+  pause au survol. Un logo `<a href="/cas-clients/<slug>" data-cas-ouvrir="<slug>">` ouvre ce cas
+  dans le carrousel de la page.
+- **Carrousel** : `data-carrousel-auto="5000"` (barre de progression synchronisée, pause au
+  survol et au focus, arrêt après action). Une carte `data-cas-carte="<slug>"` s'élargit sur place
+  avec situation, enjeux, chiffre clé et « Ce que ce cas démontre » si la page contient
+  `<script type="application/json" id="cas-apercus">` (voir l'accueil).
+- **Enjeux ouvrables** : `<ul data-enjeux>` de `li.enjeu` (bouton `.enjeu__bouton` +
+  `.enjeu__panneau`), une seule carte ouverte à la fois, mise en avant tournante au repos.
+- **Témoignages** : le partiel tourne seul toutes les 8 s et un clic sur un petit témoignage le
+  passe en grand.
 - **Pré-remplissage du contact** : tout lien `data-prefill="<sujet>"` (et/ou
   `data-prefill-cas="<slug>"`, `data-prefill-message="…"`) fait défiler jusqu'au formulaire de la
-  page et le pré-remplit. Son `href` doit pointer vers `/nous-contacter?sujet=…&cas=…`, qui
-  pré-remplit aussi à l'arrivée. Sujets : `prise-de-fonction`, `posture`, `comite`,
-  `transformation`, `equipe`, `autre`. Le formulaire porte `data-formulaire-contact`, ses puces
-  `data-sujet`, son message `data-message`.
+  page et écrit une phrase de départ modifiable dans le message. Son `href` pointe vers
+  `/nous-contacter?sujet=…&cas=…`, qui pré-remplit aussi à l'arrivée. Sujets : `prise-de-fonction`,
+  `posture`, `comite`, `transformation`, `equipe`, `autre`. Le formulaire porte
+  `data-formulaire-contact` et son message `data-message` ; il n'y a plus de puces de sujet.
+- **Formulaire** : `data-frappe="exemple 1||exemple 2"` sur un champ tape ses exemples en
+  placeholder ; une coche apparaît sur chaque champ valide (`.field__saisie` + `.field__ok`) ;
+  le bouton `.btn-envoi` devient la confirmation.

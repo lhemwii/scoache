@@ -31,9 +31,92 @@
 /* ---------- Vos enjeux ---------- */
 .home-enjeux .chapo { max-width: 430px; font-size: 17px; }
 .home-enjeux .plateau__texte { justify-content: flex-start; }
-.home-enjeux__grille { margin: 0; padding: 0; list-style: none; }
-.home-enjeux__grille > li { display: flex; }
-.home-enjeux__grille .carte-lien { flex: 1; }
+.home-enjeux__grille { align-content: start; margin: 0; padding: 0; list-style: none; }
+
+/* Carte d'enjeu : s'ouvre sur place (pleine largeur) pour montrer les cas liés */
+.enjeu {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: 12px;
+  background: var(--blanc);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+}
+.enjeu--accent { background: #e9e8f8; }
+.enjeu.is-ouvert { grid-column: 1 / -1; }
+.enjeu__bouton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 26px 26px 22px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--noir);
+  font: inherit;
+  text-align: left;
+}
+.enjeu .pastille { transition: background-color 0.3s ease, color 0.3s ease; }
+.enjeu .pastille .ico { transition: transform 0.4s cubic-bezier(0.3, 1.4, 0.5, 1); }
+.enjeu--accent .pastille { background: var(--accent); color: var(--blanc); }
+.enjeu__chevron { transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.enjeu.is-ouvert .enjeu__chevron { transform: rotate(180deg); }
+@media (hover: hover) and (pointer: fine) {
+  .enjeu:not(.is-ouvert):hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(13, 13, 26, 0.08); }
+  .enjeu:not(.enjeu--accent):hover .pastille { background: var(--noir); color: var(--blanc); }
+  .enjeu:hover .pastille .ico { transform: rotate(-8deg) scale(1.1); }
+}
+.enjeu__bouton:active { transform: scale(0.995); }
+.enjeu.is-invite { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(71, 68, 193, 0.4), 0 12px 26px rgba(13, 13, 26, 0.07); }
+
+.enjeu__panneau { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.enjeu.is-ouvert .enjeu__panneau { grid-template-rows: 1fr; }
+.enjeu__interieur {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  padding: 0 26px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, padding 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.enjeu.is-ouvert .enjeu__interieur { padding: 0 26px 26px; opacity: 1; transition: opacity 0.4s ease 0.15s, padding 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.enjeu__label { padding-top: 16px; border-top: 1px solid var(--bordure); font-size: 13px; font-weight: 600; color: var(--accent); }
+.enjeu__cas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.enjeu-cas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  height: 100%;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--gris-clair);
+  color: var(--noir);
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.3s ease;
+}
+.enjeu--accent .enjeu-cas { background: rgba(255, 255, 255, 0.75); }
+.enjeu-cas img { object-fit: contain; }
+.enjeu-cas__titre { flex: 1; font-size: 15px; line-height: 1.35; }
+.enjeu-cas__lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+.enjeu-cas__lien .ico { transition: transform 0.25s ease; }
+.enjeu-cas:hover { transform: translateY(-2px); background: var(--greige); }
+.enjeu--accent .enjeu-cas:hover { background: var(--blanc); }
+.enjeu-cas:hover .enjeu-cas__lien .ico { transform: translateX(3px); }
+.enjeu__parler { align-self: flex-start; }
 
 /* ---------- Offre : trois échelles ---------- */
 .home-offre { padding-top: 48px; }
@@ -49,6 +132,14 @@
   background: var(--blanc);
 }
 .home-echelle__photo { height: 200px; padding: 0; }
+/* Rideau : la photo se dévoile de haut en bas quand la carte apparaît */
+.home-echelle__photo { clip-path: inset(0 0 0 0); transition: clip-path 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.12s; }
+@media (prefers-reduced-motion: no-preference) {
+  html.reveal-pret .home-echelle[data-reveal]:not(.is-revealed) .home-echelle__photo { clip-path: inset(0 0 100% 0); }
+  /* Cas clients : zoom très lent des photos (Ken Burns) */
+  .home-cas .carte-photo > img { animation: ken-burns 24s ease-in-out infinite alternate; }
+}
+@keyframes ken-burns { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.09) translate(-1.5%, -1%); } }
 .home-echelle__photo::after {
   background: linear-gradient(155deg, rgba(71, 68, 193, 0) 30%, rgba(107, 107, 208, 0.35) 75%, rgba(71, 68, 193, 0.75) 100%);
 }
@@ -115,7 +206,7 @@
 .home-expertise:hover { box-shadow: 0 8px 24px rgba(13, 13, 26, 0.07); }
 .home-expertise__texte { display: flex; flex: 1; flex-direction: column; gap: 6px; min-width: 0; }
 .home-expertise__eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); }
-.home-expertise__titre { font-size: 22px; font-weight: 500; letter-spacing: -0.11px; }
+.home-expertise__titre { font-size: 22px; font-weight: 400; letter-spacing: -0.11px; }
 .home-expertise__desc { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
 .home-expertise__fleche { transition: transform 0.2s ease; }
 .home-expertise:hover .home-expertise__fleche { transform: translateX(3px); }
@@ -166,8 +257,10 @@
   .home-logos .marquee__piste li { height: 40px; }
 
   .home-enjeux .chapo { font-size: 16px; }
-  .home-enjeux .carte-lien { padding: 22px 20px 20px; }
-  .home-enjeux .carte-lien__titre { font-size: 19px; }
+  .enjeu__bouton { padding: 22px 20px 20px; }
+  .enjeu__interieur, .enjeu.is-ouvert .enjeu__interieur { padding-left: 20px; padding-right: 20px; }
+  .enjeu__cas { grid-template-columns: minmax(0, 1fr); }
+  .home-enjeux .carte-lien__titre { font-size: 20px; }
 
   .home-offre { padding-top: 40px; }
   .home-offre .section-head { margin-bottom: 20px; }
