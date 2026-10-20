@@ -720,6 +720,8 @@ a.mega__title:hover { text-decoration: underline; text-underline-position: from-
   line-height: 1.5;
   color: var(--texte-2);
 }
+.contact__proche { margin: 0; }
+.contact__proche[hidden] { display: none; }
 
 .checks {
   display: flex;
@@ -1795,3 +1797,121 @@ a.photo:hover > img { scale: 1.04; }
 
 /* Citation principale centrée dans sa carte, quelle que soit sa longueur */
 .temoignages__citation { display: flex; flex: 1; align-items: center; }
+
+/* =====================================================================
+   RECHERCHE DU SITE (script.js, initRecherche ; index /search-index.json)
+   ===================================================================== */
+.recherche {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 24px 24px;
+  background: rgba(13, 13, 26, 0.32);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.recherche[hidden] { display: none; }
+.recherche.is-open { opacity: 1; }
+.recherche__boite {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  max-height: 76vh;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--blanc);
+  box-shadow: 0 24px 60px rgba(13, 13, 26, 0.18);
+  transform: translateY(-8px) scale(0.99);
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.recherche.is-open .recherche__boite { transform: none; }
+.recherche__tete {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 14px 20px;
+  border-bottom: 1px solid var(--bordure);
+}
+.recherche__tete > .ico { flex: none; color: var(--texte-2); }
+.recherche__champ {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--noir);
+  font: inherit;
+  font-size: 18px;
+  outline: none;
+}
+.recherche__champ::placeholder { color: var(--placeholder); }
+.recherche__champ::-webkit-search-cancel-button { display: none; }
+.recherche__fermer {
+  flex: none;
+  padding: 6px 8px;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  background: var(--gris-clair);
+  color: var(--texte-2);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.recherche__fermer:hover { color: var(--noir); }
+.recherche__resultats { overflow-y: auto; overscroll-behavior: contain; padding: 4px 8px; }
+.recherche__resultats:empty { display: none; }
+.recherche__groupe { padding: 8px 0 4px; }
+.recherche__groupe + .recherche__groupe { border-top: 1px solid var(--gris-clair); }
+.recherche__type { margin: 0; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--accent); }
+.recherche__resultat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--noir);
+  text-decoration: none;
+}
+.recherche__resultat[aria-selected="true"] { background: var(--gris-clair); }
+.recherche__titre { font-size: 15px; font-weight: 500; line-height: 1.35; }
+.recherche__extrait {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--texte-2);
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.recherche mark { padding: 0 1px; border-radius: 3px; background: rgba(71, 68, 193, 0.14); color: inherit; }
+.recherche__statut { margin: 0; padding: 12px 20px 14px; font-size: 13px; color: var(--texte-2); }
+.recherche__resultats:not(:empty) + .recherche__statut { border-top: 1px solid var(--bordure); padding-top: 10px; }
+
+/* Ouverture depuis le panneau mobile */
+.mobile-panel__recherche {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 24px 0;
+  padding: 13px 16px;
+  border: 1px solid var(--bordure);
+  border-radius: 12px;
+  background: var(--gris-clair);
+  color: var(--texte-2);
+  font: inherit;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .recherche { padding: 12px; }
+  .recherche__boite { max-height: calc(100vh - 24px); }
+  .recherche__champ { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .recherche, .recherche__boite { transition: none; }
+}

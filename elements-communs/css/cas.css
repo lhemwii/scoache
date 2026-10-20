@@ -539,3 +539,116 @@
   .page-cas .cas-ligne__photo { flex-basis: 220px; height: 160px; }
   .page-cas .cas-ligne__titre { font-size: 23px; }
 }
+
+/* =====================================================================
+   PAGE CAS : gabarit « 10 secondes » (hero, en 30 secondes, ce que le cas démontre, détail)
+   ===================================================================== */
+.page-cas .cas-fiche__photo { justify-content: flex-start; }
+
+/* En 30 secondes : trois cartes dans un plateau greige */
+.page-cas .cas-30 { padding-top: 8px; }
+.page-cas .cas-30__eyebrow { margin: 0 36px 14px; }
+.page-cas .cas-30__plateau { align-items: stretch; }
+.page-cas .cas-30__carte {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+  padding: 28px 28px 30px;
+}
+.page-cas .cas-30__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.page-cas .cas-30__num {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--gris-clair);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--noir);
+}
+.page-cas .cas-30__texte { font-size: 18px; line-height: 1.45; letter-spacing: -0.05px; }
+.page-cas .cas-30__texte--petit { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-30__liste { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.page-cas .cas-30__liste li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+.page-cas .cas-30__liste li::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+.page-cas .cas-30__kpi { display: flex; flex-direction: column; gap: 6px; }
+.page-cas .cas-30__valeur {
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.72px;
+  color: var(--accent);
+}
+.page-cas .cas-30__libelle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+}
+
+/* Ce que ce cas démontre : grand énoncé sur carte blanche, filet d'accent */
+.page-cas .cas-demontre-bloc { padding-top: 8px; }
+.page-cas .cas-demontre-bloc .cas-demontre { flex: 1; padding: 44px 48px; }
+.page-cas .cas-demontre-bloc .cas-demontre::before { top: 44px; bottom: 44px; left: 48px; }
+.page-cas .cas-demontre-bloc .cas-demontre > * { margin-left: 32px; }
+.page-cas .cas-demontre-bloc .cas-demontre__texte { max-width: 1080px; font-size: 34px; line-height: 1.28; letter-spacing: -0.34px; }
+
+/* Détail */
+.page-cas .cas-situation-detail { display: flex; flex: 1; flex-direction: column; gap: 14px; padding: 32px 40px; }
+.page-cas .cas-situation-detail p { max-width: 900px; font-size: 18px; line-height: 1.55; }
+.page-cas .cas-section-evolutions .cas-evolutions__carte { flex: 1; padding: 32px 40px; }
+.page-cas .cas-section-evolutions .cas-evolutions__texte { max-width: 900px; }
+
+/* D'autres situations proches : carrousel de l'accueil */
+.page-cas .cas-proches-bloc .section-head { margin-bottom: 24px; }
+
+@media (max-width: 1100px) {
+  .page-cas .cas-30__plateau { flex-direction: column; }
+  .page-cas .cas-demontre-bloc .cas-demontre__texte { font-size: 28px; }
+}
+@media (max-width: 900px) {
+  .page-cas .cas-30__eyebrow { margin: 0 12px 12px; }
+  .page-cas .cas-30__carte { padding: 22px 20px 24px; }
+  .page-cas .cas-30__texte { font-size: 17px; }
+  .page-cas .cas-30__valeur { font-size: 40px; }
+  .page-cas .cas-demontre-bloc .cas-demontre { padding: 28px 22px; }
+  .page-cas .cas-demontre-bloc .cas-demontre::before { top: 28px; bottom: 28px; left: 22px; }
+  .page-cas .cas-demontre-bloc .cas-demontre > * { margin-left: 20px; }
+  .page-cas .cas-demontre-bloc .cas-demontre__texte { font-size: 23px; }
+  .page-cas .cas-situation-detail { padding: 24px 20px; }
+  .page-cas .cas-situation-detail p { font-size: 16px; }
+  .page-cas .cas-section-evolutions .cas-evolutions__carte { padding: 24px 20px; }
+}
+/* La photo du hero reste mesurée pour que « En 30 secondes » apparaisse dès le premier écran */
+.page-cas .cas-fiche .cas-fiche__photo { min-height: 420px; }
+@media (max-width: 900px) {
+  .page-cas .cas-fiche .cas-fiche__photo { min-height: 240px; }
+}
+@media (max-width: 600px) {
+  .page-cas .cas-fiche .cas-fiche__photo { min-height: 200px; }
+}

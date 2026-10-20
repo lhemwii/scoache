@@ -17,7 +17,7 @@
   <script src="/include.js" defer></script>
   <script src="/script.js" defer></script>
 </head>
-<body class="page-cas">
+<body class="page-cas" data-cas="chanel">
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 <div class="page">
   <div data-include="header"></div>
@@ -32,12 +32,13 @@
       </ol>
     </nav>
 
+    <!-- Hero : le client, son profil et le problème -->
     <section class="section section--plateau" aria-labelledby="titre-page">
       <div class="plateau cas-fiche">
         <div class="cas-fiche__texte">
           <div class="cas-fiche__intro">
             <span class="cas-fiche__logo"><img src="/assets/cas/logos/chanel.png" alt="CHANEL" width="162" height="25" loading="eager" decoding="async"></span>
-            <p class="eyebrow eyebrow--lg">Cas client, coaching individuel</p>
+            <p class="eyebrow eyebrow--lg">Dirigeante senior, coaching individuel</p>
             <h1 class="cas-fiche__titre" id="titre-page">Renforcer l’influence d’une dirigeante dans des interactions à forts enjeux</h1>
             <ul class="cas-pastilles" aria-label="En bref">
               <li>Dirigeante senior</li>
@@ -48,14 +49,60 @@
           <a class="link-caps link-caps--accent" href="/cas-clients/individuel">Voir les cas, coaching individuel <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
         </div>
         <div class="carte cas-fiche__carte">
-          <div class="photo photo--entre cas-fiche__photo">
+          <div class="photo cas-fiche__photo">
             <img src="/assets/cas/photos/chanel.jpg" alt="" width="1264" height="1200" fetchpriority="high" decoding="async">
             <span class="logo-puce cas-puce"><img src="/assets/cas/logos/chanel.png" alt="" width="114" height="18" loading="eager" decoding="async"></span>
-            <div class="cas-situation">
-              <h2 class="cas-situation__titre">Situation</h2>
-              <p class="cas-situation__texte">Dans un environnement à haut niveau d’exigence, une dirigeante senior souhaitait renforcer sa capacité à tenir pleinement sa position et à exercer son influence dans des interactions sensibles avec ses pairs et sa hiérarchie. L’enjeu était de gagner en solidité et en impact sans tomber dans la sur-adaptation ni dans la confrontation.</p>
-            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- En 30 secondes : le défi, ce que nous avons fait, ce qui a changé -->
+    <section class="section cas-30" aria-labelledby="titre-30">
+      <h2 class="visually-hidden" id="titre-30">Le cas en 30 secondes</h2>
+      <p class="eyebrow cas-30__eyebrow" aria-hidden="true">En 30 secondes</p>
+      <div class="plateau cas-30__plateau">
+        <div class="carte cas-30__carte">
+          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">01</span>Le défi</h3>
+          <p class="cas-30__texte">Dans un environnement à haut niveau d’exigence, une dirigeante senior souhaitait renforcer sa capacité à tenir pleinement sa position et à exercer son influence dans des interactions sensibles avec ses pairs et sa hiérarchie.</p>
+        </div>
+        <div class="carte cas-30__carte">
+          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">02</span>Ce que nous avons fait</h3>
+          <ul class="cas-30__liste">
+            <li>Posture exécutive</li>
+            <li>Assertivité</li>
+            <li>Influence relationnelle</li>
+            <li>Sécurité intérieure</li>
+          </ul>
+        </div>
+        <div class="carte cas-30__carte">
+          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">03</span>Ce qui a changé</h3>
+          <p class="cas-30__texte">Les premières évolutions observées font apparaître une posture plus solide et plus assurée, une moindre déstabilisation dans les interactions sensibles et un signal de leadership perçu comme plus fort et plus apaisé par certains collaborateurs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ce que ce cas démontre : grand énoncé, sans aplat bleu -->
+    <section class="section cas-demontre-bloc" aria-labelledby="titre-demontre">
+      <div class="plateau">
+        <div class="carte cas-demontre">
+          <h2 class="cas-surtitre-13" id="titre-demontre">Ce que ce cas démontre</h2>
+          <p class="cas-demontre__texte">La capacité de Scoaché à accompagner une dirigeante senior lorsque l’enjeu n’est plus de développer une compétence isolée, mais de renforcer sa capacité à tenir sa place, influencer et décider dans des environnements sensibles.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Le détail, mot pour mot -->
+    <section class="section" aria-labelledby="titre-situation">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Le détail du cas</p>
+          <h2 class="section-head__title" id="titre-situation">Situation</h2>
+        </div>
+      </div>
+      <div class="plateau">
+        <div class="carte cas-situation-detail">
+          <p>Dans un environnement à haut niveau d’exigence, une dirigeante senior souhaitait renforcer sa capacité à tenir pleinement sa position et à exercer son influence dans des interactions sensibles avec ses pairs et sa hiérarchie. L’enjeu était de gagner en solidité et en impact sans tomber dans la sur-adaptation ni dans la confrontation.</p>
         </div>
       </div>
     </section>
@@ -110,62 +157,132 @@
       </ol>
     </section>
 
-    <section class="section cas-section-evolutions" aria-label="Évolutions observées et enseignements">
-      <div class="plateau cas-evolutions">
-        <div class="carte cas-evolutions__carte">
-          <h2 class="cas-surtitre-13">Évolutions observées</h2>
-          <p class="cas-evolutions__texte">Les premières évolutions observées font apparaître une posture plus solide et plus assurée, une moindre déstabilisation dans les interactions sensibles et un signal de leadership perçu comme plus fort et plus apaisé par certains collaborateurs. L’accompagnement est toujours en cours.</p>
+    <section class="section cas-section-evolutions" aria-labelledby="titre-evolutions">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Ce qui a changé</p>
+          <h2 class="section-head__title" id="titre-evolutions">Évolutions observées</h2>
         </div>
-        <div class="carte cas-demontre">
-          <h2 class="cas-surtitre-13">Ce que ce cas démontre</h2>
-          <p class="cas-demontre__texte">La capacité de Scoaché à accompagner une dirigeante senior lorsque l’enjeu n’est plus de développer une compétence isolée, mais de renforcer sa capacité à tenir sa place, influencer et décider dans des environnements sensibles.</p>
+      </div>
+      <div class="plateau">
+        <div class="carte cas-evolutions__carte">
+          <p class="cas-evolutions__texte">Les premières évolutions observées font apparaître une posture plus solide et plus assurée, une moindre déstabilisation dans les interactions sensibles et un signal de leadership perçu comme plus fort et plus apaisé par certains collaborateurs. L’accompagnement est toujours en cours.</p>
         </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="titre-proches">
-      <div class="section-head">
-        <div class="section-head__text">
-          <p class="eyebrow">Autres cas clients</p>
-          <h2 class="section-head__title" id="titre-proches">D’autres situations proches</h2>
+    <!-- D'autres situations proches : le carrousel de l'accueil, à défilement automatique -->
+    <section class="section cas-proches-bloc" aria-labelledby="titre-proches">
+      <div data-carrousel data-carrousel-auto="5000">
+        <div class="section-head">
+          <div class="section-head__text">
+            <p class="eyebrow">Autres cas clients</p>
+            <h2 class="section-head__title" id="titre-proches">D’autres situations proches</h2>
+          </div>
         </div>
-        <a class="link-caps link-caps--accent section-head__link" href="/cas-clients">Tous les cas clients <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
+        <div class="carrousel">
+          <ul class="carrousel__piste" tabindex="0" aria-label="D’autres situations proches, faire défiler horizontalement">
+            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/vinci-airports">
+                <img src="/assets/cas/vinci-airports.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/vinci-airports.png" alt="VINCI Airports" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeant senior</span>
+                  <span class="carte-verre__titre">Prendre pleinement sa place de leader dans un environnement à forts enjeux stratégiques</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> VINCI Airports</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/michael-page">
+                <img src="/assets/home/cas/michael-page.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/michael-page.png" alt="Michael Page" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, manager à responsabilités</span>
+                  <span class="carte-verre__titre">Faire évoluer sa posture de leader pour renforcer l’engagement et la performance collective</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Michael Page</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/ilek">
+                <img src="/assets/home/cas/ilek.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/ilek.png" alt="Ilek" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, 2 leaders accompagnés</span>
+                  <span class="carte-verre__titre">Faire évoluer la posture de leaders dans un contexte de croissance et de transformation</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Ilek</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/biborg">
+                <img src="/assets/home/cas/biborg.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/biborg.png" alt="Biborg" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, 4 leaders accompagnés depuis 2022</span>
+                  <span class="carte-verre__titre">Accompagner des leaders dans les passages de seuil de leur trajectoire</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Biborg</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/le-lab-rh">
+                <img src="/assets/home/cas/le-lab-rh.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/le-lab-rh.png" alt="Le Lab RH" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeant</span>
+                  <span class="carte-verre__titre">Assumer pleinement sa place de dirigeant dans une organisation en développement</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Le Lab RH</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/fintecture">
+                <img src="/assets/home/cas/fintecture.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/fintecture.png" alt="Fintecture" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, directeur commercial</span>
+                  <span class="carte-verre__titre">Faire évoluer son leadership sous forte pression sans renoncer à l’exigence de performance</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Fintecture</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/jobteaser">
+                <img src="/assets/home/cas/jobteaser.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/jobteaser.png" alt="Jobteaser" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeant</span>
+                  <span class="carte-verre__titre">Préserver son impact et sa capacité d’action dans un environnement sous tension</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> Jobteaser</span></span>
+                </span>
+              </a>
+            </li>
+            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/homeexchange">
+                <img src="/assets/home/cas/homeexchange.jpg" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/homeexchange.png" alt="HomeExchange" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">Individuel, dirigeante fonctionnelle</span>
+                  <span class="carte-verre__titre">Trouver son alignement pour asseoir son leadership et mieux embarquer ses équipes</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> HomeExchange</span></span>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="carrousel__pied">
+            <div class="carrousel__progression" aria-hidden="true"><span></span></div>
+            <div class="carrousel__commandes">
+              <div class="carrousel__fleches">
+                <button type="button" class="fleche" data-carrousel-prec aria-label="Cas précédents"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-left"/></svg></button>
+                <button type="button" class="fleche" data-carrousel-suiv aria-label="Cas suivants"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-right"/></svg></button>
+              </div>
+              <a class="link-caps" href="/cas-clients">Tous les cas clients</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <ul class="cas-proches">
-        <li>
-          <a class="photo photo--entre cas-carte" href="/cas-clients/vinci-airports">
-            <img src="/assets/cas/photos/vinci-airports-m.jpg" alt="" width="806" height="920" loading="lazy" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/vinci-airports.png" alt="" width="89" height="23" loading="lazy" decoding="async"></span>
-            <span class="carte-verre cas-carte__verre">
-              <span class="cas-carte__surtitre">Cas client, VINCI Airports</span>
-              <span class="cas-carte__titre">Prendre pleinement sa place de leader dans un environnement à forts enjeux stratégiques</span>
-              <span class="cas-carte__lien">Lire le cas <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="photo photo--entre cas-carte" href="/cas-clients/michael-page">
-            <img src="/assets/cas/photos/michael-page-m.jpg" alt="" width="806" height="920" loading="lazy" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/michael-page.png" alt="" width="107" height="19" loading="lazy" decoding="async"></span>
-            <span class="carte-verre cas-carte__verre">
-              <span class="cas-carte__surtitre">Cas client, Michael Page</span>
-              <span class="cas-carte__titre">Faire évoluer sa posture de leader pour renforcer l’engagement et la performance collective</span>
-              <span class="cas-carte__lien">Lire le cas <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="photo photo--entre cas-carte" href="/cas-clients/ilek">
-            <img src="/assets/cas/photos/ilek-m.jpg" alt="" width="806" height="920" loading="lazy" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/ilek.png" alt="" width="65" height="31" loading="lazy" decoding="async"></span>
-            <span class="carte-verre cas-carte__verre">
-              <span class="cas-carte__surtitre">Cas client, Ilek</span>
-              <span class="cas-carte__titre">Faire évoluer la posture de leaders dans un contexte de croissance et de transformation</span>
-              <span class="cas-carte__lien">Lire le cas <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span>
-            </span>
-          </a>
-        </li>
-      </ul>
     </section>
 
     <div data-include="contact"></div>

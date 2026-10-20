@@ -41,12 +41,22 @@ sans `.html`, en chemin absolu.
   `schoolab`, `jobteaser`, `groupe-nice-matin`, `homeexchange`, `enseignement-catholique-de-paris`,
   `michael-page-collectif`. Tout est généré par `cas-clients/_generer.py` (qui met aussi à jour le
   JSON `#cas-apercus` de l'accueil) : modifier les données, puis relancer le script.
+  Gabarit d'une page cas : hero (logo, profil et échelle, titre = le problème), bande « En 30
+  secondes » (le défi, ce que nous avons fait, ce qui a changé : extraits mot pour mot), « Ce que ce
+  cas démontre », puis le détail (situation, enjeux, accompagnement, évolutions), le carrousel
+  « D’autres situations proches » et le bloc contact. `<body data-cas="<slug>">` affiche dans ce
+  bloc la ligne « Vous vivez une situation proche ? », qui pré-remplit le message avec le cas.
 - `/formations` (catalogue avec ancres `#leadership`, `#management`, `#communication`,
   `#efficacite-personnelle`), puis `/formations/<slug>` : une page par formation du catalogue,
   plus `cadre-relationnel-et-performance` et `gestion-de-conflit` (générées par `formations/_generer.py`)
 - `/a-propos` (ancres `#fondatrice`, `#methode` pour « La méthode », `#qualite` pour Qualiopi), `/nous-contacter`, `/mentions-legales`,
   `/confidentialite` (ancre `#cookies`), `/accessibilite`
 - Une page absente renvoie `404.html`.
+
+**Recherche** : l'icône de la navbar, Ctrl+K (ou Cmd+K) et le bouton du panneau mobile ouvrent
+la recherche (script.js, `initRecherche`). Elle lit `/search-index.json`, généré par
+`python3 _index-recherche.py` (exclu du déploiement) : **relancer ce script après toute
+modification de contenu**, puis le commiter avec les pages.
 
 **Chemins absolus partout** (`/styles.css`, `/assets/...`, `/partials/...`) : les pages imbriquées
 (`/cas-clients/chanel`) doivent fonctionner.

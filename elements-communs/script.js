@@ -317,12 +317,29 @@
       var exemples = champ.getAttribute('data-frappe').split('||');
       champ.setAttribute('placeholder', exemples[0]);
       if (mouvementReduit.matches) return;
+      // Les champs d'un même formulaire tapent l'un après l'autre (nom, e-mail, puis message), jamais
+      // en même temps : un verrou par formulaire. Un exemple unique (nom, e-mail) n'est tapé qu'une
+      // fois, et plus du tout dès que le visiteur a touché au champ.
+      var form = champ.form || champ.closest('form') || document.body;
+      var verrou = form._frappe || (form._frappe = { libre: true, file: [] });
+      var unique = exemples.length === 1, fini = false, tient = false;
       var rang = 0, pos = 0, sens = 1, minut = null, actif = false, visible = false;
-      function peutTaper() { return visible && document.activeElement !== champ && champ.value === ''; }
+      function rendre() {
+        if (!tient) return;
+        tient = false;
+        var suivant = verrou.file.shift();
+        if (suivant) suivant(); else verrou.libre = true;
+      }
+      function prendre(suite) {
+        if (verrou.libre) { verrou.libre = false; tient = true; suite(); }
+        else verrou.file.push(function () { tient = true; suite(); });
+      }
+      function peutTaper() { return !fini && visible && document.activeElement !== champ && champ.value === ''; }
       function arreter() {
         clearTimeout(minut);
         actif = false;
         champ.setAttribute('placeholder', exemples[rang]);
+        rendre();
       }
       function tic() {
         if (!peutTaper()) { arreter(); return; }
@@ -331,7 +348,8 @@
           pos += 1;
           champ.setAttribute('placeholder', texte.slice(0, pos));
           if (pos >= texte.length) {
-            if (exemples.length === 1) { actif = false; return; }
+            rendre();
+            if (unique) { actif = false; fini = true; return; }
             sens = -1;
             minut = setTimeout(tic, 1900);
             return;
@@ -346,14 +364,24 @@
       }
       function demarrer() {
         if (actif || !peutTaper()) return;
-        actif = true; pos = 0; sens = 1;
-        champ.setAttribute('placeholder', '');
-        minut = setTimeout(tic, 500);
+        actif = true;
+        prendre(function () {
+          if (!peutTaper()) { actif = false; champ.setAttribute('placeholder', exemples[rang]); rendre(); return; }
+          pos = 0; sens = 1;
+          champ.setAttribute('placeholder', '');
+          minut = setTimeout(tic, 350);
+        });
       }
-      champ.addEventListener('focus', arreter);
-      champ.addEventListener('input', arreter);
+      champ.addEventListener('focus', function () { if (unique) fini = true; arreter(); });
+      champ.addEventListener('input', function () { if (unique) fini = true; arreter(); });
       champ.addEventListener('blur', function () { setTimeout(demarrer, 600); });
-      visibleQuand(champ, function (v) { visible = v; if (v) demarrer(); }, 0.6);
+      // Vide tant que son tour n'est pas venu : pas d'exemple complet qui disparaît puis se retape.
+      if (champ.value === '') champ.setAttribute('placeholder', '');
+      visibleQuand(champ, function (v) {
+        visible = v;
+        if (v) demarrer();
+        else if (!actif && champ.getAttribute('placeholder') === '') champ.setAttribute('placeholder', exemples[rang]);
+      }, 0.6);
     });
   }
 
@@ -1082,7 +1110,7 @@
 
   function formulaireContact() { return document.querySelector('[data-formulaire-contact]'); }
 
-  function preremplir(sujet, cas, message, defiler) {
+  function preremplir(sujet, cas, message, defiler, depuisUrl) {
     var form = formulaireContact();
     if (!form) return false;
     if (cas && CAS[cas]) {
@@ -1106,10 +1134,14 @@
     if (defiler) {
       var bloc = form.closest('section') || form;
       var reduit = mouvementReduit.matches;
-      bloc.scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: 'start' });
+      // Si la section dépasse l'écran (page Nous contacter, mobile), on centre le message pré-rempli.
+      var cibleDefil = zone && bloc.getBoundingClientRect().height > window.innerHeight * 0.9 ? zone : bloc;
+      cibleDefil.scrollIntoView({ behavior: reduit ? 'auto' : 'smooth', block: cibleDefil === zone ? 'center' : 'start' });
       form.classList.remove('is-prerempli');
       void form.offsetWidth;
       form.classList.add('is-prerempli');
+      // À l'arrivée depuis un lien, sur écran tactile, on n'ouvre pas le clavier d'office.
+      if (depuisUrl && !survolPossible.matches) return true;
       setTimeout(function () {
         var cible = zone || form.querySelector('input, textarea');
         if (!cible) return;
@@ -1129,6 +1161,19 @@
     preremplir(el.getAttribute('data-prefill') || '', el.getAttribute('data-prefill-cas'), el.getAttribute('data-prefill-message'), true);
   });
 
+  // Page cas client : la ligne « Vous vivez une situation proche ? » du bloc contact pré-remplit avec ce cas.
+  function initContactProche() {
+    var slug = document.body.getAttribute('data-cas');
+    if (!slug || !CAS[slug]) return;
+    toutes('[data-contact-proche]').forEach(function (lien) {
+      if (!une(lien, 'proche')) return;
+      lien.href = '/nous-contacter?cas=' + slug;
+      lien.setAttribute('data-prefill-cas', slug);
+      var ligne = lien.closest('.contact__proche');
+      if (ligne) ligne.hidden = false;
+    });
+  }
+
   var urlTraitee = false;
   function preremplirDepuisUrl() {
     if (urlTraitee || !formulaireContact()) return;
@@ -1138,7 +1183,7 @@
     // Clé connue (prise-de-fonction, posture...) ou intitulé libre (nom d'une formation).
     var sujet = /^[a-z-]+$/.test(brut) ? brut : brut.replace(/[^A-Za-zÀ-ÿ0-9 ,'’&%-]/g, '').trim();
     var cas = (params.get('cas') || '').replace(/[^a-z-]/g, '');
-    if (sujet || cas) preremplir(sujet, cas, null, true);
+    if (sujet || cas) preremplir(sujet, cas, null, true, true);
   }
 
   /* ---------- Bandeau de logos en défilement continu (data-marquee) ---------- */
@@ -1261,6 +1306,276 @@
     requestAnimationFrame(pas);
   }
 
+  /* ---------- Recherche du site : icône de la navbar, Ctrl+K, panneau mobile ----------
+     Index statique /search-index.json (généré par _index-recherche.py), chargé à la première ouverture.
+     Recherche insensible aux accents et à la casse, résultats groupés par type, termes surlignés,
+     flèches et Entrée pour naviguer, Échap pour fermer. */
+
+  var recherche = null;
+  var ORDRE_TYPES = ['Page', 'Coaching', 'Cas client', 'Formation'];
+  var LIBELLES_TYPES = { 'Page': 'Pages', 'Coaching': 'Coaching de dirigeant', 'Cas client': 'Cas clients', 'Formation': 'Formations' };
+
+  // Minuscules sans accents, longueur identique au texte d'origine (pour surligner au bon endroit).
+  function plier(texte) {
+    var sortie = '';
+    for (var i = 0; i < texte.length; i += 1) {
+      var c = texte.charAt(i);
+      var d = c.normalize ? c.normalize('NFD').replace(/[̀-ͯ]/g, '') : c;
+      sortie += (d.length === 1 ? d : c).toLowerCase();
+    }
+    return sortie.replace(/[’']/g, "'");
+  }
+  function motsDe(requete) {
+    return plier(requete).split(/[^a-z0-9']+/).map(function (m) { return m.replace(/^'+|'+$/g, ''); })
+      .filter(function (m) { return m.length > 1 || /\d/.test(m); });
+  }
+  function preparer(index) {
+    return index.map(function (p) {
+      var inter = (p.intertitres || []).join(' | ');
+      return {
+        p: p,
+        titre: plier(p.titre + (p.client ? ' ' + p.client : '')),
+        inter: plier(inter),
+        texte: plier((p.description || '') + ' ' + p.texte)
+      };
+    });
+  }
+  function scorer(e, mots) {
+    var total = 0;
+    for (var i = 0; i < mots.length; i += 1) {
+      var m = mots[i], s = 0;
+      var it = e.titre.indexOf(m), ih = e.inter.indexOf(m), ix = e.texte.indexOf(m);
+      if (it < 0 && ih < 0 && ix < 0) return 0;
+      if (it >= 0) s += (it === 0 || e.titre.charAt(it - 1) === ' ') ? 12 : 8;
+      if (ih >= 0) s += 4;
+      if (ix >= 0) s += 1 + Math.min(3, e.texte.split(m).length - 1) * 0.5;
+      total += s;
+    }
+    return total;
+  }
+  // Morceau de texte autour du premier terme trouvé.
+  function extrait(e, mots) {
+    var source = (e.p.description || '') + ' ' + e.p.texte;
+    var plie = plier(source), pos = -1;
+    for (var i = 0; i < mots.length && pos < 0; i += 1) pos = plie.indexOf(mots[i]);
+    if (pos < 0) return e.p.description || e.p.texte.slice(0, 150);
+    var debut = Math.max(0, pos - 60), fin = Math.min(source.length, pos + 120);
+    while (debut > 0 && source.charAt(debut) !== ' ') debut -= 1;
+    while (fin < source.length && source.charAt(fin) !== ' ') fin += 1;
+    return (debut > 0 ? '… ' : '') + source.slice(debut, fin).trim() + (fin < source.length ? ' …' : '');
+  }
+  // Remplit un élément avec le texte, termes recherchés dans des <mark> (aucun HTML injecté).
+  function surligner(el, texte, mots) {
+    var plie = plier(texte), zones = [];
+    mots.forEach(function (m) {
+      var i = plie.indexOf(m);
+      while (i >= 0) { zones.push([i, i + m.length]); i = plie.indexOf(m, i + m.length); }
+    });
+    zones.sort(function (a, b) { return a[0] - b[0]; });
+    var curseur = 0;
+    zones.forEach(function (z) {
+      if (z[0] < curseur) return;
+      if (z[0] > curseur) el.appendChild(document.createTextNode(texte.slice(curseur, z[0])));
+      el.appendChild(elt('mark', null, texte.slice(z[0], z[1])));
+      curseur = z[1];
+    });
+    if (curseur < texte.length) el.appendChild(document.createTextNode(texte.slice(curseur)));
+  }
+
+  function construireRecherche() {
+    var fond = elt('div', 'recherche');
+    fond.id = 'recherche';
+    fond.hidden = true;
+    var boite = elt('div', 'recherche__boite');
+    boite.setAttribute('role', 'dialog');
+    boite.setAttribute('aria-modal', 'true');
+    boite.setAttribute('aria-label', 'Rechercher sur le site');
+    var tete = elt('div', 'recherche__tete');
+    var loupe = icone('search', 20);
+    var champ = elt('input', 'recherche__champ');
+    champ.type = 'search';
+    champ.id = 'recherche-champ';
+    champ.placeholder = 'Rechercher un cas, une formation, un sujet…';
+    champ.setAttribute('autocomplete', 'off');
+    champ.setAttribute('spellcheck', 'false');
+    champ.setAttribute('role', 'combobox');
+    champ.setAttribute('aria-expanded', 'false');
+    champ.setAttribute('aria-controls', 'recherche-resultats');
+    champ.setAttribute('aria-autocomplete', 'list');
+    champ.setAttribute('aria-label', 'Rechercher sur le site');
+    var fermer = elt('button', 'recherche__fermer');
+    fermer.type = 'button';
+    fermer.setAttribute('aria-label', 'Fermer la recherche');
+    fermer.appendChild(elt('span', 'recherche__touche', 'Échap'));
+    tete.appendChild(loupe);
+    tete.appendChild(champ);
+    tete.appendChild(fermer);
+    var resultats = elt('div', 'recherche__resultats');
+    resultats.id = 'recherche-resultats';
+    resultats.setAttribute('role', 'listbox');
+    resultats.setAttribute('aria-label', 'Résultats');
+    var statut = elt('p', 'recherche__statut');
+    statut.setAttribute('role', 'status');
+    statut.setAttribute('aria-live', 'polite');
+    boite.appendChild(tete);
+    boite.appendChild(resultats);
+    boite.appendChild(statut);
+    fond.appendChild(boite);
+    document.body.appendChild(fond);
+    return { fond: fond, boite: boite, champ: champ, resultats: resultats, statut: statut, fermer: fermer,
+      index: null, chargement: null, options: [], actif: -1, retour: null };
+  }
+
+  function chargerIndex() {
+    if (recherche.index) return Promise.resolve(recherche.index);
+    if (!recherche.chargement) {
+      recherche.chargement = fetch('/search-index.json').then(function (r) {
+        if (!r.ok) throw new Error('index');
+        return r.json();
+      }).then(function (donnees) {
+        recherche.index = preparer(donnees);
+        return recherche.index;
+      }).catch(function () {
+        recherche.chargement = null;
+        return null;
+      });
+    }
+    return recherche.chargement;
+  }
+
+  function choisir(i, defiler) {
+    var opts = recherche.options;
+    if (!opts.length) { recherche.actif = -1; recherche.champ.removeAttribute('aria-activedescendant'); return; }
+    i = (i + opts.length) % opts.length;
+    opts.forEach(function (o, k) { o.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+    recherche.actif = i;
+    recherche.champ.setAttribute('aria-activedescendant', opts[i].id);
+    if (defiler) opts[i].scrollIntoView({ block: 'nearest' });
+  }
+
+  function afficherResultats() {
+    var r = recherche, requete = r.champ.value.trim();
+    r.resultats.textContent = '';
+    r.options = [];
+    r.actif = -1;
+    r.champ.removeAttribute('aria-activedescendant');
+    var mots = motsDe(requete);
+    if (!mots.length) {
+      r.champ.setAttribute('aria-expanded', 'false');
+      r.statut.textContent = requete ? 'Tapez au moins deux lettres.' : 'Cas clients, formations, coaching, méthode : tapez quelques lettres.';
+      return;
+    }
+    if (!r.index) { r.statut.textContent = 'Chargement de l’index…'; return; }
+    var trouves = r.index.map(function (e) { return { e: e, s: scorer(e, mots) }; })
+      .filter(function (x) { return x.s > 0; })
+      .sort(function (a, b) { return b.s - a.s; });
+    if (!trouves.length) {
+      r.champ.setAttribute('aria-expanded', 'false');
+      r.statut.textContent = 'Aucun résultat pour « ' + requete + ' ».';
+      return;
+    }
+    var groupes = {};
+    trouves.forEach(function (x) { (groupes[x.e.p.type] = groupes[x.e.p.type] || []).push(x); });
+    var types = ORDRE_TYPES.filter(function (t) { return groupes[t]; })
+      .sort(function (a, b) { return groupes[b][0].s - groupes[a][0].s; });
+    types.forEach(function (type) {
+      var groupe = elt('div', 'recherche__groupe');
+      groupe.setAttribute('role', 'group');
+      var titreId = 'recherche-groupe-' + plier(type).replace(/[^a-z]/g, '');
+      groupe.setAttribute('aria-labelledby', titreId);
+      var titre = elt('p', 'recherche__type', LIBELLES_TYPES[type] || type);
+      titre.id = titreId;
+      groupe.appendChild(titre);
+      groupes[type].slice(0, 6).forEach(function (x) {
+        var lien = elt('a', 'recherche__resultat');
+        lien.href = x.e.p.url;
+        lien.id = 'recherche-option-' + r.options.length;
+        lien.setAttribute('role', 'option');
+        lien.setAttribute('aria-selected', 'false');
+        lien.tabIndex = -1;
+        var t = elt('span', 'recherche__titre');
+        surligner(t, (x.e.p.client ? x.e.p.client + ' : ' : '') + x.e.p.titre, mots);
+        var ex = elt('span', 'recherche__extrait');
+        surligner(ex, extrait(x.e, mots), mots);
+        lien.appendChild(t);
+        lien.appendChild(ex);
+        var idx = r.options.length;
+        lien.addEventListener('mousemove', function () { if (r.actif !== idx) choisir(idx, false); });
+        lien.addEventListener('click', function () { fermerRecherche(false); });
+        groupe.appendChild(lien);
+        r.options.push(lien);
+      });
+      r.resultats.appendChild(groupe);
+    });
+    r.champ.setAttribute('aria-expanded', 'true');
+    r.statut.textContent = trouves.length === 1 ? '1 résultat' : trouves.length + ' résultats';
+    choisir(0, false);
+  }
+
+  function ouvrirRecherche(declencheur) {
+    if (!recherche) return;
+    fermerMobile(false);
+    recherche.retour = declencheur || document.activeElement;
+    recherche.fond.hidden = false;
+    document.body.classList.add('no-scroll');
+    window.requestAnimationFrame(function () { recherche.fond.classList.add('is-open'); });
+    recherche.champ.focus();
+    recherche.champ.select();
+    afficherResultats();
+    chargerIndex().then(function (index) {
+      if (!index) { recherche.statut.textContent = 'La recherche est indisponible pour le moment.'; return; }
+      afficherResultats();
+    });
+  }
+  function fermerRecherche(rendreFocus) {
+    if (!recherche || recherche.fond.hidden) return;
+    recherche.fond.classList.remove('is-open');
+    recherche.fond.hidden = true;
+    document.body.classList.remove('no-scroll');
+    if (rendreFocus !== false && recherche.retour && recherche.retour.focus) recherche.retour.focus({ preventScroll: true });
+  }
+
+  function initRecherche() {
+    var declencheurs = toutes('.navbar__search, [data-recherche-ouvrir]');
+    if (!recherche) {
+      recherche = construireRecherche();
+      var r = recherche;
+      r.champ.addEventListener('input', afficherResultats);
+      r.champ.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown') { e.preventDefault(); choisir(r.actif + 1, true); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); choisir(r.actif - 1, true); }
+        else if (e.key === 'Enter') {
+          var o = r.options[r.actif];
+          if (o) { e.preventDefault(); fermerRecherche(false); window.location.href = o.href; }
+        }
+      });
+      r.fond.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { e.preventDefault(); fermerRecherche(true); return; }
+        if (e.key !== 'Tab') return;
+        // Le focus reste dans la boîte : le champ et le bouton Fermer.
+        e.preventDefault();
+        (document.activeElement === r.champ ? r.fermer : r.champ).focus();
+      });
+      r.fermer.addEventListener('click', function () { fermerRecherche(true); });
+      r.fond.addEventListener('mousedown', function (e) { if (e.target === r.fond) fermerRecherche(true); });
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 'k' || e.key === 'K')) {
+          e.preventDefault();
+          if (r.fond.hidden) ouvrirRecherche(document.activeElement); else fermerRecherche(true);
+        }
+      });
+    }
+    declencheurs.forEach(function (b) {
+      if (!une(b, 'recherche')) return;
+      b.setAttribute('aria-haspopup', 'dialog');
+      b.setAttribute('aria-controls', 'recherche');
+      b.addEventListener('click', function (e) {
+        e.preventDefault();
+        ouvrirRecherche(b.closest('.mobile-panel') ? burger : b);
+      });
+    });
+  }
+
   /* ---------- Écouteurs globaux (une seule fois) ---------- */
 
   document.addEventListener('keydown', function (e) {
@@ -1294,6 +1609,8 @@
     initMarquees();
     initComptes();
     initReveal();
+    initContactProche();
+    initRecherche();
     preremplirDepuisUrl();
   }
 

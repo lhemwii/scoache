@@ -353,7 +353,10 @@
   color: var(--texte-2);
 }
 .ct-agenda .ico { color: var(--noir); }
-.ct-agenda a { display: inline-flex; align-items: center; gap: 6px; color: var(--noir); font-weight: 500; text-underline-position: from-font; }
+.ct-agenda { flex-wrap: nowrap; align-items: flex-start; line-height: 1.5; }
+.ct-agenda > .ico { flex: none; margin-top: 3px; }
+.ct-agenda a { color: var(--noir); font-weight: 500; text-underline-position: from-font; }
+.ct-agenda a .ico { display: inline-block; margin-left: 4px; vertical-align: -1px; }
 .ct-agenda a:hover { color: var(--accent); }
 
 .ct-etapes { display: grid; margin: 0; padding: 0; list-style: none; flex: 1; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }

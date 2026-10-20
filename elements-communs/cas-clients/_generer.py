@@ -15,6 +15,7 @@ Aucun nombre de cas n'est affiché nulle part.
 import html
 import json
 import os
+import re
 import struct
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -925,7 +926,8 @@ def paragraphes(valeur):
     return valeur if isinstance(valeur, list) else [valeur]
 
 
-def tete(titre, description, chemin):
+def tete(titre, description, chemin, cas_slug=None):
+    attr_cas = f' data-cas="{cas_slug}"' if cas_slug else ''
     return f'''<!doctype html>
 <html lang="fr">
 <head>
@@ -945,7 +947,7 @@ def tete(titre, description, chemin):
   <script src="/include.js" defer></script>
   <script src="/script.js" defer></script>
 </head>
-<body class="page-cas">
+<body class="page-cas"{attr_cas}>
 <a class="skip-link" href="#contenu">Aller au contenu</a>
 <div class="page">
   <div data-include="header"></div>
@@ -1145,27 +1147,61 @@ def page_echelle(echelle):
 
 # ---------------------------------------------------------------- pages cas
 
+def premiere_phrase(texte):
+    """Première phrase d'un paragraphe, mot pour mot (jusqu'au premier point suivi d'une majuscule)."""
+    m = re.match(r'(.+?[.!?])(?=\s+[A-ZÀ-ÖØ-Ý«]|\s*$)', texte, re.S)
+    return m.group(1) if m else texte
+
+
+def photo_portrait(cas):
+    """Photo verticale (564 x 800) pour les cartes du carrousel, comme sur l'accueil."""
+    for chemin in (f'assets/home/cas/{cas["slug"]}.jpg', f'assets/cas/{cas["slug"]}.jpg'):
+        if os.path.exists(os.path.join(RACINE, chemin)):
+            return '/' + chemin
+    return photo(cas, True)
+
+
+def proches_etendus(cas):
+    """Les cas proches choisis, puis les autres cas de la même échelle, puis les autres : de quoi faire défiler."""
+    ordre = list(cas['proches'])
+    for c in DONNEES:
+        if c['echelle'] == cas['echelle'] and c['slug'] not in ordre and c['slug'] != cas['slug']:
+            ordre.append(c['slug'])
+    for c in DONNEES:
+        if c['slug'] not in ordre and c['slug'] != cas['slug']:
+            ordre.append(c['slug'])
+    return [PAR_SLUG[s] for s in ordre[:8]]
+
+
+def minuscule(texte):
+    return texte if texte[:2].isupper() else texte[0].lower() + texte[1:]
+
+
 def carte_proche(cas):
     slug = cas['slug']
-    return f'''        <li>
-          <a class="photo photo--entre cas-carte" href="/cas-clients/{slug}">
-            <img src="{photo(cas, True)}" alt="" width="806" height="920" loading="lazy" decoding="async">
-            {puce_photo(cas)}
-            <span class="carte-verre cas-carte__verre">
-              <span class="cas-carte__surtitre">Cas client, {e(cas['nom'])}</span>
-              <span class="cas-carte__titre">{e(cas['titre'])}</span>
-              <span class="cas-carte__lien">Lire le cas {FLECHE.format(16)}</span>
-            </span>
-          </a>
-        </li>'''
+    nom_echelle = PAGES_ECHELLES[cas['echelle']]['court']
+    return f'''            <li class="carrousel__item">
+              <a class="photo carte-photo" href="/cas-clients/{slug}">
+                <img src="{photo_portrait(cas)}" alt="" width="564" height="800" loading="lazy" decoding="async">
+                <span class="logo-puce"><img src="/assets/cas/logos/{slug}.png" alt="{e(cas['nom'])}" width="96" height="32" loading="lazy"></span>
+                <span class="carte-verre">
+                  <span class="carte-verre__eyebrow">{nom_echelle}, {e(minuscule(cas['meta'][0]))}</span>
+                  <span class="carte-verre__titre">{e(cas['titre'])}</span>
+                  <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> {e(cas['nom'])}</span></span>
+                </span>
+              </a>
+            </li>'''
 
 
 def page_cas(cas):
+    """Gabarit « 10 secondes » : le problème (hero), l'essentiel en 30 secondes, ce que le cas démontre,
+    puis le détail mot pour mot, les situations proches et le contact (avec une ligne de pré-remplissage)."""
     slug = cas['slug']
     echelle = ECHELLES[cas['echelle']]
     url_echelle, libelle_echelle = lien_echelle(cas['echelle'])
+    profil = f"{cas['meta'][0]}, {minuscule(echelle)}"
     pastilles = '\n'.join(f'              <li>{e(m)}</li>' for m in cas['meta'])
-    situation = '\n'.join(f'              <p class="cas-situation__texte">{e(p)}</p>' for p in paragraphes(cas['situation']))
+    situation = '\n'.join(f'          <p>{e(p)}</p>' for p in paragraphes(cas['situation']))
     intro_enjeux = ''
     if cas.get('enjeux_intro'):
         intro_enjeux = ('\n          <div class="cas-enjeux__intro">\n'
@@ -1179,22 +1215,34 @@ def page_cas(cas):
           <h3 class="cas-etape__titre"><span class="visually-hidden">{i:02d}, </span>{e(titre)}</h3>
           <p class="cas-etape__texte">{e(texte)}</p>
         </li>''' for i, (titre, texte) in enumerate(cas['etapes'], 1))
-    chiffre = ''
-    if cas['kpi']:
-        valeur, libelle = cas['kpi']
-        chiffre = (f'\n          <p class="cas-chiffre"><span class="cas-chiffre__valeur">{e(valeur)}</span>'
-                   f'<span class="cas-chiffre__libelle">{e(libelle)}</span></p>')
+    blocs_evol = paragraphes(cas['evolutions'])
     blocs = []
-    for bloc in paragraphes(cas['evolutions']):
+    for bloc in blocs_evol:
         if isinstance(bloc, list):
             blocs.append('          <ul class="cas-evolutions__liste">\n'
                          + '\n'.join(f'            <li>{e(t)}</li>' for t in bloc) + '\n          </ul>')
         else:
             blocs.append(f'          <p class="cas-evolutions__texte">{e(bloc)}</p>')
     evolutions = '\n'.join(blocs)
-    proches = '\n'.join(carte_proche(PAR_SLUG[s]) for s in cas['proches'])
-    nb_axes = NOMBRES.get(len(cas['etapes']), f'{len(cas["etapes"])} axes')
+    chiffre = ''
+    if cas['kpi']:
+        valeur, libelle = cas['kpi']
+        chiffre = (f'\n          <p class="cas-chiffre"><span class="cas-chiffre__valeur">{e(valeur)}</span>'
+                   f'<span class="cas-chiffre__libelle">{e(libelle)}</span></p>')
     titre_evolutions = cas.get('evolutions_titre', 'Évolutions observées')
+    nb_axes = NOMBRES.get(len(cas['etapes']), f'{len(cas["etapes"])} axes')
+
+    # En 30 secondes : uniquement des extraits mot pour mot du cas
+    defi = premiere_phrase(paragraphes(cas['situation'])[0])
+    fait = '\n'.join(f'            <li>{e(titre)}</li>' for titre, _ in cas['etapes'][:4])
+    premiere_evol = premiere_phrase(next(b for b in blocs_evol if isinstance(b, str)))
+    if cas['kpi']:
+        change = (f'<p class="cas-30__kpi"><span class="cas-30__valeur">{e(cas["kpi"][0])}</span>'
+                  f'<span class="cas-30__libelle">{e(cas["kpi"][1])}</span></p>\n'
+                  f'          <p class="cas-30__texte cas-30__texte--petit">{e(premiere_evol)}</p>')
+    else:
+        change = f'<p class="cas-30__texte">{e(premiere_evol)}</p>'
+    proches = '\n'.join(carte_proche(c) for c in proches_etendus(cas))
 
     corps = f'''    <nav class="fil-ariane" aria-label="Fil d’Ariane">
       <ol>
@@ -1205,12 +1253,13 @@ def page_cas(cas):
       </ol>
     </nav>
 
+    <!-- Hero : le client, son profil et le problème -->
     <section class="section section--plateau" aria-labelledby="titre-page">
       <div class="plateau cas-fiche">
         <div class="cas-fiche__texte">
           <div class="cas-fiche__intro">
             <span class="cas-fiche__logo">{logo(slug, 170, 48, 170 * 48 * 0.5, charge='eager')}</span>
-            <p class="eyebrow eyebrow--lg">Cas client, {echelle[0].lower() + echelle[1:]}</p>
+            <p class="eyebrow eyebrow--lg">{e(profil)}</p>
             <h1 class="cas-fiche__titre" id="titre-page">{e(cas['titre'])}</h1>
             <ul class="cas-pastilles" aria-label="En bref">
 {pastilles}
@@ -1219,14 +1268,57 @@ def page_cas(cas):
           <a class="link-caps link-caps--accent" href="{url_echelle}">{libelle_echelle} {FLECHE.format(16)}</a>
         </div>
         <div class="carte cas-fiche__carte">
-          <div class="photo photo--entre cas-fiche__photo">
+          <div class="photo cas-fiche__photo">
             <img src="{photo(cas)}" alt="" width="1264" height="1200" fetchpriority="high" decoding="async">
             {puce_photo(cas, 'eager')}
-            <div class="cas-situation">
-              <h2 class="cas-situation__titre">Situation</h2>
-{situation}
-            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- En 30 secondes : le défi, ce que nous avons fait, ce qui a changé -->
+    <section class="section cas-30" aria-labelledby="titre-30">
+      <h2 class="visually-hidden" id="titre-30">Le cas en 30 secondes</h2>
+      <p class="eyebrow cas-30__eyebrow" aria-hidden="true">En 30 secondes</p>
+      <div class="plateau cas-30__plateau">
+        <div class="carte cas-30__carte">
+          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">01</span>Le défi</h3>
+          <p class="cas-30__texte">{e(defi)}</p>
+        </div>
+        <div class="carte cas-30__carte">
+          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">02</span>Ce que nous avons fait</h3>
+          <ul class="cas-30__liste">
+{fait}
+          </ul>
+        </div>
+        <div class="carte cas-30__carte">
+          <h3 class="cas-30__label"><span class="cas-30__num" aria-hidden="true">03</span>Ce qui a changé</h3>
+          {change}
+        </div>
+      </div>
+    </section>
+
+    <!-- Ce que ce cas démontre : grand énoncé, sans aplat bleu -->
+    <section class="section cas-demontre-bloc" aria-labelledby="titre-demontre">
+      <div class="plateau">
+        <div class="carte cas-demontre">
+          <h2 class="cas-surtitre-13" id="titre-demontre">Ce que ce cas démontre</h2>
+          <p class="cas-demontre__texte">{e(cas['demontre'])}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Le détail, mot pour mot -->
+    <section class="section" aria-labelledby="titre-situation">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Le détail du cas</p>
+          <h2 class="section-head__title" id="titre-situation">Situation</h2>
+        </div>
+      </div>
+      <div class="plateau">
+        <div class="carte cas-situation-detail">
+{situation}
         </div>
       </div>
     </section>
@@ -1259,37 +1351,53 @@ def page_cas(cas):
       </ol>
     </section>
 
-    <section class="section cas-section-evolutions" aria-label="{e(titre_evolutions)} et enseignements">
-      <div class="plateau cas-evolutions">
-        <div class="carte cas-evolutions__carte">
-          <h2 class="cas-surtitre-13">{e(titre_evolutions)}</h2>{chiffre}
-{evolutions}
+    <section class="section cas-section-evolutions" aria-labelledby="titre-evolutions">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Ce qui a changé</p>
+          <h2 class="section-head__title" id="titre-evolutions">{e(titre_evolutions)}</h2>
         </div>
-        <div class="carte cas-demontre">
-          <h2 class="cas-surtitre-13">Ce que ce cas démontre</h2>
-          <p class="cas-demontre__texte">{e(cas['demontre'])}</p>
+      </div>
+      <div class="plateau">
+        <div class="carte cas-evolutions__carte">{chiffre}
+{evolutions}
         </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="titre-proches">
-      <div class="section-head">
-        <div class="section-head__text">
-          <p class="eyebrow">Autres cas clients</p>
-          <h2 class="section-head__title" id="titre-proches">D’autres situations proches</h2>
+    <!-- D'autres situations proches : le carrousel de l'accueil, à défilement automatique -->
+    <section class="section cas-proches-bloc" aria-labelledby="titre-proches">
+      <div data-carrousel data-carrousel-auto="5000">
+        <div class="section-head">
+          <div class="section-head__text">
+            <p class="eyebrow">Autres cas clients</p>
+            <h2 class="section-head__title" id="titre-proches">D’autres situations proches</h2>
+          </div>
         </div>
-        <a class="link-caps link-caps--accent section-head__link" href="/cas-clients">Tous les cas clients {FLECHE.format(16)}</a>
-      </div>
-      <ul class="cas-proches">
+        <div class="carrousel">
+          <ul class="carrousel__piste" tabindex="0" aria-label="D’autres situations proches, faire défiler horizontalement">
 {proches}
-      </ul>
+          </ul>
+          <div class="carrousel__pied">
+            <div class="carrousel__progression" aria-hidden="true"><span></span></div>
+            <div class="carrousel__commandes">
+              <div class="carrousel__fleches">
+                <button type="button" class="fleche" data-carrousel-prec aria-label="Cas précédents"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-left"/></svg></button>
+                <button type="button" class="fleche" data-carrousel-suiv aria-label="Cas suivants"><svg class="ico" width="20" height="20" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-right"/></svg></button>
+              </div>
+              <a class="link-caps" href="/cas-clients">Tous les cas clients</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 '''
     titre_page = f'{cas["nom"]}, cas client, Scoaché'
     if slug == 'michael-page-collectif':
         titre_page = f'{cas["nom"]}, coaching collectif, cas client, Scoaché'
-    description = f'Cas client {cas["nom"]} : {cas["titre"][0].lower() + cas["titre"][1:]}.'
-    ecrire(f'cas-clients/{slug}.html', tete(titre_page, description, f'/cas-clients/{slug}') + corps + PIED + '</body>\n</html>\n')
+    description = f'Cas client {cas["nom"]} : {minuscule(cas["titre"])}.'
+    ecrire(f'cas-clients/{slug}.html',
+           tete(titre_page, description, f'/cas-clients/{slug}', slug) + corps + PIED + '</body>\n</html>\n')
 
 
 # ---------------------------------------------------------------- aperçus de l'accueil
