@@ -1071,7 +1071,7 @@ def ligne(cas, rang):
             <p class="cas-ligne__resume">{e(cas['resume'])}</p>
             <a class="link-caps link-caps--accent" href="{url}">Lire le cas<span class="visually-hidden"> {e(cas['nom'])}</span> {FLECHE.format(16)}</a>
           </div>
-          <a class="photo cas-ligne__photo" href="{url}" tabindex="-1" aria-hidden="true">
+          <a class="photo photo--texture cas-ligne__photo" href="{url}" tabindex="-1" aria-hidden="true">
             <img src="{photo(cas, True)}" alt="" width="600" height="420" loading="{'eager' if rang < 2 else 'lazy'}" decoding="async">
             {puce_photo(cas, 'eager' if rang < 2 else 'lazy')}
           </a>
@@ -1113,7 +1113,7 @@ def page_echelle(echelle):
           </div>
           {PREUVE}
         </div>
-        <a class="photo cas-hero__photo" href="/cas-clients/{premier['slug']}">
+        <a class="photo photo--texture cas-hero__photo" href="/cas-clients/{premier['slug']}">
           <img src="{photo(premier)}" alt="" width="1264" height="1200" fetchpriority="high" decoding="async">
           <span class="carte-verre cas-hero__verre">
             <span class="carte-verre__eyebrow">Cas client, {e(premier['nom'])}</span>
@@ -1181,7 +1181,7 @@ def carte_proche(cas):
     slug = cas['slug']
     nom_echelle = PAGES_ECHELLES[cas['echelle']]['court']
     return f'''            <li class="carrousel__item">
-              <a class="photo carte-photo" href="/cas-clients/{slug}">
+              <a class="photo photo--texture carte-photo" href="/cas-clients/{slug}">
                 <img src="{photo_portrait(cas)}" alt="" width="564" height="800" loading="lazy" decoding="async">
                 <span class="logo-puce"><img src="/assets/cas/logos/{slug}.png" alt="{e(cas['nom'])}" width="96" height="32" loading="lazy"></span>
                 <span class="carte-verre">
@@ -1269,7 +1269,7 @@ def page_cas(cas):
           <a class="link-caps link-caps--accent" href="{url_echelle}">{libelle_echelle} {FLECHE.format(16)}</a>
         </div>
         <div class="carte cas-fiche__carte">
-          <div class="photo cas-fiche__photo">
+          <div class="photo photo--texture cas-fiche__photo">
             <img src="{photo(cas)}" alt="" width="1264" height="1200" fetchpriority="high" decoding="async">
             {puce_photo(cas, 'eager')}
           </div>
@@ -1406,6 +1406,9 @@ def apercus_accueil():
             'nom': c['nom'], 'echelle': ECHELLES[c['echelle']], 'meta': meta_ligne(c), 'titre': c['titre'],
             'situation': c['resume'], 'enjeux': c['enjeux'][:4], 'kpi': c['kpi'], 'demontre': c['demontre'],
             'logo': {'l': l, 'h': h},
+            # Parcours du hero : « Le défi » et « Ce qui a changé », mot pour mot comme sur la page du cas
+            'defi': premiere_phrase(paragraphes(c['situation'])[0]),
+            'change': premiere_phrase(next(b for b in paragraphes(c['evolutions']) if isinstance(b, str))),
         }
     chemin = os.path.join(RACINE, 'index.html')
     with open(chemin, encoding='utf-8') as f:

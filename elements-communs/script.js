@@ -605,9 +605,12 @@
         if (cible) arreterAuto();
         var large = ecranLarge.matches;
         var dureeMax = 0;
+        // Carte et détail reliés visuellement ; les autres cartes s'effacent
+        racine.classList.toggle('a-un-ouvert', !!cible);
         tousItems().forEach(function (item) {
           var ouvrir = item === cible;
           var detail = detailDe(item);
+          item.classList.toggle('is-lie', ouvrir);
           carteDe(item).setAttribute('aria-expanded', ouvrir ? 'true' : 'false');
           detail.inert = !ouvrir;
           if (!large) { item.classList.toggle('is-ouvert', ouvrir); return; }
@@ -846,6 +849,8 @@
           c.querySelector('.enjeu__bouton').setAttribute('aria-expanded', o ? 'true' : 'false');
           c.querySelector('.enjeu__panneau').inert = !o;
         });
+        // Les autres cartes s'effacent tant qu'un enjeu est ouvert
+        grille.classList.toggle('a-une-ouverte', !!ouvrir);
         if (mouvementReduit.matches) return;
         var decalage = 0;
         if (ouvrir) {
@@ -951,7 +956,8 @@
         citation: fig.querySelector('.temoignages__citation p').textContent,
         nom: fig.querySelector('.temoin__nom').textContent,
         role: fig.querySelector('.temoin__role').textContent,
-        photo: fig.querySelector('.temoin__photo').getAttribute('src')
+        photo: fig.querySelector('.temoin__photo').getAttribute('src'),
+        logo: lireLogo(fig)
       };
     }
     var legende = fig.querySelector('figcaption').textContent;
@@ -960,18 +966,43 @@
       citation: fig.querySelector('blockquote p').textContent,
       nom: legende.slice(0, i).trim(),
       role: legende.slice(i + 1).trim(),
-      photo: fig.querySelector('.temoin__photo').getAttribute('src')
+      photo: fig.querySelector('.temoin__photo').getAttribute('src'),
+      logo: lireLogo(fig)
     };
+  }
+  // Logo de l'entreprise du témoin : image en couleur, ou nom en toutes lettres quand aucun fichier n'existe
+  function lireLogo(fig) {
+    var l = fig.querySelector('.temoin__logo');
+    if (!l) return null;
+    return l.tagName === 'IMG' ? { src: l.getAttribute('src'), w: l.getAttribute('width'), h: l.getAttribute('height') } : { texte: l.textContent };
+  }
+  function ecrireLogo(fig, logo, parent) {
+    var ancien = fig.querySelector('.temoin__logo');
+    if (!logo) { if (ancien) ancien.remove(); return; }
+    var nouveau;
+    if (logo.src) {
+      nouveau = elt('img', 'temoin__logo');
+      nouveau.src = logo.src;
+      nouveau.alt = '';
+      nouveau.width = logo.w;
+      nouveau.height = logo.h;
+    } else {
+      nouveau = elt('span', 'temoin__logo temoin__logo--texte', logo.texte);
+      nouveau.setAttribute('aria-hidden', 'true');
+    }
+    if (ancien) ancien.replaceWith(nouveau); else parent.appendChild(nouveau);
   }
   function ecrireTemoignage(fig, t, principal) {
     if (principal) {
       fig.querySelector('.temoignages__citation p').textContent = t.citation;
       fig.querySelector('.temoin__nom').textContent = t.nom;
       fig.querySelector('.temoin__role').textContent = t.role;
+      ecrireLogo(fig, t.logo, fig.querySelector('.temoin'));
     } else {
       fig.querySelector('blockquote p').textContent = t.citation;
       fig.querySelector('figcaption').textContent = t.nom + ', ' + t.role;
       fig.querySelector('.temoignages__promouvoir .visually-hidden').textContent = 'Afficher en grand le témoignage de ' + t.nom;
+      ecrireLogo(fig, t.logo, fig.querySelector('.temoignages__court-texte'));
     }
     fig.querySelector('.temoin__photo').setAttribute('src', t.photo);
   }
@@ -981,7 +1012,7 @@
       if (!une(bloc, 'temoignages')) return;
       var principal = bloc.querySelector('.temoignages__principal');
       var courts = toutes('.temoignages__court', bloc);
-      var interagi = false, visible = false, rang = 0, minut = null, enCours = false;
+      var visible = false, rang = 0, minut = null, enCours = false;
 
       function promouvoir(fig, parUtilisateur) {
         if (enCours) return;
@@ -999,25 +1030,49 @@
           enCours = false;
         }, duree);
       }
-      courts.forEach(function (fig) {
-        fig.querySelector('.temoignages__promouvoir').addEventListener('click', function () {
-          arreter();
-          promouvoir(fig, true);
-        });
-      });
-      function arreter() { interagi = true; clearTimeout(minut); }
-      function tourner() {
+      /* Rotation continue toutes les 6 s. Un clic choisit un témoignage : la rotation reprend
+         10 s plus tard, jamais arrêtée pour de bon. Pause seulement pendant le survol à la souris
+         (ou tant que le clavier est sur une carte). Rien ne tourne avec « réduire les animations ». */
+      var INTERVALLE = 6000, APRES_CLIC = 10000;
+      var survol = false, focusClavier = false, repriseApres = 0;
+      function planifier(delai) {
         clearTimeout(minut);
-        if (interagi || !visible || document.hidden) return;
+        if (mouvementReduit.matches || !visible || document.hidden || survol || focusClavier) return;
+        delai = Math.max(delai || INTERVALLE, repriseApres - Date.now());
         minut = setTimeout(function () {
-          if (interagi || !visible) return;
+          if (survol || focusClavier || !visible || document.hidden) return;
           promouvoir(courts[rang % courts.length], false);
           rang += 1;
-          tourner();
-        }, 8000);
+          planifier(INTERVALLE);
+        }, delai);
       }
-      ['pointerdown', 'keydown', 'focusin'].forEach(function (type) { bloc.addEventListener(type, arreter); });
-      if (!mouvementReduit.matches) visibleQuand(bloc, function (v) { visible = v; if (v) tourner(); else clearTimeout(minut); }, 0.4);
+      courts.forEach(function (fig) {
+        fig.querySelector('.temoignages__promouvoir').addEventListener('click', function () {
+          promouvoir(fig, true);
+          repriseApres = Date.now() + APRES_CLIC;
+          planifier(APRES_CLIC);
+        });
+      });
+      bloc.addEventListener('pointerenter', function (e) {
+        if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
+        survol = true;
+        clearTimeout(minut);
+      });
+      bloc.addEventListener('pointerleave', function (e) {
+        if (!survol) return;
+        survol = false;
+        planifier(INTERVALLE);
+      });
+      bloc.addEventListener('focusin', function (e) {
+        var t = e.target;
+        if (t.matches && t.matches(':focus-visible')) { focusClavier = true; clearTimeout(minut); }
+      });
+      bloc.addEventListener('focusout', function (e) {
+        if (bloc.contains(e.relatedTarget)) return;
+        if (focusClavier) { focusClavier = false; planifier(INTERVALLE); }
+      });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) planifier(INTERVALLE); });
+      if (!mouvementReduit.matches) visibleQuand(bloc, function (v) { visible = v; if (v) planifier(INTERVALLE); else clearTimeout(minut); }, 0.4);
 
       // Citation principale révélée mot à mot à la première apparition
       var citation = principal.querySelector('[data-mots] p');
@@ -1041,6 +1096,231 @@
           setTimeout(function () { citation.textContent = texte; citation.removeAttribute('aria-label'); }, mots.length * 18 + 600);
         }, 0.5);
       }
+    });
+  }
+
+  /* ---------- Hero : parcours interactif (data-hero-parcours) ----------
+     Un clic sur l'une des trois situations ne quitte plus la page : la carte s'agrandit sur place
+     (grid-template-rows 0fr vers 1fr, comme les enjeux) et déroule quatre étapes : la situation,
+     l'accompagnement, le cas le plus proche, puis le contact pré-rempli. « Suivant », « Retour »,
+     points de progression, × pour revenir à la liste, Échap aussi. Textes : #parcours-hero (pages
+     offre) et #cas-apercus (pages cas), mot pour mot. */
+  var ETAPES_PARCOURS = ['La situation', 'Notre accompagnement', 'Un cas proche', 'Parlons-en'];
+
+  function construireParcours(cle, p, cas) {
+    var racine = elt('div', 'parcours');
+    racine.setAttribute('role', 'group');
+    racine.setAttribute('aria-label', 'Parcours : ' + p.situation);
+
+    var haut = elt('div', 'parcours__haut');
+    var progression = elt('div', 'parcours__progression');
+    var points = elt('ol', 'parcours__points');
+    points.setAttribute('aria-hidden', 'true');
+    ETAPES_PARCOURS.forEach(function () { points.appendChild(elt('li')); });
+    progression.appendChild(points);
+    progression.appendChild(elt('p', 'parcours__nom-etape'));
+    haut.appendChild(progression);
+    var fermer = elt('button', 'parcours__fermer');
+    fermer.type = 'button';
+    fermer.setAttribute('aria-label', 'Revenir aux situations');
+    fermer.appendChild(icone('x', 18));
+    haut.appendChild(fermer);
+    racine.appendChild(haut);
+
+    var etapes = elt('div', 'parcours__etapes');
+    function etape(i) {
+      var bloc = elt('section', 'parcours__etape');
+      bloc.setAttribute('aria-label', ETAPES_PARCOURS[i]);
+      etapes.appendChild(bloc);
+      return bloc;
+    }
+    function titre(bloc, texte) {
+      var h = elt('h3', 'parcours__titre', texte);
+      h.tabIndex = -1;
+      bloc.appendChild(h);
+      return h;
+    }
+    function puceEchelle(bloc) {
+      var puce = elt('p', 'parcours__echelle');
+      puce.appendChild(icone(p.icone, 16));
+      puce.appendChild(elt('span', null, p.echelle));
+      bloc.appendChild(puce);
+    }
+
+    // 1. La situation, formulée comme un problème
+    var e1 = etape(0);
+    puceEchelle(e1);
+    titre(e1, p.situation);
+    e1.appendChild(elt('p', 'parcours__texte parcours__texte--lg', p.probleme));
+
+    // 2. Comment Scoaché l'accompagne : l'échelle et trois étapes
+    var e2 = etape(1);
+    puceEchelle(e2);
+    titre(e2, p.promesse);
+    var liste = elt('ol', 'parcours__liste');
+    p.etapes.forEach(function (et, i) {
+      var li = elt('li');
+      li.appendChild(elt('span', 'parcours__num', String(i + 1)));
+      var t = elt('span', 'parcours__liste-texte');
+      t.appendChild(elt('strong', null, et[0]));
+      t.appendChild(elt('span', null, et[1]));
+      li.appendChild(t);
+      liste.appendChild(li);
+    });
+    e2.appendChild(liste);
+    var voirOffre = elt('a', 'link-caps', 'Voir le ' + p.echelle.charAt(0).toLowerCase() + p.echelle.slice(1));
+    voirOffre.href = p.lien;
+    e2.appendChild(voirOffre);
+
+    // 3. Le cas le plus proche
+    var e3 = etape(2);
+    if (cas) {
+      var puce = elt('span', 'parcours__logo');
+      var img = elt('img');
+      img.src = '/assets/cas/logos/' + p.cas + '.png';
+      img.alt = cas.nom;
+      if (cas.logo) { img.width = cas.logo.l; img.height = cas.logo.h; }
+      puce.appendChild(img);
+      e3.appendChild(puce);
+      titre(e3, cas.titre);
+      var grille = elt('div', 'parcours__cas');
+      var defi = elt('div', 'parcours__cas-bloc');
+      defi.appendChild(elt('p', 'parcours__label', 'Le défi'));
+      defi.appendChild(elt('p', 'parcours__texte', cas.defi));
+      grille.appendChild(defi);
+      var change = elt('div', 'parcours__cas-bloc');
+      change.appendChild(elt('p', 'parcours__label', 'Ce qui a changé'));
+      if (cas.kpi) {
+        var kpi = elt('p', 'parcours__kpi');
+        kpi.appendChild(elt('span', 'parcours__kpi-valeur', cas.kpi[0]));
+        kpi.appendChild(elt('span', 'parcours__kpi-libelle', cas.kpi[1]));
+        change.appendChild(kpi);
+      }
+      change.appendChild(elt('p', 'parcours__texte', cas.change));
+      grille.appendChild(change);
+      e3.appendChild(grille);
+      var voirCas = elt('a', 'link-caps', 'Voir le cas');
+      voirCas.href = '/cas-clients/' + p.cas;
+      e3.appendChild(voirCas);
+    }
+
+    // 4. Le contact, pré-rempli avec la situation
+    var e4 = etape(3);
+    puceEchelle(e4);
+    titre(e4, 'Une situation à discuter ? Parlons-en, sans engagement.');
+    e4.appendChild(elt('p', 'parcours__texte', p.situation + ', ' + p.echelle.charAt(0).toLowerCase() + p.echelle.slice(1) + ' : le formulaire de contact reprend votre situation.'));
+    var cta = elt('a', 'btn btn--noir btn--lg parcours__cta', 'Nous contacter ');
+    cta.href = '/nous-contacter?sujet=' + p.sujet;
+    cta.setAttribute('data-prefill', p.sujet);
+    cta.setAttribute('data-prefill-message', p.message);
+    cta.appendChild(icone('arrow', 18));
+    e4.appendChild(cta);
+    racine.appendChild(etapes);
+
+    var nav = elt('div', 'parcours__nav');
+    var retour = elt('button', 'parcours__retour');
+    retour.type = 'button';
+    retour.appendChild(icone('arrow', 16));
+    retour.appendChild(elt('span', null, 'Retour'));
+    var suivant = elt('button', 'btn btn--noir parcours__suivant');
+    suivant.type = 'button';
+    suivant.appendChild(elt('span', null, 'Suivant'));
+    suivant.appendChild(icone('arrow', 16));
+    nav.appendChild(retour);
+    nav.appendChild(suivant);
+    racine.appendChild(nav);
+    return racine;
+  }
+
+  function initParcoursHero() {
+    var zone = document.querySelector('[data-hero-parcours]');
+    var source = document.getElementById('parcours-hero');
+    if (!zone || !source || !une(zone, 'parcours')) return;
+    var donnees;
+    try { donnees = JSON.parse(source.textContent); } catch (err) { return; }
+    var carte = zone.closest('.hero__carte');
+    var vueListe = carte.querySelector('[data-hero-liste]');
+    var interieur = zone.querySelector('.hero__vue-interieur');
+    var cas = lireDonneesCas() || {};
+    var parcours = null, rang = 0, declencheur = null;
+    zone.inert = true;
+
+    function etapes() { return toutes('.parcours__etape', parcours); }
+    function montrer(i, focus) {
+      var liste = etapes();
+      rang = Math.max(0, Math.min(liste.length - 1, i));
+      liste.forEach(function (bloc, j) {
+        bloc.classList.toggle('is-active', j === rang);
+        bloc.classList.toggle('is-passee', j < rang);
+        bloc.inert = j !== rang;
+      });
+      toutes('.parcours__points li', parcours).forEach(function (pt, j) {
+        pt.classList.toggle('is-active', j === rang);
+        pt.classList.toggle('is-fait', j < rang);
+      });
+      parcours.querySelector('.parcours__nom-etape').textContent = ETAPES_PARCOURS[rang];
+      var nom = parcours.querySelector('.parcours__nom-etape');
+      nom.setAttribute('aria-label', 'Étape ' + (rang + 1) + ' sur ' + liste.length + ', ' + ETAPES_PARCOURS[rang]);
+      var suivant = parcours.querySelector('.parcours__suivant');
+      suivant.hidden = rang === liste.length - 1;
+      parcours.querySelector('.parcours__retour span').textContent = rang === 0 ? 'Les situations' : 'Retour';
+      if (focus) {
+        var h = liste[rang].querySelector('.parcours__titre');
+        if (h) h.focus({ preventScroll: true });
+        // Le haut de la carte reste visible
+        var haut = carte.getBoundingClientRect().top;
+        if (haut < margeHaute()) guiderFenetre(carte, haut - margeHaute(), mouvementReduit.matches ? 0 : DUREE_OUVERTURE);
+      }
+    }
+    function ouvrir(cle, lien) {
+      var p = donnees[cle];
+      if (!p) return false;
+      declencheur = lien;
+      interieur.textContent = '';
+      parcours = construireParcours(cle, p, cas[p.cas]);
+      interieur.appendChild(parcours);
+      parcours.querySelector('.parcours__fermer').addEventListener('click', function () { fermer(true); });
+      parcours.querySelector('.parcours__retour').addEventListener('click', function () {
+        if (rang === 0) fermer(true); else montrer(rang - 1, true);
+      });
+      parcours.querySelector('.parcours__suivant').addEventListener('click', function () {
+        montrer(rang + 1, true);
+        // Dernière étape : le focus va au bouton de contact
+        if (rang === etapes().length - 1) parcours.querySelector('.parcours__cta').focus({ preventScroll: true });
+      });
+      toutes('[data-parcours]', vueListe).forEach(function (a) { a.setAttribute('aria-expanded', a === lien ? 'true' : 'false'); });
+      montrer(0, false);
+      carte.classList.add('is-parcours');
+      carte.setAttribute('data-situation', cle);
+      vueListe.inert = true;
+      zone.inert = false;
+      var h = parcours.querySelector('.parcours__titre');
+      if (h) h.focus({ preventScroll: true });
+      // Sur mobile, la carte qui grandit reste dans le champ
+      var r = carte.getBoundingClientRect();
+      if (r.top < margeHaute()) guiderFenetre(carte, r.top - margeHaute(), mouvementReduit.matches ? 0 : DUREE_OUVERTURE);
+      return true;
+    }
+    function fermer(rendreFocus) {
+      if (!carte.classList.contains('is-parcours')) return;
+      carte.classList.remove('is-parcours');
+      carte.removeAttribute('data-situation');
+      zone.inert = true;
+      vueListe.inert = false;
+      toutes('[data-parcours]', vueListe).forEach(function (a) { a.setAttribute('aria-expanded', 'false'); });
+      if (rendreFocus && declencheur) declencheur.focus({ preventScroll: true });
+      var haut = carte.getBoundingClientRect().top;
+      if (haut < margeHaute()) guiderFenetre(carte, haut - margeHaute(), mouvementReduit.matches ? 0 : DUREE_OUVERTURE);
+    }
+    toutes('[data-parcours]', vueListe).forEach(function (lien) {
+      lien.setAttribute('aria-expanded', 'false');
+      lien.addEventListener('click', function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0) return;
+        if (ouvrir(lien.getAttribute('data-parcours'), lien)) e.preventDefault();
+      });
+    });
+    carte.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && carte.classList.contains('is-parcours')) { e.stopPropagation(); fermer(true); }
     });
   }
 
@@ -1623,6 +1903,7 @@
     initFrappe();
     initCarrousels();
     initEnjeux();
+    initParcoursHero();
     initTemoignages();
     initGaranties();
     initFaq();

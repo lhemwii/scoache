@@ -926,7 +926,7 @@ def page(f):
     cartes = '\n'.join(
         f'''          <li>
             <a class="fo-autre" href="/formations/{a['slug']}">
-              <span class="photo fo-autre__photo"><img src="{photo(a['slug'])}" alt="" width="{LARGEUR_PHOTO}" height="{HAUTEUR_PHOTO}" loading="lazy"></span>
+              <span class="photo photo--texture fo-autre__photo"><img src="{photo(a['slug'])}" alt="" width="{LARGEUR_PHOTO}" height="{HAUTEUR_PHOTO}" loading="lazy"></span>
               <span class="fo-autre__texte"><span class="fo-autre__eyebrow">{e(a['famille'])}</span><span class="fo-autre__titre">{e(a['titre'])}</span></span>
               {ico("arrow")}
             </a>
@@ -987,7 +987,7 @@ def page(f):
           <p class="inst-hero__preuve">{ico("star", 14)}4,9/5 sur Google, 94 % de satisfaction en 2025</p>
         </div>
         <div class="carte fo-hero-carte">
-          <div class="photo"><img src="{photo(f['slug'])}" alt="" width="{LARGEUR_PHOTO}" height="{HAUTEUR_PHOTO}"></div>
+          <div class="photo photo--texture"><img src="{photo(f['slug'])}" alt="" width="{LARGEUR_PHOTO}" height="{HAUTEUR_PHOTO}"></div>
           <div class="fo-bref__haut">
             <h2 class="fo-bref__titre">En bref</h2>
             <img src="/assets/qualiopi.png" alt="Qualiopi, processus certifié, République française" width="100" height="44">

@@ -181,7 +181,7 @@ Variantes : `plateau--10` (padding et gouttière 10), `plateau--colonne`. Grille
           <a class="link-caps" href="/offre">Découvrir l’offre</a>
         </div>
       </div>
-      <p class="hero__preuve"><svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>4,9/5 sur Google, 94 % de satisfaction en 2025</p>
+      <p class="hero__preuve"><svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg><span>4,9/5 sur Google, 94 % de satisfaction en 2025</span></p>
     </div>
     <div class="carte hero__carte">
       <div class="hero__carte-contenu">
@@ -222,6 +222,12 @@ Variantes : `plateau--10` (padding et gouttière 10), `plateau--colonne`. Grille
 (`photo--entre` : contenu réparti haut et bas). Photos et logos partagés dans `assets/cas/`
 (chanel, mazars, manomano, vinci-airports, croix-rouge-francaise) ; les autres cas ajoutent les
 leurs dans `assets/cas-clients/`.
+
+`photo--texture` : photo d'illustration (cas clients, visuels décoratifs), légèrement floutée
+(7 px, zoom 1,12 pour des bords nets), grain et dégradé violet. Toutes les photos `.photo` en
+portent la classe, sauf celles de personnes, qui restent nettes : hero de l'accueil
+(`hero__photo`), portraits des témoins et portrait d'Ilana (hors `.photo`). Les générateurs
+`cas-clients/_generer.py` et `formations/_generer.py` l'ajoutent d'office.
 
 ### Carrousel (progression, flèches, filtres optionnels) : JS fourni
 ```html
@@ -321,8 +327,16 @@ Boutons `btn btn--noir` (et `btn--lg`), lien majuscule souligné `link-caps`, é
   bouton du formulaire.
 - Aucun décompte des cas ou des coachings : pas de « 15 cas », « quinze accompagnements »,
   « 9 individuels ». Dire « nos cas clients », « tous les cas clients ».
-- Formations **discrètes** : un onglet dans le menu « Offre », une section sur `/offre` et un lien
-  dans le pied de page, comme dans le Figma ; jamais dans les héros.
+- Formations **discrètes** : une section sur `/offre` et un lien dans le pied de page ; jamais dans
+  la navbar (le menu « Offre » ne montre que le coaching de dirigeant) ni dans les héros.
+- Navbar : la rubrique de la page courante est une pastille noire pleine, texte blanc (« Offre » sur
+  /offre, /coaching-de-dirigeant/* et /formations*, « Cas clients » sur /cas-clients/*, « À propos »
+  sur /a-propos ; include.js pose `is-current`). Les trois pilules flottantes (logo, navigation,
+  recherche + contact) ont la même hauteur (`--pill-h` : 58 px, 52 px une fois la page défilée,
+  50 px sur mobile).
+- Tailles de texte minimales : surtitres 15 px SemiBold, chapôs sous les titres 17 à 18 px,
+  descriptions de cartes 15 à 16 px, légendes des cartes vitrées 12 à 13 px, lignes de
+  métadonnées 14 px.
 - Photos de cas : toujours la puce logo du client, jamais un chiffre (les chiffres restent dans le texte).
 - Logos clients toujours en couleur, sans filtre ni transparence.
 - Pastilles numérotées toujours claires (`#F1EFEB`, texte noir), jamais une pastille sombre parmi des claires.
@@ -361,8 +375,24 @@ Durées de 0,3 à 0,6 s ; seuls le zoom du hero et le Ken Burns des cas sont len
   mise en avant tournante au repos. `li.enjeu` est en `display: contents` : script.js place le
   panneau sur une rangée pleine largeur sous la rangée de sa carte (propriété `order`), la carte
   ne change jamais de taille et le panneau s'ouvre en grid-template-rows (0fr vers 1fr).
-- **Témoignages** : le partiel tourne seul toutes les 8 s et un clic sur un petit témoignage le
-  passe en grand.
+  Carte ouverte : contour noir, titre plus grand, filet d'accent ; les autres s'estompent
+  (`.a-une-ouverte` sur la grille). Même principe dans le carrousel : la carte ouverte et son
+  détail partagent un contour noir et une languette (`.is-lie`), les autres cartes s'estompent
+  (`.a-un-ouvert`).
+- **Parcours du hero** (accueil) : un clic sur l'une des trois situations de la carte blanche
+  (`a.mega-link[data-parcours="individuel|collectif|organisation"]`) ne quitte pas la page ; la
+  carte s'agrandit sur place et déroule quatre étapes : la situation, l'accompagnement (échelle et
+  trois étapes des pages offre), le cas le plus proche (logo, titre, « Le défi », « Ce qui a
+  changé », lien vers le cas) puis « Nous contacter », qui pré-remplit le formulaire avec la
+  situation. « Suivant », « Retour », points de progression, × ou Échap pour revenir à la liste ;
+  la photo se resserre et se floute. Textes : `#parcours-hero` (pages offre, mot pour mot) et
+  `#cas-apercus` (champs `defi` et `change`, écrits par `cas-clients/_generer.py`). Sans
+  JavaScript, les liens mènent aux pages coaching.
+- **Témoignages** : le partiel tourne seul toutes les 6 s, sans fin ; un clic sur un petit
+  témoignage le passe en grand et la rotation reprend 10 s plus tard. Pause seulement au survol
+  (ou tant que le clavier est dans le bloc). Chaque témoin porte le logo de son entreprise en
+  couleur (`img.temoin__logo`, fichiers de `assets/cas/logos/`) ; sans fichier de logo, son nom
+  en toutes lettres (`span.temoin__logo.temoin__logo--texte`, Darewin). Jamais de logo inventé.
 - **Pré-remplissage du contact** : tout lien `data-prefill="<sujet>"` (et/ou
   `data-prefill-cas="<slug>"`, `data-prefill-message="…"`) fait défiler jusqu'au formulaire de la
   page et écrit une phrase de départ modifiable dans le message. Son `href` pointe vers

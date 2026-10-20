@@ -20,7 +20,7 @@
   line-height: 1.4;
   color: var(--noir);
 }
-.page-offre .of-hero__texte { max-width: 520px; font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-hero__texte { max-width: 520px; font-size: 17px; line-height: 1.5; color: var(--texte-2); }
 .page-offre .of-hero .hero__actions { padding-top: 6px; }
 
 @media (min-width: 1241px) {
@@ -145,7 +145,7 @@
 }
 .page-offre .of-table .of-table__vide { width: 200px; }
 .page-offre .of-table tbody tr { border-bottom: 1px solid var(--bordure); }
-.page-offre .of-table tbody th { padding-left: 0; font-size: 13px; font-weight: 600; color: var(--accent); }
+.page-offre .of-table tbody th { padding-left: 0; font-size: 14px; font-weight: 600; color: var(--accent); }
 .page-offre .of-table td { font-size: 15px; line-height: 1.45; }
 
 /* ---------- Cartes à numéro ou à icône (étapes, transitions, méthode, pour qui) ---------- */
@@ -155,7 +155,7 @@
 .page-offre .of-carte__titre--26 { font-size: 26px; letter-spacing: -0.13px; }
 .page-offre .of-carte__titre--22 { font-size: 22px; letter-spacing: -0.11px; }
 .page-offre .of-carte__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
-.page-offre .of-carte__texte--14 { font-size: 14px; }
+.page-offre .of-carte__texte--14 { font-size: 15px; }
 .page-offre .of-carte__tete { display: flex; align-items: center; gap: 12px; }
 .page-offre .of-carte--qui { gap: 18px; }
 
@@ -182,7 +182,7 @@
   padding: 14px 20px;
 }
 .page-offre .of-formats > div + div { border-left: 1px solid var(--bordure); }
-.page-offre .of-formats dt { font-size: 12px; font-weight: 600; color: var(--accent); }
+.page-offre .of-formats dt { font-size: 13px; font-weight: 600; color: var(--accent); }
 .page-offre .of-formats dd { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.35; }
 
 /* ---------- /coaching-de-dirigeant : onglets « Trois échelles » ---------- */
@@ -240,13 +240,13 @@
   border-radius: 12px;
   background: var(--blanc);
 }
-.page-offre .of-pedagogie__titre { font-size: 14px; font-weight: 600; }
+.page-offre .of-pedagogie__titre { font-size: 15px; font-weight: 600; }
 .page-offre .of-pedagogie ul { display: flex; flex-wrap: wrap; gap: 10px; }
 .page-offre .of-pedagogie li {
   padding: 7px 14px;
   border: 1px solid var(--bordure);
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -298,7 +298,7 @@
 
   .page-offre .of-hero__accroche { font-size: 19px; }
   .page-offre .of-hero__photo { min-height: 360px; }
-  .page-offre .of-hero--offre .hero__lead { font-size: 16px; }
+  .page-offre .of-hero--offre .hero__lead { font-size: 17px; }
   .page-offre .of-orient__titre { font-size: 22px; }
   .page-offre .of-orient .mega-link__title { font-size: 16px; }
 
@@ -322,7 +322,7 @@
   .page-offre .of-table td::before {
     content: attr(data-echelle);
     flex: 0 0 96px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
   }
 
@@ -381,8 +381,8 @@
 .page-offre .of-famille:hover .of-famille__photo img { scale: 1.04; }
 .page-offre .of-famille__texte { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 12px 0; }
 .page-offre .of-famille__titre { font-size: 22px; line-height: 1.25; letter-spacing: -0.11px; }
-.page-offre .of-famille__desc { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
-.page-offre .of-famille__duree { font-size: 13px; color: #8a8a8a; }
+.page-offre .of-famille__desc { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-famille__duree { font-size: 14px; color: #8a8a8a; }
 .page-offre .of-famille__lien {
   margin-top: 2px;
   font-size: 12px;
@@ -426,7 +426,7 @@
   border-bottom: 1px solid var(--bordure);
 }
 .page-offre .of-fiche__ligne:first-child { border-top: 1px solid var(--bordure); }
-.page-offre .of-fiche dt { padding-top: 2px; font-size: 12px; font-weight: 600; color: var(--accent); }
+.page-offre .of-fiche dt { padding-top: 2px; font-size: 13px; font-weight: 600; color: var(--accent); }
 .page-offre .of-fiche dd { margin: 0; font-size: 15px; line-height: 1.4; }
 
 .page-offre .of-echelle__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; padding-top: 4px; }
@@ -479,7 +479,7 @@
   line-height: 1.45;
   color: var(--texte-2);
 }
-.page-offre .of-onglets__format strong { font-size: 12px; font-weight: 600; color: var(--accent); }
+.page-offre .of-onglets__format strong { font-size: 13px; font-weight: 600; color: var(--accent); }
 
 /* ---------- /coaching-de-dirigeant : trois métiers, côte à côte ---------- */
 .page-offre .of-transitions__intro {
@@ -509,7 +509,7 @@
   padding: 13px 0;
   border-top: 1px solid var(--bordure);
 }
-.page-offre .of-palier__ligne dt { padding-top: 2px; font-size: 12px; font-weight: 600; color: var(--accent); }
+.page-offre .of-palier__ligne dt { padding-top: 2px; font-size: 13px; font-weight: 600; color: var(--accent); }
 .page-offre .of-palier__ligne dd { margin: 0; font-size: 16px; line-height: 1.4; }
 /* Les lignes s'alignent d'une colonne à l'autre (même hauteur pour « Rôle », « Horizon »...) */
 @supports (grid-template-rows: subgrid) {

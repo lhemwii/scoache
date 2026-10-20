@@ -10,15 +10,13 @@
 /* ---------- Surtitres ---------- */
 .page-cas .cas-surtitre {
   margin: 0;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.66px;
-  text-transform: uppercase;
   color: var(--accent);
 }
 .page-cas .cas-surtitre-13 {
   margin: 0;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--accent);
 }
@@ -46,7 +44,7 @@
   line-height: 1.06;
   letter-spacing: -0.78px;
 }
-.page-cas .cas-hero__lead { max-width: 520px; font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-hero__lead { max-width: 520px; font-size: 17px; line-height: 1.5; color: var(--texte-2); }
 
 .page-cas .cas-hero__carte {
   display: flex;
@@ -116,7 +114,7 @@
 }
 .page-cas .cas-echelle:hover .cas-echelle__photo img { scale: 1.04; }
 .page-cas .cas-echelle__texte { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 24px 20px 0; }
-.page-cas .cas-echelle__label { font-size: 13px; font-weight: 600; color: var(--accent); }
+.page-cas .cas-echelle__label { font-size: 15px; font-weight: 600; color: var(--accent); }
 .page-cas .cas-echelle__titre { font-size: 26px; line-height: 1.2; letter-spacing: -0.13px; }
 .page-cas .cas-echelle__desc { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
 .page-cas .cas-echelle__lien {
@@ -165,8 +163,8 @@
 }
 .page-cas .cas-ligne__logo { display: flex; align-items: center; height: 48px; }
 .page-cas .cas-ligne__logo img { max-width: 100%; height: auto; }
-.page-cas .cas-ligne__echelle { font-size: 13px; font-weight: 600; color: var(--accent); }
-.page-cas .cas-ligne__meta { font-size: 13px; line-height: 1.45; color: var(--texte-2); }
+.page-cas .cas-ligne__echelle { font-size: 15px; font-weight: 600; color: var(--accent); }
+.page-cas .cas-ligne__meta { font-size: 14px; line-height: 1.45; color: var(--texte-2); }
 
 .page-cas .cas-ligne__corps {
   display: flex;
@@ -261,10 +259,8 @@
 }
 .page-cas .cas-situation__titre {
   margin: 0;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.66px;
-  text-transform: uppercase;
   color: var(--accent);
 }
 .page-cas .cas-situation__texte { font-size: 16px; font-weight: 500; line-height: 1.45; }
@@ -277,12 +273,12 @@
   gap: 8px;
   padding: 20px 0 16px;
   border-bottom: 1px solid var(--bordure);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.5;
   color: var(--texte-2);
 }
 .page-cas .cas-enjeux__intro p:last-child { color: var(--noir); font-weight: 500; }
-.page-cas .cas-lead { max-width: 760px; margin-top: 4px; font-size: 16px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-lead { max-width: 760px; margin-top: 4px; font-size: 17px; line-height: 1.5; color: var(--texte-2); }
 .page-cas .cas-enjeux__liste {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -332,7 +328,7 @@
   line-height: 1.25;
   letter-spacing: -0.11px;
 }
-.page-cas .cas-etape__texte { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-etape__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
 
 /* ---------- Évolutions et enseignement ---------- */
 .page-cas .cas-evolutions > .carte { flex: 1 1 0; padding: 36px; }
@@ -366,7 +362,7 @@
 }
 .page-cas .cas-chiffre__libelle {
   padding-bottom: 6px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.66px;
   text-transform: uppercase;
@@ -406,7 +402,7 @@
 .page-cas .cas-carte .stat { align-self: flex-start; }
 .page-cas .cas-carte__verre { gap: 8px; }
 .page-cas .cas-carte__surtitre {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.66px;
   text-transform: uppercase;
@@ -477,8 +473,8 @@
   .page-cas .cas-echelle { padding-bottom: 22px; }
   .page-cas .cas-echelle__photo { height: 200px; }
   .page-cas .cas-echelle__texte { padding: 18px 12px 0; }
-  .page-cas .cas-enjeux__intro { padding-top: 16px; font-size: 15px; }
-  .page-cas .cas-lead { font-size: 15px; }
+  .page-cas .cas-enjeux__intro { padding-top: 16px; font-size: 17px; }
+  .page-cas .cas-lead { font-size: 17px; }
 
   .page-cas .cas-liste { margin: 0 12px; }
   .page-cas .cas-ligne {
@@ -561,14 +557,12 @@
 }
 .page-cas .cas-30__label {
   margin: 0;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.66px;
-  text-transform: uppercase;
   color: var(--texte-2);
 }
 .page-cas .cas-30__texte { font-size: 17px; line-height: 1.45; }
-.page-cas .cas-30__texte--petit { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-30__texte--petit { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
 .page-cas .cas-30__liste { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
 .page-cas .cas-30__liste li { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 500; line-height: 1.3; }
 .page-cas .cas-30__pastille {
@@ -584,7 +578,7 @@
 }
 .page-cas .cas-30__kpi { display: flex; flex-direction: column; gap: 6px; }
 .page-cas .cas-30__valeur { font-size: 48px; line-height: 1; letter-spacing: -0.72px; color: var(--accent); }
-.page-cas .cas-30__libelle { font-size: 11px; font-weight: 600; letter-spacing: 0.66px; text-transform: uppercase; }
+.page-cas .cas-30__libelle { font-size: 13px; font-weight: 600; letter-spacing: 0.66px; text-transform: uppercase; }
 
 /* Ce que ce cas démontre : carte blanche bordée, filet de 3 px, énoncé de 30 px */
 .page-cas .cas-demontre-bloc { padding-top: 8px; }

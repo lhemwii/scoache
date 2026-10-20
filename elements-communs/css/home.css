@@ -7,8 +7,155 @@
 
 /* ---------- Hero ---------- */
 .page-home .hero__texte { gap: 20px; }
-.page-home .home-hero__eyebrow { font-size: 13px; font-weight: 600; }
+.page-home .home-hero__eyebrow { font-size: 15px; font-weight: 600; }
 .page-home .home-hero__accroche { max-width: 300px; }
+
+/* ---------- Hero : parcours interactif (script.js, initParcoursHero) ----------
+   La liste des situations et le parcours sont deux vues superposées dans la colonne :
+   chacune anime sa hauteur (grid-template-rows 0fr vers 1fr, comme les enjeux), la carte
+   grandit donc en douceur. La photo se resserre et se floute pendant le parcours. */
+.hero__carte-contenu { gap: 0; }
+.hero__carte-contenu > .home-hero__eyebrow { margin-bottom: 10px; }
+.hero__vue {
+  display: grid;
+  grid-template-rows: 1fr;
+  min-width: 0;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.hero__vue-interieur {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease 0.1s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.hero__vue--liste .hero__vue-interieur > .link-caps { margin-top: 18px; }
+.hero__vue--parcours { grid-template-rows: 0fr; }
+.hero__vue--parcours .hero__vue-interieur { align-items: stretch; opacity: 0; transform: translateY(10px); }
+.hero__carte.is-parcours .hero__vue--liste { grid-template-rows: 0fr; }
+.hero__carte.is-parcours .hero__vue--liste .hero__vue-interieur { opacity: 0; transform: translateY(-10px); transition: opacity 0.2s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.hero__carte.is-parcours .hero__vue--parcours { grid-template-rows: 1fr; }
+.hero__carte.is-parcours .hero__vue--parcours .hero__vue-interieur { opacity: 1; transform: none; }
+/* Sans JavaScript, la vue du parcours n'existe pas */
+html:not(.js) .hero__vue--parcours { display: none; }
+
+.hero__photo { transition: flex-basis 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), height 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.hero__photo > img { transition: filter 0.45s ease, scale 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.hero__photo .carte-verre { transition: opacity 0.25s ease, transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.3s ease; }
+.hero__carte.is-parcours .hero__photo { flex-basis: 150px; }
+.hero__carte.is-parcours .hero__photo > img { filter: blur(8px) saturate(0.8); scale: 1.08; }
+.hero__carte.is-parcours .hero__photo .carte-verre { opacity: 0; pointer-events: none; }
+
+.parcours { display: flex; flex-direction: column; gap: 18px; padding-top: 2px; }
+.parcours__haut { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.parcours__progression { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.parcours__points { display: flex; align-items: center; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.parcours__points li {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--greige);
+  transition: width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.3s ease;
+}
+.parcours__points li.is-fait { background: var(--noir); }
+.parcours__points li.is-active { width: 26px; background: var(--accent); }
+.parcours__nom-etape { margin: 0; font-size: 14px; font-weight: 600; color: var(--texte-2); }
+.parcours__fermer {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--bordure);
+  border-radius: 10px;
+  background: var(--blanc);
+  color: var(--noir);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.parcours__fermer:hover { background: var(--gris-clair); }
+
+/* Les quatre étapes partagent la même case : la carte prend la hauteur de la plus haute,
+   aucun saut entre deux étapes ; seule l'étape courante est visible et accessible. */
+.parcours__etapes { display: grid; }
+.parcours__etape {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  grid-area: 1 / 1;
+  min-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(16px);
+  transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 0.45s;
+}
+.parcours__etape.is-passee { transform: translateX(-16px); }
+.parcours__etape.is-active { opacity: 1; visibility: visible; transform: none; transition: opacity 0.35s ease 0.08s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s; }
+.parcours__titre { margin: 0; font-size: 26px; font-weight: 400; line-height: 1.2; letter-spacing: -0.2px; }
+.parcours__titre:focus { outline: none; }
+.parcours__titre:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+.parcours__texte { margin: 0; font-size: 16px; line-height: 1.5; color: var(--texte-2); }
+.parcours__texte--lg { font-size: 18px; color: var(--noir); }
+.parcours__echelle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--gris-clair);
+  font-size: 14px;
+  font-weight: 500;
+}
+.parcours__liste { display: flex; flex-direction: column; gap: 10px; width: 100%; margin: 0; padding: 0; list-style: none; }
+.parcours__liste li { display: flex; align-items: flex-start; gap: 12px; }
+.parcours__num {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--gris-clair);
+  font-size: 14px;
+  font-weight: 600;
+}
+.parcours__liste-texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; font-size: 15px; line-height: 1.45; color: var(--texte-2); }
+.parcours__liste-texte strong { font-size: 16px; font-weight: 600; color: var(--noir); }
+.parcours__logo { display: flex; padding: 8px 12px; border: 1px solid var(--bordure); border-radius: 8px; background: var(--blanc); }
+.parcours__logo img { width: auto; max-width: 120px; height: 32px; object-fit: contain; }
+.parcours__cas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.parcours__cas-bloc { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 10px; background: var(--gris-clair); }
+.parcours__cas .parcours__texte { font-size: 15px; color: var(--noir); }
+.parcours__label { margin: 0; font-size: 15px; font-weight: 600; color: var(--accent); }
+.parcours__kpi { display: flex; flex-direction: column; gap: 2px; margin: 0; }
+.parcours__kpi-valeur { font-size: 30px; line-height: 1.1; letter-spacing: -0.3px; color: var(--accent); }
+.parcours__kpi-libelle { font-size: 14px; font-weight: 600; }
+.parcours__cta { margin-top: 6px; }
+.parcours__nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid var(--bordure); }
+.parcours__retour {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px;
+  border: 0;
+  background: none;
+  color: var(--noir);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.65px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.parcours__retour .ico { transform: rotate(180deg); transition: transform 0.2s ease; }
+.parcours__retour:hover { color: var(--accent); }
+.parcours__retour:hover .ico { transform: rotate(180deg) translateX(2px); }
+.parcours__suivant[hidden] { display: none; }
 
 /* ---------- Logos clients ---------- */
 .home-logos {
@@ -56,7 +203,26 @@
   cursor: pointer;
   transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
 }
-.enjeu.is-ouvert .enjeu__bouton { box-shadow: 0 0 0 1px rgba(71, 68, 193, 0.45); }
+/* Enjeu ouvert : bordure noire, titre un peu plus grand, filet d'accent ; les autres s'effacent */
+.enjeu__bouton { position: relative; transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease, opacity 0.35s ease, filter 0.35s ease; }
+.enjeu__bouton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 26px;
+  width: 0;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.enjeu.is-ouvert .enjeu__bouton { box-shadow: 0 0 0 1.5px var(--noir), 0 16px 34px rgba(13, 13, 26, 0.1); }
+.enjeu.is-ouvert .enjeu__bouton::before { width: 48px; }
+.home-enjeux .enjeu.is-ouvert .carte-lien__titre { font-size: 22px; font-weight: 500; }
+.enjeu.is-ouvert .pastille { background: var(--noir); color: var(--blanc); }
+.a-une-ouverte .enjeu:not(.is-ouvert) .enjeu__bouton { opacity: 0.45; filter: saturate(0.3); }
+.a-une-ouverte .enjeu:not(.is-ouvert) .enjeu__bouton:hover,
+.a-une-ouverte .enjeu:not(.is-ouvert) .enjeu__bouton:focus-visible { opacity: 0.8; filter: none; }
 .enjeu .pastille { transition: background-color 0.3s ease, color 0.3s ease; }
 .enjeu .pastille .ico { transition: transform 0.4s cubic-bezier(0.3, 1.4, 0.5, 1); }
 .enjeu__chevron { transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
@@ -90,7 +256,7 @@
   transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .enjeu.is-ouvert .enjeu__contenu { opacity: 1; transform: none; transition: opacity 0.35s ease 0.08s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.enjeu__label { font-size: 13px; font-weight: 600; color: var(--accent); }
+.enjeu__label { font-size: 15px; font-weight: 600; color: var(--accent); }
 .enjeu__cas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
 .enjeu-cas {
   display: flex;
@@ -210,9 +376,9 @@
 }
 .home-expertise:hover { box-shadow: 0 8px 24px rgba(13, 13, 26, 0.07); }
 .home-expertise__texte { display: flex; flex: 1; flex-direction: column; gap: 6px; min-width: 0; }
-.home-expertise__eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); }
+.home-expertise__eyebrow { font-size: 15px; font-weight: 600; color: var(--accent); }
 .home-expertise__titre { font-size: 22px; font-weight: 400; letter-spacing: -0.11px; }
-.home-expertise__desc { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
+.home-expertise__desc { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
 .home-expertise__fleche { transition: transform 0.2s ease; }
 .home-expertise:hover .home-expertise__fleche { transform: translateX(3px); }
 .home-expertise:hover .home-expertise__titre { text-decoration: underline; text-underline-position: from-font; }
@@ -261,7 +427,10 @@
   .home-logos .marquee.is-anime .marquee__piste { padding-right: 40px; }
   .home-logos .marquee__piste li { height: 40px; }
 
-  .home-enjeux .chapo { font-size: 16px; }
+  .hero__carte.is-parcours .hero__photo { flex-basis: auto; height: 120px; }
+  .parcours__titre { font-size: 23px; }
+  .parcours__cas { grid-template-columns: minmax(0, 1fr); }
+  .home-enjeux .chapo { font-size: 17px; }
   .enjeu__bouton { padding: 22px 20px 20px; }
   .enjeu__contenu { padding: 18px 20px 22px; }
   .enjeu__cas { grid-template-columns: minmax(0, 1fr); }
