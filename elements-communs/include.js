@@ -44,7 +44,9 @@
 
     Promise.all(cibles.map(function (el) {
       var nom = el.getAttribute('data-include');
-      return fetch('/partials/' + nom + '.html', { credentials: 'same-origin' })
+      // URL propre d'abord (Vercel, serve.py), puis .html (python3 -m http.server).
+      return fetch('/partials/' + nom, { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r : fetch('/partials/' + nom + '.html', { credentials: 'same-origin' }); })
         .then(function (r) {
           if (!r.ok) throw new Error('Partiel introuvable : ' + nom + ' (' + r.status + ')');
           return r.text();
