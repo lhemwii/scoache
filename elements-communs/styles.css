@@ -1676,23 +1676,7 @@ a.photo:hover > img { scale: 1.04; }
 }
 .cas-detail__actions .btn { padding: 10px 16px; font-size: 13px; }
 
-/* Chiffre clé dévoilé au survol de la carte photo */
-.carte-photo__kpi {
-  position: absolute !important;
-  top: 16px;
-  left: 16px;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.carte-photo .logo-puce { transition: opacity 0.3s ease; }
-@media (hover: hover) and (pointer: fine) {
-  a.carte-photo:hover .carte-photo__kpi,
-  a.carte-photo:focus-visible .carte-photo__kpi { opacity: 1; transform: none; }
-  a.carte-photo:hover .carte-photo__kpi ~ .logo-puce,
-  a.carte-photo:hover .logo-puce:has(~ .carte-photo__kpi) { opacity: 0; }
-}
-@media (hover: none) { .carte-photo__kpi { display: none; } }
+/* Les photos de cas portent toujours la puce logo du client, jamais un chiffre : les chiffres restent dans le texte. */
 
 /* ---------- Témoignages : fondu enchaîné, promotion au clic, citation mot à mot ---------- */
 .temoignages__principal,

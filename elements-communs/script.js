@@ -654,13 +654,6 @@
           item.appendChild(detail);
           carte.setAttribute('aria-expanded', 'false');
           carte.setAttribute('aria-controls', detail.id);
-          if (d.kpi) {
-            var kpi = elt('span', 'stat stat--verre carte-photo__kpi');
-            kpi.setAttribute('aria-hidden', 'true');
-            kpi.appendChild(elt('span', 'stat__valeur', d.kpi[0]));
-            kpi.appendChild(elt('span', 'stat__libelle', d.kpi[1]));
-            carte.appendChild(kpi);
-          }
           carte.addEventListener('click', function (e) {
             if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0) return;
             e.preventDefault();
@@ -1082,7 +1075,9 @@
     'schoolab': { nom: "Schoolab", titre: "Déployer un coaching individualisé à l’échelle d’une population stratégique", sujet: 'equipe' },
     'jobteaser': { nom: "Jobteaser", titre: "Préserver son impact et sa capacité d’action dans un environnement sous tension", sujet: 'posture' },
     'groupe-nice-matin': { nom: "Groupe Nice-Matin", titre: "Faire évoluer la posture de managers clés dans un contexte de transformation", sujet: 'transformation' },
-    'homeexchange': { nom: "HomeExchange", titre: "Trouver son alignement pour asseoir son leadership et mieux embarquer ses équipes", sujet: 'posture' }
+    'homeexchange': { nom: "HomeExchange", titre: "Trouver son alignement pour asseoir son leadership et mieux embarquer ses équipes", sujet: 'posture' },
+    'enseignement-catholique-de-paris': { nom: "Enseignement catholique de Paris", titre: "Accompagner des dirigeants d’établissement dans la gestion des conflits", sujet: 'equipe' },
+    'michael-page-collectif': { nom: "Michael Page", titre: "Renforcer la cohésion managériale et structurer le fonctionnement d’une équipe", sujet: 'comite' }
   };
 
   function formulaireContact() { return document.querySelector('[data-formulaire-contact]'); }
@@ -1094,7 +1089,14 @@
       var t = CAS[cas].titre;
       message = message || ('Bonjour, notre situation ressemble au cas ' + CAS[cas].nom + ' : ' + t.charAt(0).toLowerCase() + t.slice(1) + '.');
     }
-    if (sujet && !SUJETS.hasOwnProperty(sujet)) sujet = ANCIENS_BESOINS[sujet] || '';
+    if (sujet && !SUJETS.hasOwnProperty(sujet)) {
+      if (ANCIENS_BESOINS[sujet]) sujet = ANCIENS_BESOINS[sujet];
+      else {
+        // Sujet libre, par exemple le nom d'une formation du catalogue.
+        if (!message && /[A-Za-zÀ-ÿ]/.test(sujet)) message = 'Bonjour, je souhaite en savoir plus sur la formation « ' + sujet + ' ».';
+        sujet = '';
+      }
+    }
     var zone = form.querySelector('[data-message]');
     if (!message && sujet) message = SUJETS[sujet];
     if (zone && message) {
@@ -1132,7 +1134,9 @@
     if (urlTraitee || !formulaireContact()) return;
     urlTraitee = true;
     var params = new URLSearchParams(window.location.search);
-    var sujet = (params.get('sujet') || params.get('besoin') || '').replace(/[^a-z-]/g, '');
+    var brut = (params.get('sujet') || params.get('besoin') || '').trim().slice(0, 80);
+    // Clé connue (prise-de-fonction, posture...) ou intitulé libre (nom d'une formation).
+    var sujet = /^[a-z-]+$/.test(brut) ? brut : brut.replace(/[^A-Za-zÀ-ÿ0-9 ,'’&%-]/g, '').trim();
     var cas = (params.get('cas') || '').replace(/[^a-z-]/g, '');
     if (sujet || cas) preremplir(sujet, cas, null, true);
   }

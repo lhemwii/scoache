@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""Génère la page /cas-clients et les 15 pages /cas-clients/<slug>.
+"""Génère le hub /cas-clients, les pages d'échelle /cas-clients/{individuel,collectif,organisation}
+et les pages /cas-clients/<slug>, puis le JSON des aperçus de l'accueil (#cas-apercus).
 
 Usage : python3 cas-clients/_generer.py   (depuis le dossier elements-communs)
 
 Les textes viennent mot pour mot du document de la cliente (« Document de référence
-pour la conception de la future page Cas clients »). Seules adaptations : apostrophes
+pour la conception de la future page Cas clients ») et, pour les deux cas complémentaires,
+du texte d'Ilana Porteret (Figma 1249:31246). Seules adaptations : apostrophes
 typographiques, séparateurs des lignes de métadonnées remplacés par des virgules,
-graphie « Scoaché » et « Biborg ». Tous les cas sont présentés au même niveau.
-Échelle, chiffre clé, photos et cas proches : Figma F329a0sXQJxBKyrLljpb2F, pages 07 à 22.
+éléments de liste avec majuscule et point final, graphie « Scoaché » et « Biborg ».
+Photos, puces logo et cas proches : Figma F329a0sXQJxBKyrLljpb2F, pages 07 à 22b.
+Aucun nombre de cas n'est affiché nulle part.
 """
 import html
 import json
@@ -739,6 +742,104 @@ DONNEES = json.loads(r'''[
  }
 ]''')
 
+# Cas complémentaires rédigés par Ilana Porteret (Figma 1249:31246, pages 1261:6144 et 1261:6455).
+# Texte mot pour mot ; seules adaptations : point médian remplacé par une virgule, éléments de liste
+# avec une majuscule et un point final. Photos provisoires : Biborg et Jobteaser, comme dans le Figma.
+DONNEES.extend([
+ {
+  "slug": "enseignement-catholique-de-paris",
+  "nom": "Enseignement catholique de Paris",
+  "echelle": "collectif",
+  "kpi": ["39", "dirigeants d’établissements"],
+  "titre": "Accompagner des dirigeants d’établissement dans la gestion des conflits",
+  "meta": [
+   "39 dirigeants d’établissements accompagnés",
+   "6 ateliers",
+   "Parcours en 2 niveaux"
+  ],
+  "resume": "Entre octobre 2024 et avril 2026, l’ECDP a proposé à des dirigeants d’établissements catholiques de Paris un parcours collectif consacré à la gestion des conflits dans l’exercice de leurs responsabilités.",
+  "situation": [
+   "Entre octobre 2024 et avril 2026, l’ECDP a proposé à des dirigeants d’établissements catholiques de Paris un parcours collectif consacré à la gestion des conflits dans l’exercice de leurs responsabilités.",
+   "Déployé auprès de plusieurs groupes, l’accompagnement a réuni 39 dirigeants d’établissements autour d’un enjeu commun : mieux comprendre les situations conflictuelles et disposer de repères pour les aborder avec davantage de recul."
+  ],
+  "enjeux_intro": [
+   "Dans leurs fonctions, les dirigeants d’établissement sont régulièrement confrontés à des désaccords, des tensions relationnelles ou des situations dans lesquelles ils doivent à la fois préserver le dialogue, poser un cadre et prendre position.",
+   "Le parcours visait notamment à leur permettre de :"
+  ],
+  "enjeux": [
+   "Mieux comprendre les mécanismes à l’œuvre dans les situations de conflit.",
+   "Prendre du recul avant d’intervenir.",
+   "Ajuster leur posture et leur communication selon les interlocuteurs et le contexte.",
+   "Traiter les désaccords sans laisser les relations se dégrader.",
+   "Partager des repères avec d’autres dirigeants confrontés à des situations comparables."
+  ],
+  "etapes_intro": "Le dispositif a été organisé en plusieurs groupes afin de permettre aux dirigeants de travailler à partir de problématiques liées à l’exercice de leur fonction.",
+  "etapes": [
+   ["Un premier niveau consacré aux fondamentaux", "Cinq ateliers de niveau 1 ont été organisés auprès de 39 dirigeants. Ils ont permis d’aborder les principaux mécanismes du conflit et les postures mobilisables pour y faire face."],
+   ["Un second niveau d’approfondissement", "Neuf des dirigeants accompagnés ont ensuite participé à un atelier de niveau 2, destiné à prolonger le travail engagé et à approfondir les pratiques."],
+   ["Un travail entre pairs", "Le format collectif a permis de confronter les expériences, de mettre en perspective les situations rencontrées et d’examiner différentes manières d’intervenir."]
+  ],
+  "evolutions_titre": "Les résultats",
+  "evolutions": [
+   "Au total, 39 dirigeants d’établissements ont été accompagnés au cours de six ateliers répartis sur deux niveaux.",
+   "Pour les quatre ateliers disposant d’une évaluation, les taux de satisfaction recueillis se situent entre 89,2 % et 98,9 %."
+  ],
+  "demontre": "Dans un réseau d’établissements, un parcours collectif à plusieurs niveaux permet de partager des repères communs sur la gestion des conflits et d’approfondir progressivement les pratiques.",
+  "proches": ["cic", "croix-rouge-francaise", "chanel"],
+  "photo": "biborg"
+ },
+ {
+  "slug": "michael-page-collectif",
+  "nom": "Michael Page",
+  "echelle": "collectif",
+  "kpi": None,
+  "titre": "Renforcer la cohésion managériale et structurer le fonctionnement d’une équipe",
+  "meta": [
+   "4 membres d’une équipe managériale accompagnées",
+   "5 entretiens individuels",
+   "2 séances collectives"
+  ],
+  "resume": "Entre novembre 2025 et mars 2026, PageGroup a souhaité accompagner une équipe managériale Middle Office confrontée à des difficultés de communication et à un besoin de clarification de son fonctionnement collectif.",
+  "situation": [
+   "Entre novembre 2025 et mars 2026, PageGroup a souhaité accompagner une équipe managériale Middle Office confrontée à des difficultés de communication et à un besoin de clarification de son fonctionnement collectif.",
+   "Au-delà des relations entre ses membres, l’enjeu consistait à permettre à l’équipe de partager une vision plus claire du service, d’harmoniser ses pratiques managériales et de mieux embarquer les équipes placées sous sa responsabilité."
+  ],
+  "enjeux_intro": [
+   "L’équipe avait besoin de retrouver un cadre suffisamment sécurisant pour aborder les difficultés rencontrées, exprimer les ressentis et construire des réponses communes.",
+   "L’accompagnement devait notamment lui permettre de :"
+  ],
+  "enjeux": [
+   "Instaurer des modalités de communication plus claires et plus directes.",
+   "Renforcer la confiance et la qualité des relations au sein de l’équipe.",
+   "Mieux comprendre les fonctionnements et les besoins de chacune.",
+   "Aligner la vision du service et les principes de management.",
+   "Clarifier les rôles, les responsabilités et les modes de coordination.",
+   "Identifier des leviers pour mieux engager les équipes."
+  ],
+  "etapes_intro": "Le dispositif a associé un travail individuel préparatoire et deux séances de coaching collectif espacées dans le temps.",
+  "etapes": [
+   ["Des entretiens individuels de cadrage", "Cinq entretiens ont permis de comprendre le contexte, de recueillir les perceptions et les besoins de chacune et d’identifier les principaux sujets à travailler collectivement."],
+   ["La construction d’un cadre relationnel commun", "La première séance a porté sur la sécurité psychologique, la communication et les conditions nécessaires à une collaboration efficace. L’équipe a construit un pacte d’alliance précisant l’atmosphère recherchée, les besoins individuels et les règles à mobiliser en cas de difficulté."],
+   ["L’alignement managérial et la mise en action", "La seconde séance a permis d’expliciter une vision commune du service, d’identifier les points d’alignement et les dysfonctionnements, puis de définir des actions concrètes concernant le fonctionnement de l’équipe et l’engagement des collaborateurs."]
+  ],
+  "evolutions_titre": "Les évolutions",
+  "evolutions": [
+   "Le travail collectif a fait apparaître des objectifs et des modes de fonctionnement plus largement partagés que les membres de l’équipe ne le percevaient initialement.",
+   "L’équipe a pu formuler un objectif commun autour de la qualité des relations et de la liberté d’expression, puis définir des priorités d’action portant notamment sur :",
+   [
+    "La clarification des rôles, des missions et des responsabilités.",
+    "La structuration des temps de coordination.",
+    "L’harmonisation des attentes et des pratiques managériales.",
+    "La mise en place de repères plus clairs pour les équipes.",
+    "Le suivi dans la durée des décisions prises collectivement."
+   ]
+  ],
+  "demontre": "Lorsqu’une équipe managériale doit retrouver un cadre commun, l’articulation d’entretiens individuels, d’un travail sur les relations et d’une mise en action collective permet de transformer des perceptions dispersées en repères et en engagements partagés.",
+  "proches": ["cic", "croix-rouge-francaise", "chanel"],
+  "photo": "jobteaser"
+ }
+])
+
 PAR_SLUG = {c['slug']: c for c in DONNEES}
 
 ECHELLES = {
@@ -747,9 +848,33 @@ ECHELLES = {
     'organisation': 'Coaching d’organisation',
 }
 
+# Les trois échelles (Figma 1255:7328 et pages 07a à 07c). Ordre des cas : celui du Figma.
+PAGES_ECHELLES = {
+    'individuel': {
+        'court': 'Individuel',
+        'desc': 'Dirigeants et managers, en tête-à-tête, pour traverser une situation à fort enjeu.',
+        'photo': 'chanel',
+    },
+    'collectif': {
+        'court': 'Collectif',
+        'desc': 'CODIR, COMEX et groupes de pairs : faire d’un groupe une équipe qui décide.',
+        'photo': 'mazars',
+    },
+    'organisation': {
+        'court': 'Organisation',
+        'desc': 'Un socle de leadership commun, déployé à l’échelle de l’entreprise.',
+        'photo': 'manomano',
+    },
+}
+
 NOMBRES = {1: 'Un axe', 2: 'Deux axes', 3: 'Trois axes', 4: 'Quatre axes', 5: 'Cinq axes', 6: 'Six axes'}
 
 FLECHE = '<svg class="ico" width="{0}" height="{0}" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>'
+
+LEAD_CAS = ('Dirigeants, équipes de direction, populations de managers : pour chaque cas, la situation, '
+            'les enjeux, l’accompagnement et les évolutions observées.')
+PREUVE = ('<p class="hero__preuve"><svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>'
+          '4,9/5 sur Google, 94 % de satisfaction en 2025</p>')
 
 
 def e(texte):
@@ -778,13 +903,14 @@ def logo(slug, max_l, max_h, aire, classe='', alt=None, charge='lazy'):
             f'width="{round(largeur)}" height="{round(hauteur)}" loading="{charge}" decoding="async">')
 
 
-def puce_photo(cas):
-    """Chiffre clé quand il existe, sinon le logo du client (comme dans le Figma)."""
-    if cas['kpi']:
-        valeur, libelle = cas['kpi']
-        return (f'<span class="stat stat--verre"><span class="stat__valeur">{e(valeur)}</span>'
-                f'<span class="stat__libelle">{e(libelle)}</span></span>')
-    return f'<span class="logo-puce cas-puce">{logo(cas["slug"], 120, 34, 120 * 34 * 0.5, alt="")}</span>'
+def photo(cas, moyenne=False):
+    """Photo du cas (les deux cas complémentaires reprennent provisoirement une photo existante)."""
+    return f'/assets/cas/photos/{cas["slug"]}{"-m" if moyenne else ""}.jpg'
+
+
+def puce_photo(cas, charge='lazy'):
+    """Sur toutes les photos de cas : la puce logo du client, jamais un chiffre (les chiffres restent dans le texte)."""
+    return f'<span class="logo-puce cas-puce">{logo(cas["slug"], 120, 34, 120 * 34 * 0.5, alt="", charge=charge)}</span>'
 
 
 def meta_ligne(cas):
@@ -793,6 +919,10 @@ def meta_ligne(cas):
     for el in elements[1:]:
         sortie.append(el[0].lower() + el[1:] if el[:1].isupper() and not el.isupper() else el)
     return ', '.join(sortie)
+
+
+def paragraphes(valeur):
+    return valeur if isinstance(valeur, list) else [valeur]
 
 
 def tete(titre, description, chemin):
@@ -833,19 +963,97 @@ PIED = '''
 '''
 
 
-def barre(texte, slug=None):
-    # Avec un slug, le bouton pré-remplit le formulaire de contact (data-prefill, voir script.js).
-    lien = (f'href="/nous-contacter?cas={slug}" data-prefill data-prefill-cas="{slug}"' if slug
-            else 'href="/nous-contacter"')
-    return f'''<div class="plateau">
-        <div class="barre">
-          <p class="barre__texte"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-message"/></svg>{e(texte)}</p>
-          <a class="btn btn--noir" {lien}>Nous contacter {FLECHE.format(16)}</a>
+def ecrire(chemin, contenu):
+    with open(os.path.join(RACINE, chemin), 'w', encoding='utf-8') as f:
+        f.write(contenu)
+
+
+def lien_echelle(echelle):
+    """Libellé et adresse de la page d'une échelle : « Voir les cas, coaching collectif »."""
+    nom = ECHELLES[echelle]
+    return f'/cas-clients/{echelle}', f'Voir les cas, {nom[0].lower() + nom[1:]}'
+
+
+# ---------------------------------------------------------------- hub /cas-clients
+
+def logos_uniques():
+    vus, sortie = set(), []
+    for c in DONNEES:
+        fichier = c['slug'] if c['slug'] != 'michael-page-collectif' else 'michael-page'
+        if fichier in vus:
+            continue
+        vus.add(fichier)
+        sortie.append(c)
+    return sortie
+
+
+def page_hub():
+    mur = '\n'.join(
+        f'            <li><a href="/cas-clients/{c["slug"]}">{logo(c["slug"], 150, 44, 150 * 44 * 0.42, charge="eager")}</a></li>'
+        for c in logos_uniques())
+    cartes = []
+    for echelle, infos in PAGES_ECHELLES.items():
+        url, _ = lien_echelle(echelle)
+        cartes.append(f'''        <li>
+          <a class="carte cas-echelle" href="{url}">
+            <span class="cas-echelle__photo"><img src="{photo(PAR_SLUG[infos['photo']], True)}" alt="" width="600" height="420" loading="lazy" decoding="async"></span>
+            <span class="cas-echelle__texte">
+              <span class="cas-echelle__label">{infos['court']}</span>
+              <span class="cas-echelle__titre">{ECHELLES[echelle]}</span>
+              <span class="cas-echelle__desc">{e(infos['desc'])}</span>
+              <span class="cas-echelle__lien">Voir les cas<span class="visually-hidden">, {ECHELLES[echelle][0].lower() + ECHELLES[echelle][1:]}</span></span>
+            </span>
+          </a>
+        </li>''')
+    corps = f'''    <nav class="fil-ariane" aria-label="Fil d’Ariane">
+      <ol>
+        <li><a href="/">Accueil</a></li>
+        <li aria-current="page">Cas clients</li>
+      </ol>
+    </nav>
+
+    <!-- Hero et mur de logos en couleur (Figma 1186:5365) -->
+    <section class="section section--plateau" aria-labelledby="titre-page">
+      <div class="plateau cas-hero">
+        <div class="cas-hero__texte">
+          <div class="cas-hero__intro">
+            <p class="eyebrow eyebrow--lg">Cas clients</p>
+            <h1 class="cas-hero__titre" id="titre-page">Nos accompagnements, de CHANEL à ManoMano</h1>
+            <p class="cas-hero__lead">{e(LEAD_CAS)}</p>
+            <a class="btn btn--noir btn--lg" href="/nous-contacter">Nous contacter {FLECHE.format(18)}</a>
+          </div>
+          {PREUVE}
         </div>
-      </div>'''
+        <div class="carte cas-hero__carte">
+          <h2 class="cas-surtitre">Ils nous ont confié leurs dirigeants</h2>
+          <ul class="cas-mur">
+{mur}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trois échelles (Figma 1255:7328) -->
+    <section class="section" aria-labelledby="titre-echelles">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Les cas clients</p>
+          <h2 class="section-head__title" id="titre-echelles">Choisissez une échelle d’accompagnement</h2>
+        </div>
+      </div>
+      <ul class="plateau cas-echelles">
+{chr(10).join(cartes)}
+      </ul>
+    </section>
+'''
+    ecrire('cas-clients.html',
+           tete('Cas clients, Scoaché',
+                'Nos accompagnements de dirigeants, d’équipes de direction et de populations de managers, de CHANEL à ManoMano, rangés par échelle : individuel, collectif, organisation.',
+                '/cas-clients')
+           + corps + PIED + '</body>\n</html>\n')
 
 
-# ---------------------------------------------------------------- page liste
+# ---------------------------------------------------------------- pages d'échelle
 
 def ligne(cas, rang):
     slug = cas['slug']
@@ -862,88 +1070,77 @@ def ligne(cas, rang):
             <a class="link-caps link-caps--accent" href="{url}">Lire le cas<span class="visually-hidden"> {e(cas['nom'])}</span> {FLECHE.format(16)}</a>
           </div>
           <a class="photo cas-ligne__photo" href="{url}" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/{slug}-m.jpg" alt="" width="600" height="420" loading="{'eager' if rang < 2 else 'lazy'}" decoding="async">
-            {puce_photo(cas)}
+            <img src="{photo(cas, True)}" alt="" width="600" height="420" loading="{'eager' if rang < 2 else 'lazy'}" decoding="async">
+            {puce_photo(cas, 'eager' if rang < 2 else 'lazy')}
           </a>
         </li>'''
 
 
-def page_liste():
-    mur = '\n'.join(
-        f'            <li><a href="/cas-clients/{c["slug"]}">{logo(c["slug"], 150, 44, 150 * 44 * 0.42, charge="eager")}</a></li>'
-        for c in DONNEES)
-    lignes = '\n'.join(ligne(c, i) for i, c in enumerate(DONNEES))
-    filtres = '\n'.join(
-        f'          <button type="button" class="filtre" aria-pressed="{"true" if v == "tous" else "false"}" data-filtre-cas="{v}">{t}</button>'
-        for v, t in [('tous', 'Tous les cas'), ('individuel', 'Individuel'), ('collectif', 'Collectif'), ('organisation', 'Organisation')])
+def onglets_echelles(courante):
+    liens = []
+    for echelle, infos in PAGES_ECHELLES.items():
+        actif = ' aria-current="page"' if echelle == courante else ''
+        liens.append(f'          <a class="filtre" href="/cas-clients/{echelle}"{actif}>{infos["court"]}</a>')
+    return ('        <nav class="filtres cas-filtres" aria-label="Changer d’échelle d’accompagnement">\n'
+            + '\n'.join(liens) + '\n        </nav>')
+
+
+def page_echelle(echelle):
+    infos = PAGES_ECHELLES[echelle]
+    nom = ECHELLES[echelle]
+    cas_echelle = [c for c in DONNEES if c['echelle'] == echelle]
+    premier = cas_echelle[0]
+    lignes = '\n'.join(ligne(c, i) for i, c in enumerate(cas_echelle))
     corps = f'''    <nav class="fil-ariane" aria-label="Fil d’Ariane">
       <ol>
         <li><a href="/">Accueil</a></li>
-        <li aria-current="page">Cas clients</li>
+        <li><a href="/cas-clients">Cas clients</a></li>
+        <li aria-current="page">{infos['court']}</li>
       </ol>
     </nav>
 
+    <!-- Hero (Figma 1255:5997, 1255:6442, 1255:6887) -->
     <section class="section section--plateau" aria-labelledby="titre-page">
       <div class="plateau cas-hero">
         <div class="cas-hero__texte">
           <div class="cas-hero__intro">
             <p class="eyebrow eyebrow--lg">Cas clients</p>
-            <h1 class="cas-hero__titre" id="titre-page">Nos accompagnements, de CHANEL à ManoMano</h1>
-            <p class="cas-hero__lead">Dirigeants, équipes de direction, populations de managers : pour chaque cas, la situation, les enjeux, l’accompagnement et les évolutions observées.</p>
+            <h1 class="cas-hero__titre" id="titre-page">{nom} : nos accompagnements</h1>
+            <p class="cas-hero__lead">{e(LEAD_CAS)}</p>
             <a class="btn btn--noir btn--lg" href="/nous-contacter">Nous contacter {FLECHE.format(18)}</a>
           </div>
-          <p class="hero__preuve"><svg class="ico" width="14" height="14" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>4,9/5 sur Google, 94 % de satisfaction en 2025</p>
+          {PREUVE}
         </div>
-        <div class="carte cas-hero__carte">
-          <h2 class="cas-surtitre">Ils nous ont confié leurs dirigeants</h2>
-          <ul class="cas-mur">
-{mur}
-          </ul>
-        </div>
+        <a class="photo cas-hero__photo" href="/cas-clients/{premier['slug']}">
+          <img src="{photo(premier)}" alt="" width="1264" height="1200" fetchpriority="high" decoding="async">
+          <span class="carte-verre cas-hero__verre">
+            <span class="carte-verre__eyebrow">Cas client, {e(premier['nom'])}</span>
+            <span class="carte-verre__titre">{e(premier['titre'])}</span>
+            <span class="carte-verre__lien">Lire le cas</span>
+          </span>
+        </a>
       </div>
     </section>
 
+    <!-- Les cas de l'échelle (Figma 1255:6050, 1255:6495, 1255:6940) -->
     <section class="section" aria-labelledby="titre-liste">
       <div class="section-head">
         <div class="section-head__text">
-          <p class="eyebrow">Les cas clients</p>
-          <h2 class="section-head__title" id="titre-liste">Tous les accompagnements</h2>
+          <p class="eyebrow">Cas clients, {infos['court'].lower()}</p>
+          <h2 class="section-head__title" id="titre-liste">{nom}</h2>
         </div>
-        <div class="filtres cas-filtres" role="group" aria-label="Filtrer par échelle d’accompagnement">
-{filtres}
-        </div>
+{onglets_echelles(echelle)}
       </div>
-      <ul class="cas-liste" id="cas-liste">
+      <ul class="cas-liste">
 {lignes}
       </ul>
     </section>
-
-    <section class="section cas-section-barre" aria-label="Nous contacter">
-      {barre('Votre situation ressemble à l’un de ces cas ? Parlons-en.')}
-    </section>
 '''
-    script = '''<script>
-  (function () {
-    var boutons = document.querySelectorAll('[data-filtre-cas]');
-    var lignes = document.querySelectorAll('#cas-liste > li');
-    boutons.forEach(function (bouton) {
-      bouton.addEventListener('click', function () {
-        var valeur = bouton.getAttribute('data-filtre-cas');
-        boutons.forEach(function (b) { b.setAttribute('aria-pressed', b === bouton ? 'true' : 'false'); });
-        lignes.forEach(function (li) {
-          li.hidden = valeur !== 'tous' && li.getAttribute('data-echelle') !== valeur;
-        });
-      });
-    });
-  })();
-</script>
-'''
-    sortie = (tete('Cas clients, Scoaché',
-                   'Nos accompagnements de dirigeants, d’équipes de direction et de populations de managers, de CHANEL à ManoMano : la situation, les enjeux, l’accompagnement et les évolutions observées.',
-                   '/cas-clients')
-              + corps + PIED + script + '</body>\n</html>\n')
-    with open(os.path.join(RACINE, 'cas-clients.html'), 'w', encoding='utf-8') as f:
-        f.write(sortie)
+    ecrire(f'cas-clients/{echelle}.html',
+           tete(f'{nom}, cas clients, Scoaché',
+                f'{nom} : nos accompagnements. {infos["desc"]}',
+                f'/cas-clients/{echelle}')
+           + corps + PIED + '</body>\n</html>\n')
 
 
 # ---------------------------------------------------------------- pages cas
@@ -952,7 +1149,7 @@ def carte_proche(cas):
     slug = cas['slug']
     return f'''        <li>
           <a class="photo photo--entre cas-carte" href="/cas-clients/{slug}">
-            <img src="/assets/cas/photos/{slug}-m.jpg" alt="" width="806" height="920" loading="lazy" decoding="async">
+            <img src="{photo(cas, True)}" alt="" width="806" height="920" loading="lazy" decoding="async">
             {puce_photo(cas)}
             <span class="carte-verre cas-carte__verre">
               <span class="cas-carte__surtitre">Cas client, {e(cas['nom'])}</span>
@@ -966,8 +1163,16 @@ def carte_proche(cas):
 def page_cas(cas):
     slug = cas['slug']
     echelle = ECHELLES[cas['echelle']]
+    url_echelle, libelle_echelle = lien_echelle(cas['echelle'])
     pastilles = '\n'.join(f'              <li>{e(m)}</li>' for m in cas['meta'])
+    situation = '\n'.join(f'              <p class="cas-situation__texte">{e(p)}</p>' for p in paragraphes(cas['situation']))
+    intro_enjeux = ''
+    if cas.get('enjeux_intro'):
+        intro_enjeux = ('\n          <div class="cas-enjeux__intro">\n'
+                        + '\n'.join(f'            <p>{e(p)}</p>' for p in cas['enjeux_intro'])
+                        + '\n          </div>')
     enjeux = '\n'.join(f'            <li>{e(t)}</li>' for t in cas['enjeux'])
+    intro_etapes = (f'\n          <p class="cas-lead">{e(cas["etapes_intro"])}</p>' if cas.get('etapes_intro') else '')
     etapes = '\n'.join(
         f'''        <li class="carte cas-etape">
           <span class="cas-etape__num" aria-hidden="true">{i:02d}</span>
@@ -979,13 +1184,23 @@ def page_cas(cas):
         valeur, libelle = cas['kpi']
         chiffre = (f'\n          <p class="cas-chiffre"><span class="cas-chiffre__valeur">{e(valeur)}</span>'
                    f'<span class="cas-chiffre__libelle">{e(libelle)}</span></p>')
+    blocs = []
+    for bloc in paragraphes(cas['evolutions']):
+        if isinstance(bloc, list):
+            blocs.append('          <ul class="cas-evolutions__liste">\n'
+                         + '\n'.join(f'            <li>{e(t)}</li>' for t in bloc) + '\n          </ul>')
+        else:
+            blocs.append(f'          <p class="cas-evolutions__texte">{e(bloc)}</p>')
+    evolutions = '\n'.join(blocs)
     proches = '\n'.join(carte_proche(PAR_SLUG[s]) for s in cas['proches'])
     nb_axes = NOMBRES.get(len(cas['etapes']), f'{len(cas["etapes"])} axes')
+    titre_evolutions = cas.get('evolutions_titre', 'Évolutions observées')
 
     corps = f'''    <nav class="fil-ariane" aria-label="Fil d’Ariane">
       <ol>
         <li><a href="/">Accueil</a></li>
         <li><a href="/cas-clients">Cas clients</a></li>
+        <li><a href="{url_echelle}">{PAGES_ECHELLES[cas['echelle']]['court']}</a></li>
         <li aria-current="page">{e(cas['nom'])}</li>
       </ol>
     </nav>
@@ -1001,14 +1216,15 @@ def page_cas(cas):
 {pastilles}
             </ul>
           </div>
-          <a class="link-caps link-caps--accent" href="/cas-clients">Tous les cas clients {FLECHE.format(16)}</a>
+          <a class="link-caps link-caps--accent" href="{url_echelle}">{libelle_echelle} {FLECHE.format(16)}</a>
         </div>
         <div class="carte cas-fiche__carte">
-          <div class="photo cas-fiche__photo">
-            <img src="/assets/cas/photos/{slug}.jpg" alt="" width="1264" height="1200" fetchpriority="high" decoding="async">
+          <div class="photo photo--entre cas-fiche__photo">
+            <img src="{photo(cas)}" alt="" width="1264" height="1200" fetchpriority="high" decoding="async">
+            {puce_photo(cas, 'eager')}
             <div class="cas-situation">
               <h2 class="cas-situation__titre">Situation</h2>
-              <p class="cas-situation__texte">{e(cas['situation'])}</p>
+{situation}
             </div>
           </div>
         </div>
@@ -1023,7 +1239,7 @@ def page_cas(cas):
         </div>
       </div>
       <div class="plateau">
-        <div class="carte cas-enjeux">
+        <div class="carte cas-enjeux">{intro_enjeux}
           <ul class="cas-enjeux__liste">
 {enjeux}
           </ul>
@@ -1035,7 +1251,7 @@ def page_cas(cas):
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">L’accompagnement</p>
-          <h2 class="section-head__title" id="titre-accompagnement">{nb_axes} de travail</h2>
+          <h2 class="section-head__title" id="titre-accompagnement">{nb_axes} de travail</h2>{intro_etapes}
         </div>
       </div>
       <ol class="plateau cas-etapes">
@@ -1043,11 +1259,11 @@ def page_cas(cas):
       </ol>
     </section>
 
-    <section class="section cas-section-evolutions" aria-label="Évolutions observées et enseignements">
+    <section class="section cas-section-evolutions" aria-label="{e(titre_evolutions)} et enseignements">
       <div class="plateau cas-evolutions">
         <div class="carte cas-evolutions__carte">
-          <h2 class="cas-surtitre-13">Évolutions observées</h2>{chiffre}
-          <p class="cas-evolutions__texte">{e(cas['evolutions'])}</p>
+          <h2 class="cas-surtitre-13">{e(titre_evolutions)}</h2>{chiffre}
+{evolutions}
         </div>
         <div class="carte cas-demontre">
           <h2 class="cas-surtitre-13">Ce que ce cas démontre</h2>
@@ -1067,18 +1283,42 @@ def page_cas(cas):
       <ul class="cas-proches">
 {proches}
       </ul>
-      {barre('Votre situation ressemble à celle-ci ? Parlons-en.', cas['slug'])}
     </section>
 '''
     titre_page = f'{cas["nom"]}, cas client, Scoaché'
+    if slug == 'michael-page-collectif':
+        titre_page = f'{cas["nom"]}, coaching collectif, cas client, Scoaché'
     description = f'Cas client {cas["nom"]} : {cas["titre"][0].lower() + cas["titre"][1:]}.'
-    sortie = tete(titre_page, description, f'/cas-clients/{slug}') + corps + PIED + '</body>\n</html>\n'
-    with open(os.path.join(RACINE, 'cas-clients', slug + '.html'), 'w', encoding='utf-8') as f:
-        f.write(sortie)
+    ecrire(f'cas-clients/{slug}.html', tete(titre_page, description, f'/cas-clients/{slug}') + corps + PIED + '</body>\n</html>\n')
+
+
+# ---------------------------------------------------------------- aperçus de l'accueil
+
+def apercus_accueil():
+    """Réécrit le JSON #cas-apercus de l'accueil (panneau ouvrable du carrousel)."""
+    donnees = {}
+    for c in DONNEES:
+        l, h = taille_png(os.path.join(RACINE, 'assets/cas/logos', c['slug'] + '.png'))
+        donnees[c['slug']] = {
+            'nom': c['nom'], 'echelle': ECHELLES[c['echelle']], 'meta': meta_ligne(c), 'titre': c['titre'],
+            'situation': c['resume'], 'enjeux': c['enjeux'][:4], 'kpi': c['kpi'], 'demontre': c['demontre'],
+            'logo': {'l': l, 'h': h},
+        }
+    chemin = os.path.join(RACINE, 'index.html')
+    with open(chemin, encoding='utf-8') as f:
+        page = f.read()
+    debut = page.index('<script type="application/json" id="cas-apercus">') + len('<script type="application/json" id="cas-apercus">')
+    fin = page.index('</script>', debut)
+    page = page[:debut] + json.dumps(donnees, ensure_ascii=False, separators=(',', ':')) + page[fin:]
+    with open(chemin, 'w', encoding='utf-8') as f:
+        f.write(page)
 
 
 if __name__ == '__main__':
-    page_liste()
+    page_hub()
+    for echelle in PAGES_ECHELLES:
+        page_echelle(echelle)
     for c in DONNEES:
         page_cas(c)
-    print('Pages générées :', 1 + len(DONNEES))
+    apercus_accueil()
+    print('Pages générées :', 1 + len(PAGES_ECHELLES) + len(DONNEES))

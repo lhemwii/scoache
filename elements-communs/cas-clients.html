@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cas clients, Scoaché</title>
-  <meta name="description" content="Nos accompagnements de dirigeants, d’équipes de direction et de populations de managers, de CHANEL à ManoMano : la situation, les enjeux, l’accompagnement et les évolutions observées.">
+  <meta name="description" content="Nos accompagnements de dirigeants, d’équipes de direction et de populations de managers, de CHANEL à ManoMano, rangés par échelle : individuel, collectif, organisation.">
   <meta name="robots" content="noindex">
   <link rel="canonical" href="https://scoache-site-web.vercel.app/cas-clients">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -30,6 +30,7 @@
       </ol>
     </nav>
 
+    <!-- Hero et mur de logos en couleur (Figma 1186:5365) -->
     <section class="section section--plateau" aria-labelledby="titre-page">
       <div class="plateau cas-hero">
         <div class="cas-hero__texte">
@@ -59,275 +60,55 @@
             <li><a href="/cas-clients/jobteaser"><img src="/assets/cas/logos/jobteaser.png" alt="Jobteaser" width="104" height="27" loading="eager" decoding="async"></a></li>
             <li><a href="/cas-clients/groupe-nice-matin"><img src="/assets/cas/logos/groupe-nice-matin.png" alt="Groupe Nice-Matin" width="104" height="27" loading="eager" decoding="async"></a></li>
             <li><a href="/cas-clients/homeexchange"><img src="/assets/cas/logos/homeexchange.png" alt="HomeExchange" width="99" height="28" loading="eager" decoding="async"></a></li>
+            <li><a href="/cas-clients/enseignement-catholique-de-paris"><img src="/assets/cas/logos/enseignement-catholique-de-paris.png" alt="Enseignement catholique de Paris" width="100" height="28" loading="eager" decoding="async"></a></li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="titre-liste">
+    <!-- Trois échelles (Figma 1255:7328) -->
+    <section class="section" aria-labelledby="titre-echelles">
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">Les cas clients</p>
-          <h2 class="section-head__title" id="titre-liste">Tous les accompagnements</h2>
-        </div>
-        <div class="filtres cas-filtres" role="group" aria-label="Filtrer par échelle d’accompagnement">
-          <button type="button" class="filtre" aria-pressed="true" data-filtre-cas="tous">Tous les cas</button>
-          <button type="button" class="filtre" aria-pressed="false" data-filtre-cas="individuel">Individuel</button>
-          <button type="button" class="filtre" aria-pressed="false" data-filtre-cas="collectif">Collectif</button>
-          <button type="button" class="filtre" aria-pressed="false" data-filtre-cas="organisation">Organisation</button>
+          <h2 class="section-head__title" id="titre-echelles">Choisissez une échelle d’accompagnement</h2>
         </div>
       </div>
-      <ul class="cas-liste" id="cas-liste">
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/chanel.png" alt="CHANEL" width="162" height="25" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">Dirigeante senior, coaching individuel, accompagnement en cours</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/chanel">Renforcer l’influence d’une dirigeante dans des interactions à forts enjeux</a></h3>
-            <p class="cas-ligne__resume">Dans un environnement à haut niveau d’exigence, une dirigeante senior souhaitait renforcer sa capacité à tenir pleinement sa position et à exercer son influence dans des interactions sensibles avec ses pairs et sa hiérarchie.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/chanel">Lire le cas<span class="visually-hidden"> CHANEL</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/chanel" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/chanel-m.jpg" alt="" width="600" height="420" loading="eager" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/chanel.png" alt="" width="114" height="18" loading="lazy" decoding="async"></span>
+      <ul class="plateau cas-echelles">
+        <li>
+          <a class="carte cas-echelle" href="/cas-clients/individuel">
+            <span class="cas-echelle__photo"><img src="/assets/cas/photos/chanel-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async"></span>
+            <span class="cas-echelle__texte">
+              <span class="cas-echelle__label">Individuel</span>
+              <span class="cas-echelle__titre">Coaching individuel</span>
+              <span class="cas-echelle__desc">Dirigeants et managers, en tête-à-tête, pour traverser une situation à fort enjeu.</span>
+              <span class="cas-echelle__lien">Voir les cas<span class="visually-hidden">, coaching individuel</span></span>
+            </span>
           </a>
         </li>
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/vinci-airports.png" alt="VINCI Airports" width="125" height="33" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">Dirigeant senior, executive coaching, accompagnement en cours</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/vinci-airports">Prendre pleinement sa place de leader dans un environnement à forts enjeux stratégiques</a></h3>
-            <p class="cas-ligne__resume">Dans un environnement international à forts enjeux stratégiques, un dirigeant senior souhaitait prendre davantage de hauteur et contribuer plus pleinement au niveau exécutif.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/vinci-airports">Lire le cas<span class="visually-hidden"> VINCI Airports</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/vinci-airports" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/vinci-airports-m.jpg" alt="" width="600" height="420" loading="eager" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/vinci-airports.png" alt="" width="89" height="23" loading="lazy" decoding="async"></span>
+        <li>
+          <a class="carte cas-echelle" href="/cas-clients/collectif">
+            <span class="cas-echelle__photo"><img src="/assets/cas/photos/mazars-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async"></span>
+            <span class="cas-echelle__texte">
+              <span class="cas-echelle__label">Collectif</span>
+              <span class="cas-echelle__titre">Coaching collectif</span>
+              <span class="cas-echelle__desc">CODIR, COMEX et groupes de pairs : faire d’un groupe une équipe qui décide.</span>
+              <span class="cas-echelle__lien">Voir les cas<span class="visually-hidden">, coaching collectif</span></span>
+            </span>
           </a>
         </li>
-        <li class="cas-ligne" data-echelle="collectif">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/mazars.png" alt="Mazars" width="162" height="25" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching collectif</p>
-            <p class="cas-ligne__meta">27 nouveaux associés France, 4 groupes, parcours de leadership sur 6 mois</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/mazars">Accompagner le passage à un nouveau rôle de leadership</a></h3>
-            <p class="cas-ligne__resume">L’accession au rôle d’associé constitue un véritable passage de seuil : l’expertise qui a permis d’être promu ne suffit plus.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/mazars">Lire le cas<span class="visually-hidden"> Mazars</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/mazars" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/mazars-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">27</span><span class="stat__libelle">nouveaux associés</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="collectif">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/cic.png" alt="CIC" width="95" height="43" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching collectif</p>
-            <p class="cas-ligne__meta">12 directeurs d’agence, 2 groupes de pairs, parcours sur 1 an</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/cic">Accompagner des leaders de proximité dans la conduite d’une transformation du réseau</a></h3>
-            <p class="cas-ligne__resume">Dans le cadre d’une évolution du maillage territorial, des directeurs d’agence devaient recomposer leurs équipes, reconstruire des repères communs, traiter des résistances et maintenir la performance dans un contexte de transformation.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/cic">Lire le cas<span class="visually-hidden"> CIC</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/cic" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/cic-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">12</span><span class="stat__libelle">directeurs d’agence</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="collectif">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/croix-rouge-francaise.png" alt="Croix-Rouge française" width="137" height="30" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching collectif</p>
-            <p class="cas-ligne__meta">Population de dirigeants territoriaux, séminaire collectif + coachings individuels</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/croix-rouge-francaise">Renforcer la posture de leaders territoriaux dans un environnement complexe</a></h3>
-            <p class="cas-ligne__resume">Dans un environnement organisationnel et hiérarchique exigeant, plusieurs leaders territoriaux avaient besoin de renforcer leur capacité à tenir leur rôle dans des situations de tension, d’opposition ou de forte complexité relationnelle.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/croix-rouge-francaise">Lire le cas<span class="visually-hidden"> Croix-Rouge française</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/croix-rouge-francaise" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/croix-rouge-francaise-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/croix-rouge-francaise.png" alt="" width="97" height="21" loading="lazy" decoding="async"></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/michael-page.png" alt="Michael Page" width="152" height="27" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">Manager à responsabilités, coaching individuel intensif</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/michael-page">Faire évoluer sa posture de leader pour renforcer l’engagement et la performance collective</a></h3>
-            <p class="cas-ligne__resume">Un manager expérimenté souhaitait faire évoluer sa posture de leadership afin de créer des relations de travail plus efficaces, renforcer l’engagement de son équipe et mieux comprendre l’impact de son propre fonctionnement sur le collectif.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/michael-page">Lire le cas<span class="visually-hidden"> Michael Page</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/michael-page" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/michael-page-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/michael-page.png" alt="" width="107" height="19" loading="lazy" decoding="async"></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/ilek.png" alt="Ilek" width="92" height="44" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">2 leaders accompagnés, coachings individuels, 2024–2026</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/ilek">Faire évoluer la posture de leaders dans un contexte de croissance et de transformation</a></h3>
-            <p class="cas-ligne__resume">Dans un environnement en évolution rapide, Ilek a confié à Scoaché deux accompagnements individuels de leaders confrontés à des enjeux complémentaires.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/ilek">Lire le cas<span class="visually-hidden"> Ilek</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/ilek" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/ilek-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">3 → 9/10</span><span class="stat__libelle">référence pour l’équipe</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/biborg.png" alt="Biborg" width="89" height="46" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">4 leaders accompagnés depuis 2022, coachings individuels, partenariat renouvelé</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/biborg">Accompagner des leaders dans les passages de seuil de leur trajectoire</a></h3>
-            <p class="cas-ligne__resume">Depuis 2022, Biborg confie à Scoaché plusieurs leaders à différents moments de leur trajectoire.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/biborg">Lire le cas<span class="visually-hidden"> Biborg</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/biborg" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/biborg-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">3 → 10/10</span><span class="stat__libelle">sur trois dimensions</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/le-lab-rh.png" alt="Le Lab RH" width="64" height="48" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">Dirigeant, coaching individuel, 8 séances</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/le-lab-rh">Assumer pleinement sa place de dirigeant dans une organisation en développement</a></h3>
-            <p class="cas-ligne__resume">Dans une organisation en développement, un dirigeant souhaitait consolider sa posture pour prendre pleinement sa place, porter plus fermement ses décisions et accompagner une nouvelle étape de croissance.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/le-lab-rh">Lire le cas<span class="visually-hidden"> Le Lab RH</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/le-lab-rh" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/le-lab-rh-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">3,5 → 9/10</span><span class="stat__libelle">fermeté dans les échanges</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/fintecture.png" alt="Fintecture" width="133" height="31" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">Directeur commercial, coaching individuel, 10 séances + cadrage et bilan</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/fintecture">Faire évoluer son leadership sous forte pression sans renoncer à l’exigence de performance</a></h3>
-            <p class="cas-ligne__resume">Dans un environnement de forte croissance et de forte pression sur les résultats, un directeur commercial souhaitait faire évoluer sa posture de leadership.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/fintecture">Lire le cas<span class="visually-hidden"> Fintecture</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/fintecture" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/fintecture-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">5 → 7/10</span><span class="stat__libelle">objectif global</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="organisation">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/manomano.png" alt="ManoMano" width="137" height="30" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching d’organisation</p>
-            <p class="cas-ligne__meta">+200 collaborateurs accompagnés, partenariat depuis 2020, dispositif toujours actif</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/manomano">Accompagner dans la durée des enjeux de leadership et d’influence</a></h3>
-            <p class="cas-ligne__resume">Depuis 2020, ManoMano confie à Scoaché des accompagnements individuels autour d’enjeux de leadership, d’influence, de communication à fort impact et de posture.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/manomano">Lire le cas<span class="visually-hidden"> ManoMano</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/manomano" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/manomano-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">+200</span><span class="stat__libelle">collaborateurs accompagnés</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="organisation">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/schoolab.png" alt="Schoolab" width="143" height="29" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching d’organisation</p>
-            <p class="cas-ligne__meta">40 bénéficiaires accompagnés, 190 séances individuelles, 1 an de dispositif</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/schoolab">Déployer un coaching individualisé à l’échelle d’une population stratégique</a></h3>
-            <p class="cas-ligne__resume">Dans un environnement en croissance rapide, Schoolab souhaitait proposer un accompagnement suffisamment individualisé pour répondre à des besoins de développement très différents, tout en conservant un cadre cohérent à l’échelle de l’organisation.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/schoolab">Lire le cas<span class="visually-hidden"> Schoolab</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/schoolab" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/schoolab-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">190</span><span class="stat__libelle">séances individuelles</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/jobteaser.png" alt="Jobteaser" width="126" height="32" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">Dirigeant, coaching individuel, 10 séances</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/jobteaser">Préserver son impact et sa capacité d’action dans un environnement sous tension</a></h3>
-            <p class="cas-ligne__resume">Dans un environnement professionnel exigeant, un dirigeant souhaitait continuer à contribuer avec engagement et intensité sans laisser les frustrations du quotidien altérer son énergie, ses relations ou sa capacité d’action.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/jobteaser">Lire le cas<span class="visually-hidden"> Jobteaser</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/jobteaser" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/jobteaser-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="stat stat--verre"><span class="stat__valeur">10</span><span class="stat__libelle">séances</span></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="organisation">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/groupe-nice-matin.png" alt="Groupe Nice-Matin" width="127" height="32" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching d’organisation</p>
-            <p class="cas-ligne__meta">Plusieurs managers accompagnés, coachings individuels, contexte de transformation</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/groupe-nice-matin">Faire évoluer la posture de managers clés dans un contexte de transformation</a></h3>
-            <p class="cas-ligne__resume">Dans un contexte d’évolution de l’organisation et d’exigence accrue, le Groupe Nice-Matin a confié à Scoaché plusieurs accompagnements individuels de managers amenés à faire évoluer leur posture et leur niveau de responsabilité.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/groupe-nice-matin">Lire le cas<span class="visually-hidden"> Groupe Nice-Matin</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/groupe-nice-matin" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/groupe-nice-matin-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/groupe-nice-matin.png" alt="" width="90" height="23" loading="lazy" decoding="async"></span>
-          </a>
-        </li>
-        <li class="cas-ligne" data-echelle="individuel">
-          <div class="cas-ligne__marque">
-            <span class="cas-ligne__logo"><img src="/assets/cas/logos/homeexchange.png" alt="HomeExchange" width="120" height="34" loading="lazy" decoding="async"></span>
-            <p class="cas-ligne__echelle">Coaching individuel</p>
-            <p class="cas-ligne__meta">Dirigeante fonctionnelle, coaching individuel, accompagnement en cours</p>
-          </div>
-          <div class="cas-ligne__corps">
-            <h3 class="cas-ligne__titre"><a href="/cas-clients/homeexchange">Trouver son alignement pour asseoir son leadership et mieux embarquer ses équipes</a></h3>
-            <p class="cas-ligne__resume">Dans un contexte à forts enjeux stratégiques et organisationnels, une dirigeante fonctionnelle souhaitait prendre davantage de hauteur, exprimer plus clairement ses besoins et renforcer son leadership afin de mieux embarquer ses équipes et ses interlocuteurs.</p>
-            <a class="link-caps link-caps--accent" href="/cas-clients/homeexchange">Lire le cas<span class="visually-hidden"> HomeExchange</span> <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-          </div>
-          <a class="photo cas-ligne__photo" href="/cas-clients/homeexchange" tabindex="-1" aria-hidden="true">
-            <img src="/assets/cas/photos/homeexchange-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async">
-            <span class="logo-puce cas-puce"><img src="/assets/cas/logos/homeexchange.png" alt="" width="85" height="24" loading="lazy" decoding="async"></span>
+        <li>
+          <a class="carte cas-echelle" href="/cas-clients/organisation">
+            <span class="cas-echelle__photo"><img src="/assets/cas/photos/manomano-m.jpg" alt="" width="600" height="420" loading="lazy" decoding="async"></span>
+            <span class="cas-echelle__texte">
+              <span class="cas-echelle__label">Organisation</span>
+              <span class="cas-echelle__titre">Coaching d’organisation</span>
+              <span class="cas-echelle__desc">Un socle de leadership commun, déployé à l’échelle de l’entreprise.</span>
+              <span class="cas-echelle__lien">Voir les cas<span class="visually-hidden">, coaching d’organisation</span></span>
+            </span>
           </a>
         </li>
       </ul>
-    </section>
-
-    <section class="section cas-section-barre" aria-label="Nous contacter">
-      <div class="plateau">
-        <div class="barre">
-          <p class="barre__texte"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-message"/></svg>Votre situation ressemble à l’un de ces cas ? Parlons-en.</p>
-          <a class="btn btn--noir" href="/nous-contacter">Nous contacter <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></a>
-        </div>
-      </div>
     </section>
 
     <div data-include="contact"></div>
@@ -335,20 +116,5 @@
 
   <div data-include="footer"></div>
 </div>
-<script>
-  (function () {
-    var boutons = document.querySelectorAll('[data-filtre-cas]');
-    var lignes = document.querySelectorAll('#cas-liste > li');
-    boutons.forEach(function (bouton) {
-      bouton.addEventListener('click', function () {
-        var valeur = bouton.getAttribute('data-filtre-cas');
-        boutons.forEach(function (b) { b.setAttribute('aria-pressed', b === bouton ? 'true' : 'false'); });
-        lignes.forEach(function (li) {
-          li.hidden = valeur !== 'tous' && li.getAttribute('data-echelle') !== valeur;
-        });
-      });
-    });
-  })();
-</script>
 </body>
 </html>

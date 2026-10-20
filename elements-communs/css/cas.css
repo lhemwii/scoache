@@ -1,5 +1,7 @@
-/* Scoaché, cas clients : /cas-clients et /cas-clients/<slug>
-   Figma F329a0sXQJxBKyrLljpb2F, page 07 (1186:5334) et pages 08 à 22 (1187:5443...).
+/* Scoaché, cas clients : hub /cas-clients, pages d'échelle /cas-clients/{individuel,collectif,organisation}
+   et pages /cas-clients/<slug>.
+   Figma F329a0sXQJxBKyrLljpb2F, page 07 (1186:5334), 07a à 07c (1255:5993, 1255:6438, 1255:6883)
+   et pages 08 à 22b (1187:5443...).
    Tous les sélecteurs sont préfixés par .page-cas. */
 
 .page-cas .section { padding-top: 40px; }
@@ -22,7 +24,7 @@
 }
 
 /* =====================================================================
-   PAGE LISTE /cas-clients
+   HUB /cas-clients ET PAGES D'ÉCHELLE
    ===================================================================== */
 
 /* ---------- Hero et mur de logos ---------- */
@@ -56,7 +58,7 @@
 
 .page-cas .cas-mur {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border-top: 1px solid var(--bordure);
   border-left: 1px solid var(--bordure);
 }
@@ -77,12 +79,55 @@
 .page-cas .cas-mur img {
   max-width: 100%;
   height: auto;
-  filter: grayscale(1) contrast(1.25) brightness(0.55);
-  opacity: 0.92;
-  transition: filter 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+/* Logos en couleur, sans filtre */
 .page-cas .cas-mur a:hover { background: var(--gris-clair); }
-.page-cas .cas-mur a:hover img { filter: none; opacity: 1; }
+.page-cas .cas-mur a:hover img { transform: scale(1.06); }
+
+/* ---------- Hero d'une échelle : photo du premier cas et carte vitrée ---------- */
+.page-cas .cas-hero__photo {
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+  min-height: 520px;
+  padding: 24px;
+  border-radius: 12px;
+}
+.page-cas .cas-hero__verre { width: 380px; max-width: 100%; background: rgba(255, 255, 255, 0.9); }
+
+/* ---------- Hub : les trois échelles ---------- */
+.page-cas .cas-echelles { margin: 0; list-style: none; }
+.page-cas .cas-echelles > li { display: flex; flex: 1 1 0; min-width: 0; }
+.page-cas .cas-echelle {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 8px 8px 28px;
+  color: var(--noir);
+  text-decoration: none;
+}
+.page-cas .cas-echelle__photo { position: relative; display: block; height: 240px; overflow: hidden; border-radius: 8px; }
+.page-cas .cas-echelle__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.page-cas .cas-echelle:hover .cas-echelle__photo img { scale: 1.04; }
+.page-cas .cas-echelle__texte { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 24px 20px 0; }
+.page-cas .cas-echelle__label { font-size: 13px; font-weight: 600; color: var(--accent); }
+.page-cas .cas-echelle__titre { font-size: 26px; line-height: 1.2; letter-spacing: -0.13px; }
+.page-cas .cas-echelle__desc { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-echelle__lien {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.65px;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
 
 /* ---------- Filtres ---------- */
 .page-cas .cas-filtres .filtre {
@@ -92,7 +137,9 @@
   background: var(--gris-clair);
 }
 .page-cas .cas-filtres .filtre:hover { background: var(--greige); }
-.page-cas .cas-filtres .filtre[aria-pressed="true"] { background: var(--noir); color: var(--blanc); }
+.page-cas .cas-filtres .filtre[aria-pressed="true"],
+.page-cas .cas-filtres .filtre[aria-current="page"] { background: var(--noir); color: var(--blanc); }
+.page-cas .cas-filtres a.filtre { display: inline-flex; align-items: center; font-size: 14px; font-weight: 500; text-decoration: none; }
 
 /* ---------- Liste éditoriale ---------- */
 .page-cas .cas-liste {
@@ -224,6 +271,18 @@
 
 /* ---------- Les enjeux de départ ---------- */
 .page-cas .cas-enjeux { flex: 1; padding: 12px 32px; }
+.page-cas .cas-enjeux__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 0 16px;
+  border-bottom: 1px solid var(--bordure);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+.page-cas .cas-enjeux__intro p:last-child { color: var(--noir); font-weight: 500; }
+.page-cas .cas-lead { max-width: 760px; margin-top: 4px; font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 .page-cas .cas-enjeux__liste {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -266,7 +325,6 @@
   font-size: 14px;
   font-weight: 600;
 }
-.page-cas .cas-etape:first-child .cas-etape__num { background: var(--noir); color: var(--blanc); }
 .page-cas .cas-etape__titre {
   margin: 0;
   font-size: 22px;
@@ -280,6 +338,24 @@
 .page-cas .cas-evolutions > .carte { flex: 1 1 0; padding: 36px; }
 .page-cas .cas-evolutions__carte { display: flex; flex-direction: column; gap: 16px; }
 .page-cas .cas-evolutions__texte { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-evolutions__liste { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.page-cas .cas-evolutions__liste li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--texte-2);
+}
+.page-cas .cas-evolutions__liste li::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+}
+.page-cas .cas-situation__texte + .cas-situation__texte { margin-top: 4px; }
 .page-cas .cas-chiffre { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px 14px; }
 .page-cas .cas-chiffre__valeur {
   font-size: 56px;
@@ -356,6 +432,7 @@
    ===================================================================== */
 @media (max-width: 1240px) {
   .page-cas .cas-hero__texte { flex-basis: 480px; }
+  .page-cas .cas-echelle__titre { font-size: 23px; }
   .page-cas .cas-hero__titre { font-size: 46px; }
   .page-cas .cas-fiche__texte { flex-basis: 520px; }
   .page-cas .cas-fiche__titre { font-size: 42px; }
@@ -373,6 +450,7 @@
   .page-cas .cas-hero__titre { max-width: 680px; }
   .page-cas .cas-fiche__titre { max-width: 760px; }
   .page-cas .cas-fiche__photo { min-height: 520px; }
+  .page-cas .cas-hero__photo { min-height: 460px; }
   .page-cas .cas-etapes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .page-cas .cas-proches { gap: 12px; }
   .page-cas .cas-carte { height: 440px; }
@@ -392,7 +470,15 @@
   .page-cas .cas-hero__titre { font-size: 38px; }
   .page-cas .cas-fiche__titre { font-size: 34px; }
   .page-cas .cas-hero__carte { padding: 20px 16px; }
+  .page-cas .cas-mur { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .page-cas .cas-mur a { height: 76px; padding: 12px; }
+  .page-cas .cas-hero__photo { min-height: 420px; padding: 12px; }
+  .page-cas .cas-echelles { flex-direction: column; }
+  .page-cas .cas-echelle { padding-bottom: 22px; }
+  .page-cas .cas-echelle__photo { height: 200px; }
+  .page-cas .cas-echelle__texte { padding: 18px 12px 0; }
+  .page-cas .cas-enjeux__intro { padding-top: 16px; font-size: 15px; }
+  .page-cas .cas-lead { font-size: 15px; }
 
   .page-cas .cas-liste { margin: 0 12px; }
   .page-cas .cas-ligne {

@@ -453,3 +453,45 @@
 .page-offre .of-echelle__contact { align-self: flex-start; margin-top: 2px; color: var(--texte-2); }
 .page-offre .of-onglets__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; margin: 0; }
 .page-offre .of-onglets__actions .link-caps + .link-caps { color: var(--texte-2); }
+
+/* ---------- Formations : quatre familles (Figma 1254:5724) ---------- */
+.page-offre .of-familles { margin: 0; list-style: none; }
+.page-offre .of-familles > li { display: flex; flex: 1 1 0; min-width: 0; }
+.page-offre .of-famille {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 8px 8px 22px;
+  color: var(--noir);
+  text-decoration: none;
+}
+.page-offre .of-famille__photo { position: relative; display: block; height: 210px; overflow: hidden; border-radius: 8px; }
+.page-offre .of-famille__photo img { width: 100%; height: 100%; object-fit: cover; transition: scale 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.page-offre .of-famille__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(71, 68, 193, 0) 30%, rgba(107, 107, 208, 0.35) 75%, rgba(71, 68, 193, 0.75) 100%);
+}
+.page-offre .of-famille:hover .of-famille__photo img { scale: 1.04; }
+.page-offre .of-famille__texte { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 12px 0; }
+.page-offre .of-famille__titre { font-size: 22px; line-height: 1.25; letter-spacing: -0.11px; }
+.page-offre .of-famille__desc { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-famille__duree { font-size: 13px; color: #8a8a8a; }
+.page-offre .of-famille__lien {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+@media (max-width: 1100px) {
+  .page-offre .of-familles { flex-wrap: wrap; }
+  .page-offre .of-familles > li { flex-basis: calc(50% - 4px); }
+}
+@media (max-width: 600px) {
+  .page-offre .of-familles > li { flex-basis: 100%; }
+  .page-offre .of-famille__photo { height: 180px; }
+}

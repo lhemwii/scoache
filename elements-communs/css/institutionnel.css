@@ -47,7 +47,8 @@
   font-size: 14px;
   font-weight: 600;
 }
-.inst-num--noir { background: var(--noir); color: var(--blanc); }
+/* Pastilles numérotées : toujours claires, texte noir (Figma), même la première */
+.inst-num--noir { background: var(--gris-clair); color: var(--noir); }
 .inst-num--sm { width: 32px; height: 32px; }
 
 /* Étiquettes statiques (pédagogie, outils) */
@@ -143,8 +144,9 @@
 .ap-engagements .ico { color: var(--accent); }
 
 /* Raison d'être */
-.ap-raison .plateau__texte { flex-basis: 520px; justify-content: flex-start; }
-.ap-raison__enonce { margin: 0; font-size: 30px; font-weight: 400; line-height: 1.25; letter-spacing: -0.15px; }
+.ap-raison__carte { flex: 1 1 0; min-width: 0; padding: 40px; }
+.ap-raison__enonce { margin: 0; font-size: 28px; font-weight: 400; line-height: 1.3; letter-spacing: -0.14px; }
+.ap-raison .ap-texte p { font-size: 15px; }
 .ap-texte { display: flex; flex-direction: column; gap: 14px; }
 .ap-texte p { font-size: 16px; line-height: 1.6; color: var(--texte-2); }
 .ap-signature {
@@ -170,11 +172,12 @@
   flex: 1;
   place-items: center;
   min-height: 460px;
-  padding: 40px 24px;
+  padding: 0;
+  border: 1.5px dashed #c9c6bf;
   border-radius: 8px;
   background: var(--gris-clair);
 }
-.ap-portrait__cadre img { width: 300px; max-width: 100%; height: auto; aspect-ratio: 1; }
+.ap-portrait__cadre img { width: 100%; max-width: 400px; height: auto; aspect-ratio: 1; }
 .ap-portrait figcaption { margin-top: 16px; text-align: center; }
 .ap-portrait__nom { display: block; font-size: 18px; font-weight: 500; }
 .ap-portrait__role { display: block; margin-top: 2px; font-size: 13px; color: var(--texte-2); }
@@ -188,11 +191,12 @@
 /* Mission et valeurs */
 .ap-mission { display: flex; flex-direction: column; gap: 8px; }
 .ap-mission__enonce { padding: 32px 36px; }
-.ap-mission__enonce p { max-width: 980px; font-size: 24px; line-height: 1.35; letter-spacing: -0.12px; }
+.ap-mission__enonce { padding: 28px 32px; }
+.ap-mission__enonce p { max-width: 1100px; font-size: 20px; line-height: 1.4; }
 .ap-valeurs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
 .ap-valeur { display: flex; flex-direction: column; gap: 12px; padding: 28px 24px; }
 .ap-valeur .titre-4 { font-size: 22px; letter-spacing: -0.11px; }
-.ap-valeur p { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
+.ap-valeur p { font-size: 13px; line-height: 1.55; color: var(--texte-2); }
 
 /* La méthode */
 .ap-methode { display: flex; flex-direction: column; gap: 8px; }
@@ -203,9 +207,8 @@
 .ap-pilier { display: flex; flex-direction: column; gap: 12px; padding: 32px; }
 .ap-pilier__haut { display: flex; align-items: center; gap: 10px; }
 .ap-pilier__titre { margin: 0; font-size: 22px; font-weight: 400; line-height: 1.25; letter-spacing: -0.11px; }
-.ap-pilier .inst-checks { gap: 8px; }
-.ap-pilier .inst-checks li { font-size: 14px; color: var(--texte-2); }
-.ap-pilier .inst-checks .ico { color: var(--noir); }
+.ap-piliers { margin: 0; padding: 0; list-style: none; }
+.ap-pilier__texte { font-size: 14px; line-height: 1.5; color: var(--texte-2); }
 
 .ap-outils { display: flex; align-items: stretch; gap: 24px; padding: 16px 24px; }
 .ap-outils__bloc { display: flex; flex: 1; flex-direction: column; gap: 10px; min-width: 0; }
@@ -245,10 +248,8 @@
   max-width: 100%;
   height: 50px;
   object-fit: contain;
-  filter: grayscale(1) contrast(1.1);
-  opacity: 0.85;
 }
-.ap-logos .ap-logos__clair { filter: grayscale(1) brightness(0.62) contrast(1.3); opacity: 0.9; }
+/* Logos en couleur, sans filtre ni transparence */
 
 .ap-avis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .ap-avis__carte { display: flex; flex-direction: column; gap: 18px; margin: 0; padding: 32px 36px 28px; }
@@ -428,6 +429,9 @@
 .fo-hero-carte .photo::after { border-radius: 8px; }
 .fo-hero-carte .inst-lignes { padding: 12px 20px 0; }
 .fo-hero-carte .inst-ligne dt { flex-basis: 100px; }
+@media (max-width: 600px) {
+  .fo-hero-carte .inst-ligne dt { flex-basis: auto; }
+}
 
 .fo-objectifs { display: grid; flex: 1; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .fo-objectifs li { display: flex; flex-direction: column; gap: 18px; }
@@ -533,7 +537,8 @@
   .page-contact .inst-hero__texte { flex-basis: auto; }
   .page-a-propos .inst-hero__photo { min-height: 440px; }
   .ap-raison { flex-direction: column; }
-  .ap-raison .plateau__texte { flex-basis: auto; }
+  .ap-raison__carte { padding: 28px 24px; }
+  .ap-raison__enonce { font-size: 23px; }
   .ap-fondatrice { flex-direction: column; }
   .ap-portrait { flex-basis: auto; }
   .ap-portrait__cadre { min-height: 0; }
@@ -628,3 +633,48 @@
   .ct-envoi .btn { width: 100%; }
   .ct-choix__item span { white-space: normal; }
 }
+
+/* ---------- Formations : le catalogue (Figma 1264:6144) ---------- */
+.fo-catalogue { align-items: stretch; }
+.fo-catalogue__famille { flex: 1 1 0; min-width: 0; padding: 28px; scroll-margin-top: 110px; }
+.fo-catalogue__titre { margin: 0 0 12px; font-size: 13px; font-weight: 600; color: var(--accent); }
+.fo-catalogue__liste { margin: 0; padding: 0; list-style: none; }
+.fo-catalogue__lien {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bordure);
+  color: var(--noir);
+  font-size: 15px;
+  line-height: 1.3;
+  text-decoration: none;
+}
+.fo-catalogue__lien .ico { flex: none; color: var(--texte-2); opacity: 0; transform: translateX(-4px); transition: opacity 0.2s ease, transform 0.2s ease; }
+.fo-catalogue__lien:hover span { text-decoration: underline; text-underline-position: from-font; text-decoration-thickness: 1px; }
+.fo-catalogue__lien:hover .ico,
+.fo-catalogue__lien:focus-visible .ico { opacity: 1; transform: none; }
+@media (max-width: 1100px) {
+  .fo-catalogue { flex-wrap: wrap; }
+  .fo-catalogue__famille { flex-basis: calc(50% - 4px); }
+}
+@media (max-width: 600px) {
+  .fo-catalogue__famille { flex-basis: 100%; padding: 22px 20px; }
+  .fo-catalogue__lien .ico { opacity: 1; transform: none; }
+}
+
+/* ---------- Nous contacter : Ilana vous répond (Figma 1264:6139) ---------- */
+.page-contact .ct-bas { display: flex; flex-direction: column; gap: 8px; }
+.ct-ilana {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: var(--blanc);
+}
+.ct-ilana__photo { flex: none; width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--gris-clair); }
+.ct-ilana__texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ct-ilana__titre { font-size: 15px; font-weight: 500; }
+.ct-ilana__sous { font-size: 13px; color: var(--texte-2); }

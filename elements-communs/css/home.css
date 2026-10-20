@@ -31,6 +31,8 @@
 /* ---------- Vos enjeux ---------- */
 .home-enjeux .chapo { max-width: 430px; font-size: 17px; }
 .home-enjeux .plateau__texte { justify-content: flex-start; }
+/* Les six enjeux (Figma 1222:8351) : titre 20 px en poids normal, pastilles toutes claires */
+.home-enjeux .carte-lien__titre { font-size: 20px; font-weight: 400; }
 /* Grille des enjeux. Chaque li.enjeu s'efface (display: contents) : sa carte (le bouton)
    et son panneau sont des cases de la grille. script.js les ordonne (order) pour que le
    panneau occupe une rangée pleine largeur sous la rangée de sa carte : la carte ne change
@@ -54,16 +56,13 @@
   cursor: pointer;
   transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
 }
-.enjeu--accent .enjeu__bouton { background: #e9e8f8; }
 .enjeu.is-ouvert .enjeu__bouton { box-shadow: 0 0 0 1px rgba(71, 68, 193, 0.45); }
 .enjeu .pastille { transition: background-color 0.3s ease, color 0.3s ease; }
 .enjeu .pastille .ico { transition: transform 0.4s cubic-bezier(0.3, 1.4, 0.5, 1); }
-.enjeu--accent .pastille { background: var(--accent); color: var(--blanc); }
 .enjeu__chevron { transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .enjeu.is-ouvert .enjeu__chevron { transform: rotate(180deg); }
 @media (hover: hover) and (pointer: fine) {
   .enjeu:not(.is-ouvert) .enjeu__bouton:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(13, 13, 26, 0.08); }
-  .enjeu:not(.enjeu--accent) .enjeu__bouton:hover .pastille { background: var(--noir); color: var(--blanc); }
   .enjeu__bouton:hover .pastille .ico { transform: rotate(-8deg) scale(1.1); }
 }
 .enjeu__bouton:active { transform: scale(0.995); }
@@ -90,7 +89,6 @@
   transform: translateY(-8px);
   transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.enjeu--accent .enjeu__contenu { background: #e9e8f8; }
 .enjeu.is-ouvert .enjeu__contenu { opacity: 1; transform: none; transition: opacity 0.35s ease 0.08s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .enjeu__label { font-size: 13px; font-weight: 600; color: var(--accent); }
 .enjeu__cas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
@@ -107,7 +105,6 @@
   text-decoration: none;
   transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.3s ease;
 }
-.enjeu--accent .enjeu-cas { background: rgba(255, 255, 255, 0.75); }
 .enjeu-cas img { object-fit: contain; }
 .enjeu-cas__titre { flex: 1; font-size: 15px; line-height: 1.35; }
 .enjeu-cas__lien {
@@ -123,7 +120,6 @@
 }
 .enjeu-cas__lien .ico { transition: transform 0.25s ease; }
 .enjeu-cas:hover { transform: translateY(-2px); background: var(--greige); }
-.enjeu--accent .enjeu-cas:hover { background: var(--blanc); }
 .enjeu-cas:hover .enjeu-cas__lien .ico { transform: translateX(3px); }
 .enjeu__parler { align-self: flex-start; }
 

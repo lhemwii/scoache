@@ -34,12 +34,17 @@ sans `.html`, en chemin absolu.
 
 - `/` accueil, `/offre`, `/coaching-de-dirigeant`, `/coaching-de-dirigeant/individuel`,
   `/coaching-de-dirigeant/collectif`, `/coaching-de-dirigeant/organisation`
-- `/cas-clients`, puis `/cas-clients/<slug>` avec les slugs : `chanel`, `vinci-airports`, `mazars`,
-  `cic`, `croix-rouge-francaise`, `michael-page`, `ilek`, `biborg`, `le-lab-rh`, `fintecture`,
-  `manomano`, `schoolab`, `jobteaser`, `groupe-nice-matin`, `homeexchange`
-- `/formations`, puis `/formations/<slug>` avec les slugs : `cadre-relationnel-et-performance`,
-  `gestion-de-conflit`, `prise-de-parole-en-public`, `communication-impactante`
-- `/a-propos` (ancre `#methode` pour « La méthode »), `/nous-contacter`, `/mentions-legales`,
+- `/cas-clients` : hub (mur de logos en couleur et choix d'une échelle), puis les pages d'échelle
+  `/cas-clients/individuel`, `/cas-clients/collectif`, `/cas-clients/organisation`, et
+  `/cas-clients/<slug>` avec les slugs : `chanel`, `vinci-airports`, `mazars`, `cic`,
+  `croix-rouge-francaise`, `michael-page`, `ilek`, `biborg`, `le-lab-rh`, `fintecture`, `manomano`,
+  `schoolab`, `jobteaser`, `groupe-nice-matin`, `homeexchange`, `enseignement-catholique-de-paris`,
+  `michael-page-collectif`. Tout est généré par `cas-clients/_generer.py` (qui met aussi à jour le
+  JSON `#cas-apercus` de l'accueil) : modifier les données, puis relancer le script.
+- `/formations` (catalogue avec ancres `#leadership`, `#management`, `#communication`,
+  `#efficacite-personnelle`), puis `/formations/<slug>` : une page par formation du catalogue,
+  plus `cadre-relationnel-et-performance` et `gestion-de-conflit` (générées par `formations/_generer.py`)
+- `/a-propos` (ancres `#fondatrice`, `#methode` pour « La méthode », `#qualite` pour Qualiopi), `/nous-contacter`, `/mentions-legales`,
   `/confidentialite` (ancre `#cookies`), `/accessibilite`
 - Une page absente renvoie `404.html`.
 
@@ -306,7 +311,14 @@ Boutons `btn btn--noir` (et `btn--lg`), lien majuscule souligné `link-caps`, é
   bouton du formulaire.
 - Aucun décompte des cas ou des coachings : pas de « 15 cas », « quinze accompagnements »,
   « 9 individuels ». Dire « nos cas clients », « tous les cas clients ».
-- Formations **discrètes** : jamais en avant dans la navigation ni dans les héros, un lien sobre suffit.
+- Formations **discrètes** : un onglet dans le menu « Offre », une section sur `/offre` et un lien
+  dans le pied de page, comme dans le Figma ; jamais dans les héros.
+- Photos de cas : toujours la puce logo du client, jamais un chiffre (les chiffres restent dans le texte).
+- Logos clients toujours en couleur, sans filtre ni transparence.
+- Pastilles numérotées toujours claires (`#F1EFEB`, texte noir), jamais une pastille sombre parmi des claires.
+- Pas de barre « Parlons-en » juste au-dessus du bloc « Parlons de votre situation ».
+- Menu « Cas clients » : les trois échelles, quelques thèmes et un lien vers la page de l'échelle ;
+  jamais la liste des cas (personne ne doit pouvoir les compter).
 - Ne pas inventer de clients ni de témoignages : utiliser le Figma (et, à défaut, `src/content.js` à la racine du dépôt, sans en reprendre le téléphone ni l'adresse).
 - Texte en **français**, apostrophes typographiques (’) et espaces avant « : ? ! ».
 - Accessibilité : un seul `h1` par page, titres dans l'ordre, `alt` vide pour les photos
@@ -334,7 +346,7 @@ Durées de 0,3 à 0,6 s ; seuls le zoom du hero et le Ken Burns des cas sont len
   fixe de 400 px (le corps du détail défile), animation en transform et clip-path seulement,
   interruptible (double clic, autre carte pendant l'animation). Mobile : la carte s'allonge vers
   le bas (grid-template-rows).
-- **Enjeux ouvrables** : `<ul data-enjeux>` de `li.enjeu` (bouton `.enjeu__bouton` +
+- **Enjeux ouvrables** (les six enjeux d'Ilana Porteret, mot pour mot) : `<ul data-enjeux>` de `li.enjeu` (bouton `.enjeu__bouton` +
   `.enjeu__panneau > .enjeu__interieur > .enjeu__contenu`), une seule carte ouverte à la fois,
   mise en avant tournante au repos. `li.enjeu` est en `display: contents` : script.js place le
   panneau sur une rangée pleine largeur sous la rangée de sa carte (propriété `order`), la carte
@@ -345,7 +357,9 @@ Durées de 0,3 à 0,6 s ; seuls le zoom du hero et le Ken Burns des cas sont len
   `data-prefill-cas="<slug>"`, `data-prefill-message="…"`) fait défiler jusqu'au formulaire de la
   page et écrit une phrase de départ modifiable dans le message. Son `href` pointe vers
   `/nous-contacter?sujet=…&cas=…`, qui pré-remplit aussi à l'arrivée. Sujets : `prise-de-fonction`,
-  `posture`, `comite`, `transformation`, `equipe`, `autre`. Le formulaire porte
+  `posture`, `comite`, `transformation`, `equipe`, `autre`. Un sujet libre, comme le nom d'une
+  formation (`/nous-contacter?sujet=Gestion%20du%20stress`), donne « Bonjour, je souhaite en savoir
+  plus sur la formation « Gestion du stress ». ». Le formulaire porte
   `data-formulaire-contact` et son message `data-message` ; il n'y a plus de puces de sujet.
 - **Formulaire** : `data-frappe="exemple 1||exemple 2"` sur un champ tape ses exemples en
   placeholder ; une coche apparaît sur chaque champ valide (`.field__saisie` + `.field__ok`) ;
