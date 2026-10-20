@@ -1,0 +1,450 @@
+/* Scoaché, groupe « offre » : /offre, /coaching-de-dirigeant et les trois pages d'échelle.
+   Figma F329a0sXQJxBKyrLljpb2F, pages 02 à 06 (1172:4102, 1172:4428, 1173:4347, 1173:4595, 1173:4842).
+   Tout est préfixé par .page-offre ; les composants partagés viennent de /styles.css. */
+
+/* ---------- Rythme des sections (Figma : 40 px au-dessus, 24 px de titre à plateau) ---------- */
+.page-offre .of-bloc { padding-top: 40px; }
+.page-offre .of-bloc .section-head { margin-bottom: 24px; }
+.page-offre .of-bloc--tarif { padding-top: 8px; }
+
+/* Lien majuscule suivi d'une flèche */
+.page-offre .link-caps .ico { text-decoration: none; }
+
+/* ---------- Hero commun (plateau greige, colonne texte, carte blanche) ---------- */
+.page-offre .of-hero .hero__texte { flex-basis: 620px; }
+.page-offre .of-hero .hero__intro { gap: 18px; }
+.page-offre .of-hero__titre { max-width: 556px; }
+.page-offre .of-hero__accroche {
+  max-width: 520px;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--noir);
+}
+.page-offre .of-hero__texte { max-width: 520px; font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-hero .hero__actions { padding-top: 6px; }
+
+@media (min-width: 1241px) {
+  .page-offre .of-hero__titre { font-size: 60px; letter-spacing: -0.9px; }
+  .page-offre .of-hero--offre .of-hero__titre { font-size: 56px; letter-spacing: -0.84px; }
+}
+
+/* Carte photo du hero (pages 03 à 06) */
+.page-offre .of-hero__carte {
+  display: flex;
+  flex: 1;
+  padding: 8px;
+}
+.page-offre .of-hero__photo {
+  flex: 1;
+  min-height: 600px;
+  border-radius: 8px;
+}
+.page-offre .of-hero__photo .carte-verre { width: 380px; max-width: 100%; }
+
+/* Hero de /offre : colonne texte 540 px et carte d'orientation */
+.page-offre .of-hero--offre .hero__texte { flex-basis: 540px; }
+.page-offre .of-hero--offre .of-hero__titre { max-width: 476px; }
+.page-offre .of-hero--offre .hero__lead { max-width: 450px; font-size: 17px; }
+.page-offre .of-orient {
+  align-self: flex-start;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.page-offre .of-orient__titre { max-width: 600px; font-size: 26px; letter-spacing: -0.13px; }
+.page-offre .of-orient .mega-links { padding-top: 8px; padding-bottom: 8px; }
+.page-offre .of-orient .mega-link { padding: 18px 0; }
+.page-offre .of-orient .mega-link__title { font-size: 18px; line-height: 1.3; }
+.page-offre .of-orient .mega-link__text { gap: 3px; }
+.page-offre .of-orient .mega-link__sub { line-height: 1.4; }
+
+/* ---------- /offre : cartes des trois échelles ---------- */
+.page-offre .of-echelles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 0 36px;
+}
+.page-offre .of-echelle {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 12px 12px 28px;
+  background: var(--gris-clair);
+}
+.page-offre .of-echelle__photo {
+  position: relative;
+  flex: none;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.page-offre .of-echelle__photo img { width: 100%; height: 100%; object-fit: cover; }
+.page-offre .of-echelle__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(147deg, rgba(71, 68, 193, 0) 30%, rgba(107, 107, 208, 0.35) 75%, rgba(71, 68, 193, 0.75) 100%);
+}
+.page-offre .of-echelle__corps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 24px 12px 0;
+}
+.page-offre .of-echelle__titre {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.34px;
+}
+.page-offre .of-echelle__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+
+.page-offre .of-fiche { width: 100%; margin: 0; }
+.page-offre .of-fiche__ligne {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bordure);
+}
+.page-offre .of-fiche dt { font-size: 12px; font-weight: 600; color: var(--accent); }
+.page-offre .of-fiche dd { margin: 0; font-size: 14px; text-align: right; }
+
+/* Lien pastille lavande « Découvrir » (petit accent, jamais un grand bloc) */
+.page-offre .of-pastille-lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  background: #e9e8f8;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.65px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.page-offre .of-pastille-lien:hover { background: #dddcf4; }
+.page-offre .of-pastille-lien .ico { transition: transform 0.2s ease; }
+.page-offre .of-pastille-lien:hover .ico { transform: translateX(2px); }
+
+.page-offre .of-echelle__cas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding-top: 18px;
+  border-top: 1px solid var(--bordure);
+}
+.page-offre .of-echelle__cas-titre {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+  color: var(--texte-2);
+}
+.page-offre .of-echelle__cas ul { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.page-offre .of-echelle__cas a { font-size: 14px; text-underline-position: from-font; }
+.page-offre .of-echelle__cas a:hover { color: var(--accent); }
+
+/* ---------- /offre : tableau comparatif ---------- */
+.page-offre .of-comparatif { padding: 32px 40px 24px; }
+.page-offre .of-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+}
+.page-offre .of-table th,
+.page-offre .of-table td { padding: 16px 12px; vertical-align: top; }
+.page-offre .of-table thead th {
+  padding-top: 0;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--noir);
+  font-size: 18px;
+  font-weight: 600;
+}
+.page-offre .of-table .of-table__vide { width: 200px; }
+.page-offre .of-table tbody tr { border-bottom: 1px solid var(--bordure); }
+.page-offre .of-table tbody th { padding-left: 0; font-size: 13px; font-weight: 600; color: var(--accent); }
+.page-offre .of-table td { font-size: 15px; line-height: 1.45; }
+
+/* ---------- Cartes à numéro ou à icône (étapes, transitions, méthode, pour qui) ---------- */
+.page-offre .of-carte { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.page-offre .of-carte .pastille { font-size: 14px; font-weight: 600; }
+.page-offre .of-carte__titre { margin: 0; font-size: 24px; font-weight: 400; line-height: 1.25; letter-spacing: -0.12px; }
+.page-offre .of-carte__titre--26 { font-size: 26px; letter-spacing: -0.13px; }
+.page-offre .of-carte__titre--22 { font-size: 22px; letter-spacing: -0.11px; }
+.page-offre .of-carte__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-carte__texte--14 { font-size: 14px; }
+.page-offre .of-carte__tete { display: flex; align-items: center; gap: 12px; }
+.page-offre .of-carte--qui { gap: 18px; }
+
+.page-offre ol.grille,
+.page-offre ul.grille { margin: 0; padding: 0; list-style: none; }
+
+/* Plateau en colonne : une rangée de cartes au-dessus d'une barre */
+.page-offre .of-plateau-pile .grille { width: 100%; }
+
+/* Barre des formats (Parcours, Sessions, Lieu, Rythme...) */
+.page-offre .of-formats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--blanc);
+}
+.page-offre .of-formats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 14px 20px;
+}
+.page-offre .of-formats > div + div { border-left: 1px solid var(--bordure); }
+.page-offre .of-formats dt { font-size: 12px; font-weight: 600; color: var(--accent); }
+.page-offre .of-formats dd { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.35; }
+
+/* ---------- /coaching-de-dirigeant : onglets « Trois échelles » ---------- */
+.page-offre .of-onglets { display: flex; align-items: stretch; gap: 8px; width: 100%; }
+.page-offre .of-onglets__gauche {
+  display: flex;
+  flex: 0 0 360px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 24px;
+}
+.page-offre .of-onglets__intro { display: flex; flex-direction: column; gap: 8px; }
+.page-offre .of-onglets__intro .texte-petit { max-width: 310px; margin-bottom: 8px; }
+.page-offre .of-onglets__liste { display: flex; flex-direction: column; gap: 8px; }
+.page-offre .of-onglets .mega-item { font-weight: 500; }
+.page-offre .of-onglets .mega-item__arrow { display: block; color: var(--fleche); }
+.page-offre .of-onglets .mega-item.is-active .mega-item__arrow { color: var(--noir); }
+.page-offre .of-onglets .mega-item.is-active .mega-item__label { font-weight: 600; }
+.page-offre .of-onglets .mega-item:focus-visible { outline-offset: -2px; }
+
+.page-offre .of-onglets__panneau {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  gap: 40px;
+  min-width: 0;
+  padding: 36px 40px;
+  border-radius: 12px;
+  background: var(--blanc);
+}
+.page-offre .of-onglets__panneau[hidden] { display: none; }
+.page-offre .of-onglets__contenu {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+.page-offre .of-onglets__titre { margin: 0; font-size: 26px; font-weight: 400; line-height: 1.25; letter-spacing: -0.13px; }
+.page-offre .of-onglets__contenu .mega-links { margin-bottom: 8px; }
+.page-offre .of-onglets__contenu .mega-link { gap: 14px; padding: 13px 0; }
+.page-offre .of-onglets__contenu .mega-link__title { line-height: 1.3; }
+.page-offre .of-onglets__photo { flex: 0 0 340px; height: 420px; border-radius: 8px; }
+.page-offre .of-onglets__photo .carte-verre { width: 308px; max-width: 100%; }
+
+/* ---------- /coaching-de-dirigeant : transitions de leadership ---------- */
+.page-offre .of-valeur {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 28px 40px;
+}
+.page-offre .of-valeur__titre { margin: 0; font-size: 22px; font-weight: 400; line-height: 1.25; letter-spacing: -0.11px; }
+.page-offre .of-valeur__ligne { display: flex; align-items: center; gap: 20px; }
+.page-offre .of-valeur__nom { flex: 0 0 140px; font-size: 15px; font-weight: 500; }
+.page-offre .of-valeur__barres { display: flex; flex: 1; gap: 4px; min-width: 0; padding-right: 22px; }
+.page-offre .of-valeur__barres span { height: 24px; border-radius: 6px; }
+.page-offre .of-valeur__savoir { background: #c9c6bf; }
+.page-offre .of-valeur__exercer { background: var(--noir); }
+.page-offre .of-valeur__note { font-size: 13px; color: var(--placeholder); }
+
+/* ---------- /coaching-de-dirigeant : méthode et pédagogie ---------- */
+.page-offre .of-pedagogie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  background: var(--blanc);
+}
+.page-offre .of-pedagogie__titre { font-size: 14px; font-weight: 600; }
+.page-offre .of-pedagogie ul { display: flex; flex-wrap: wrap; gap: 10px; }
+.page-offre .of-pedagogie li {
+  padding: 7px 14px;
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ---------- Cas clients (cartes photo, logo ou chiffre clé, carte vitrée) ---------- */
+.page-offre .of-cas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 0 36px;
+}
+.page-offre .of-cas__carte { height: 460px; }
+.page-offre .of-cas--480 .of-cas__carte { height: 480px; }
+.page-offre .of-cas__carte .logo-puce { padding: 12px 16px; border-radius: 12px; }
+.page-offre .of-cas__carte .logo-puce img { width: 120px; height: 34px; }
+.page-offre .of-cas__carte .stat { align-self: flex-start; }
+.page-offre .of-cas__carte .carte-verre { gap: 8px; }
+.page-offre .of-cas__carte .carte-verre__eyebrow {
+  color: var(--noir);
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+}
+.page-offre .of-cas__carte .carte-verre__titre { font-size: 19px; font-weight: 400; line-height: 1.28; }
+.page-offre .of-cas__carte .carte-verre__lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 13px;
+  letter-spacing: 0.65px;
+}
+.page-offre .of-cas__carte .carte-verre__lien .ico { transition: transform 0.2s ease; }
+.page-offre .of-cas__carte:hover .carte-verre__lien .ico { transform: translateX(3px); }
+
+/* ---------- Barre tarif (pages d'échelle) ---------- */
+.page-offre .of-tarif { flex: 1; padding: 16px 24px; }
+.page-offre .of-tarif__texte { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; font-size: 15px; }
+.page-offre .of-tarif__texte strong { font-weight: 600; color: var(--accent); }
+.page-offre .of-tarif__texte span { color: var(--texte-2); }
+
+/* =====================================================================
+   Responsive
+   ===================================================================== */
+
+@media (max-width: 1240px) {
+  .page-offre .of-hero .hero__texte { flex-basis: 480px; }
+  .page-offre .of-hero--offre .hero__texte { flex-basis: 440px; }
+  .page-offre .of-onglets__photo { flex-basis: 260px; }
+  .page-offre .of-onglets__gauche { flex-basis: 300px; }
+  .page-offre .of-echelle__titre { font-size: 30px; }
+  .page-offre .of-table .of-table__vide { width: 140px; }
+  .page-offre .of-cas__carte .carte-verre__titre { font-size: 17px; }
+}
+
+@media (max-width: 1100px) {
+  /* Le hero partagé passe en colonne : on garde des proportions lisibles */
+  .page-offre .of-hero .hero__texte { flex-basis: auto; }
+  .page-offre .of-hero__photo { min-height: 440px; }
+
+  .page-offre .of-echelles { grid-template-columns: minmax(0, 1fr); }
+  .page-offre .of-echelle { flex-direction: row; gap: 12px; padding-bottom: 12px; }
+  .page-offre .of-echelle__photo { flex: 0 0 38%; height: auto; min-height: 250px; }
+  .page-offre .of-echelle__corps { flex: 1; min-width: 0; padding: 20px 12px 16px; }
+
+  .page-offre .of-onglets { flex-direction: column; }
+  .page-offre .of-onglets__gauche { flex-basis: auto; padding: 24px 20px 12px; }
+  .page-offre .of-onglets__liste { flex-direction: row; flex-wrap: wrap; }
+  .page-offre .of-onglets__liste .mega-item { width: auto; flex: 1 1 200px; }
+  .page-offre .of-onglets__photo { flex-basis: 280px; }
+
+  .page-offre .of-cas { gap: 12px; }
+  .page-offre .of-cas__carte,
+  .page-offre .of-cas--480 .of-cas__carte { height: 440px; padding: 12px; }
+  .page-offre .of-cas__carte .carte-verre { padding: 14px; }
+  .page-offre .of-cas__carte .carte-verre__titre { font-size: 16px; }
+
+  .page-offre .of-formats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page-offre .of-formats > div:nth-child(3) { border-left: 0; }
+  .page-offre .of-formats > div:nth-child(n+3) { border-top: 1px solid var(--bordure); }
+}
+
+@media (max-width: 900px) {
+  .page-offre .of-bloc { padding-top: 40px; }
+  .page-offre .of-bloc--tarif { padding-top: 8px; }
+  .page-offre .of-bloc .section-head { margin-bottom: 20px; }
+
+  .page-offre .of-hero__accroche { font-size: 19px; }
+  .page-offre .of-hero__photo { min-height: 360px; }
+  .page-offre .of-hero--offre .hero__lead { font-size: 16px; }
+  .page-offre .of-orient__titre { font-size: 22px; }
+  .page-offre .of-orient .mega-link__title { font-size: 16px; }
+
+  .page-offre .of-echelles,
+  .page-offre .of-cas { padding: 0 12px; }
+  .page-offre .of-echelle { flex-direction: column; gap: 0; padding-bottom: 24px; }
+  .page-offre .of-echelle__photo { flex: none; height: 220px; min-height: 0; }
+  .page-offre .of-echelle__corps { padding: 20px 8px 0; }
+  .page-offre .of-echelle__titre { font-size: 28px; }
+
+  /* Tableau comparatif : une fiche par critère */
+  .page-offre .of-comparatif { padding: 8px 16px 16px; }
+  .page-offre .of-table,
+  .page-offre .of-table tbody,
+  .page-offre .of-table tr,
+  .page-offre .of-table th,
+  .page-offre .of-table td { display: block; width: 100%; }
+  .page-offre .of-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .page-offre .of-table tbody tr { padding: 16px 0 12px; }
+  .page-offre .of-table tbody th { padding: 0 0 6px; }
+  .page-offre .of-table td { display: flex; gap: 12px; padding: 6px 0; }
+  .page-offre .of-table td::before {
+    content: attr(data-echelle);
+    flex: 0 0 96px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .page-offre .of-onglets__gauche { padding: 24px 12px 8px; }
+  .page-offre .of-onglets__liste .mega-item { flex-basis: 100%; }
+  .page-offre .of-onglets__panneau { flex-direction: column; gap: 24px; padding: 24px 20px; }
+  .page-offre .of-onglets__photo { flex: none; width: 100%; height: 360px; }
+  .page-offre .of-onglets__titre { font-size: 22px; }
+
+  .page-offre .of-carte__titre--26 { font-size: 24px; }
+
+  .page-offre .of-valeur { padding: 24px 20px; }
+  .page-offre .of-valeur__barres { padding-right: 0; }
+
+  .page-offre .of-cas { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .page-offre .of-cas__carte,
+  .page-offre .of-cas--480 .of-cas__carte { height: 420px; padding: 16px; }
+  .page-offre .of-cas__carte .carte-verre { padding: 16px 18px; }
+  .page-offre .of-cas__carte .carte-verre__titre { font-size: 18px; }
+
+  .page-offre .of-pedagogie { padding: 16px; }
+  .page-offre .of-tarif { padding: 16px; }
+}
+
+@media (max-width: 600px) {
+  .page-offre .of-hero__photo { min-height: 300px; }
+  .page-offre .of-hero__photo .carte-verre,
+  .page-offre .of-onglets__photo .carte-verre { width: 100%; }
+  .page-offre .of-hero .hero__actions { gap: 16px 20px; }
+
+  .page-offre .of-fiche__ligne { flex-direction: column; }
+  .page-offre .of-fiche dd { text-align: left; }
+
+  .page-offre .of-formats { grid-template-columns: minmax(0, 1fr); }
+  .page-offre .of-formats > div + div { border-left: 0; border-top: 1px solid var(--bordure); }
+
+  .page-offre .of-valeur__ligne { flex-direction: column; align-items: stretch; gap: 6px; }
+  .page-offre .of-valeur__nom { flex-basis: auto; }
+
+  .page-offre .of-carte__titre--22 { font-size: 20px; }
+}
