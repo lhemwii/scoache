@@ -730,3 +730,33 @@ html .page-cas .cas-fiche__photo .logo-puce img { max-width: 200px; height: 56px
   .page-cas .cas-sommaire__details[open] .cas-sommaire__resume .ico { transform: rotate(180deg); }
   .page-cas .cas-sommaire__liste { flex-direction: column; padding: 0 6px 8px; }
 }
+
+/* ---------- Manche 14 : une ligne de cas = une photo avec le logo en grand, puis le texte (plus de logo en double) ---------- */
+@media (min-width: 701px) {
+  html .page-cas .cas-ligne {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    grid-template-areas: "photo marque" "photo corps";
+    grid-template-rows: auto 1fr;
+    column-gap: 40px;
+    row-gap: 12px;
+  }
+  html .page-cas .cas-ligne__photo { grid-area: photo; width: 100%; height: 220px; }
+  html .page-cas .cas-ligne__marque {
+    grid-area: marque;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px 12px;
+    padding: 0;
+    background: none;
+    text-align: left;
+  }
+  html .page-cas .cas-ligne__meta { max-width: none; }
+  html .page-cas .cas-ligne__corps { grid-area: corps; }
+}
+/* Le logo reste au centre de la photo ; dans la marque, il n'est gardé que pour les lecteurs d'écran */
+html .page-cas .cas-ligne__marque { position: relative; }
+html .page-cas .cas-ligne__logo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+html .page-cas .cas-ligne__echelle { background: var(--gris-clair); }

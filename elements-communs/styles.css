@@ -2729,3 +2729,45 @@ html .page-cas .cas-echelle__icone .ico { width: 60px; height: 60px; --ico-trait
 main .pastille--lg { width: 56px; height: 56px; border-radius: 12px; }
 main .pastille--lg > .ico { width: 28px; height: 28px; --ico-trait: 1.9; }
 main .pastille > .ico { --ico-trait: 1.8; }
+
+/* ---------- Manche 14 : grande icône d'échelle, vitrée, au milieu d'une photo floutée (offre, onglets, hub) ---------- */
+.echelle-icone {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 12px 28px rgba(13, 13, 26, 0.18);
+  color: var(--noir);
+  transform: translate(-50%, -50%);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+}
+.echelle-icone .ico { width: 60px; height: 60px; --ico-trait: 2; }
+:is(.of-echelle__photo, .of-onglets__photo):has(.echelle-icone) { position: relative; overflow: hidden; }
+:is(.of-echelle__photo, .of-onglets__photo):has(.echelle-icone) > img { filter: blur(6px) saturate(1.05); transform: scale(1.08); }
+@media (max-width: 600px) {
+  .echelle-icone { width: 104px; height: 104px; }
+  .echelle-icone .ico { width: 48px; height: 48px; }
+}
+/* Offre : la fiche « pour qui / quand / format » est dans le tableau comparatif juste en dessous */
+.page-offre .of-echelle .of-fiche { display: none; }
+/* Offre : logos des cas plus grands, dans des puces blanches */
+.page-offre .of-logos { gap: 8px; }
+.page-offre .of-logos li a { display: grid; place-items: center; width: 104px; height: 52px; padding: 8px 12px; border: 1px solid var(--bordure); border-radius: 10px; background: var(--blanc); }
+.page-offre .of-logos li img { width: auto; max-width: 100%; height: auto; max-height: 30px; object-fit: contain; }
+
+/* ---------- Manche 14 : rythme de page plus serré (moins de grands blancs) ---------- */
+:root { --rythme: clamp(56px, 6.5vw, 96px); }
+/* Bandeau de logos : fondu sur les bords plutôt qu'un logo coupé net */
+.home-logos .marquee {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+html .photo > .echelle-icone { position: absolute; top: 50%; left: 50%; margin: 0; align-self: auto; transform: translate(-50%, -50%); }
