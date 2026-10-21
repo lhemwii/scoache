@@ -876,7 +876,7 @@
   /* ---------- Vos enjeux : une carte s'ouvre pour montrer les cas liés ---------- */
   /* Trois variantes d'ouverture, comparables avec ?enjeux=a|b|c (sélecteur en bas d'écran) :
      a = séparé (la carte, puis ses cas dans un panneau à part, 16 px dessous),
-     b = volet latéral (le détail remplace l'introduction dans la colonne de gauche, dès 1024 px ;
+     b = volet latéral (le détail remplace l'introduction dans la colonne de gauche, dès 1180 px ;
          en dessous, comportement a), c = carte agrandie (sur deux colonnes, ses cas dedans).
      Sans paramètre : b. */
 
@@ -889,7 +889,7 @@
   function initEnjeux() {
     var demandee = varianteDemandee();
     var choisie = demandee || 'b';
-    var large = window.matchMedia('(min-width: 1024px)');
+    var large = window.matchMedia('(min-width: 1180px)');
     var grilles = [];
 
     toutes('[data-enjeux]').forEach(function (grille) {
@@ -960,7 +960,7 @@
         function afficher() {
           if (carte) {
             voletTitre.textContent = carte.querySelector('.carte-lien__titre').textContent.trim();
-            voletTexte.textContent = carte.querySelector('.carte-lien__texte').textContent.trim();
+            voletTexte.textContent = (carte.querySelector('.enjeu__texte') || carte.querySelector('.carte-lien__texte')).textContent.trim();
             voletCas.textContent = '';
             toutes('.enjeu__cas > li', carte).forEach(function (li) {
               // Mini-carte compacte : logo, titre, flèche ; « Voir le cas » reste lu par les lecteurs d'écran
@@ -1003,7 +1003,7 @@
         grille.classList.toggle('a-une-ouverte', !!ouvrir);
       }
 
-      // Change de variante (paramètre, sélecteur ou passage sous 1024 px) : tout se referme.
+      // Change de variante (paramètre, sélecteur ou passage sous 1180 px) : tout se referme.
       function appliquerMode() {
         var m = choisie === 'b' && !large.matches ? 'a' : choisie;
         if (m === mode) return;
@@ -1203,156 +1203,95 @@
     });
   }
 
-  /* ---------- Ils en parlent : citation mot à mot, rotation et promotion au clic ---------- */
 
-  function lireTemoignage(fig, principal) {
-    if (principal) {
-      return {
-        citation: fig.querySelector('.temoignages__citation p').textContent,
-        nom: fig.querySelector('.temoin__nom').textContent,
-        role: fig.querySelector('.temoin__role').textContent,
-        photo: fig.querySelector('.temoin__photo').getAttribute('src'),
-        logo: lireLogo(fig)
-      };
-    }
-    var legende = fig.querySelector('figcaption').textContent;
-    var i = legende.indexOf(',');
-    return {
-      citation: fig.querySelector('blockquote p').textContent,
-      nom: legende.slice(0, i).trim(),
-      role: legende.slice(i + 1).trim(),
-      photo: fig.querySelector('.temoin__photo').getAttribute('src'),
-      logo: lireLogo(fig)
-    };
-  }
-  // Logo de l'entreprise du témoin : image en couleur, ou nom en toutes lettres quand aucun fichier n'existe
-  function lireLogo(fig) {
-    var l = fig.querySelector('.temoin__logo');
-    if (!l) return null;
-    return l.tagName === 'IMG' ? { src: l.getAttribute('src'), w: l.getAttribute('width'), h: l.getAttribute('height') } : { texte: l.textContent };
-  }
-  function ecrireLogo(fig, logo, parent) {
-    var ancien = fig.querySelector('.temoin__logo');
-    if (!logo) { if (ancien) ancien.remove(); return; }
-    var nouveau;
-    if (logo.src) {
-      nouveau = elt('img', 'temoin__logo');
-      nouveau.src = logo.src;
-      nouveau.alt = '';
-      nouveau.width = logo.w;
-      nouveau.height = logo.h;
-    } else {
-      nouveau = elt('span', 'temoin__logo temoin__logo--texte', logo.texte);
-      nouveau.setAttribute('aria-hidden', 'true');
-    }
-    if (ancien) ancien.replaceWith(nouveau); else parent.appendChild(nouveau);
-  }
-  function ecrireTemoignage(fig, t, principal) {
-    if (principal) {
-      fig.querySelector('.temoignages__citation p').textContent = t.citation;
-      fig.querySelector('.temoin__nom').textContent = t.nom;
-      fig.querySelector('.temoin__role').textContent = t.role;
-      ecrireLogo(fig, t.logo, fig.querySelector('.temoin'));
-    } else {
-      fig.querySelector('blockquote p').textContent = t.citation;
-      fig.querySelector('figcaption').textContent = t.nom + ', ' + t.role;
-      fig.querySelector('.temoignages__promouvoir .visually-hidden').textContent = 'Afficher en grand le témoignage de ' + t.nom;
-      ecrireLogo(fig, t.logo, fig.querySelector('.temoignages__court-texte'));
-    }
-    fig.querySelector('.temoin__photo').setAttribute('src', t.photo);
-  }
-
+  /* ---------- Témoignages : un grand témoignage à la fois (manche 9) ----------
+     Défilement automatique avec barre de progression ; pause au survol, au focus et par le bouton ;
+     flèches, visages, flèches du clavier et balayage. Mouvement réduit : pas de défilement automatique. */
+  var DUREE_TEMOIGNAGE = 8000;
   function initTemoignages() {
-    toutes('[data-temoignages]').forEach(function (bloc) {
-      if (!une(bloc, 'temoignages')) return;
-      var principal = bloc.querySelector('.temoignages__principal');
-      var courts = toutes('.temoignages__court', bloc);
-      var visible = false, rang = 0, minut = null, enCours = false;
+    toutes('[data-temoignages]').forEach(function (scene) {
+      if (!une(scene, 'temoignages')) return;
+      var slides = toutes('[data-temoignage]', scene);
+      if (slides.length < 2) return;
+      var personnes = toutes('[data-temoignage-aller]', scene);
+      var barre = scene.querySelector('.temoignages__barre');
+      var boutonPause = scene.querySelector('[data-temoignages-pause]');
+      var courant = 0, debut = 0, ecoule = 0, raf = null, visible = false;
+      var survol = false, focus = false, arretUtilisateur = mouvementReduit.matches;
 
-      function promouvoir(fig, parUtilisateur) {
-        if (enCours) return;
-        enCours = true;
-        var haut = lireTemoignage(principal, true), bas = lireTemoignage(fig, false);
-        var duree = mouvementReduit.matches ? 0 : 320;
-        principal.classList.add('is-fondu');
-        fig.classList.add('is-fondu');
-        principal.setAttribute('aria-live', parUtilisateur ? 'polite' : 'off');
-        setTimeout(function () {
-          ecrireTemoignage(principal, bas, true);
-          ecrireTemoignage(fig, haut, false);
-          principal.classList.remove('is-fondu');
-          fig.classList.remove('is-fondu');
-          enCours = false;
-        }, duree);
+      function afficher(n, parUtilisateur) {
+        n = (n + slides.length) % slides.length;
+        if (n === courant) return;
+        var avant = slides[courant];
+        courant = n;
+        avant.classList.remove('is-actif');
+        avant.setAttribute('aria-hidden', 'true');
+        slides[n].classList.add('is-actif');
+        slides[n].removeAttribute('aria-hidden');
+        personnes.forEach(function (b, k) { if (k === n) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+        scene.querySelector('.temoignages__piste').setAttribute('aria-live', parUtilisateur ? 'polite' : 'off');
+        ecoule = 0;
+        debut = performance.now();
+        majBarre(0);
       }
-      /* Rotation continue toutes les 6 s. Un clic choisit un témoignage : la rotation reprend
-         10 s plus tard, jamais arrêtée pour de bon. Pause seulement pendant le survol à la souris
-         (ou tant que le clavier est sur une carte). Rien ne tourne avec « réduire les animations ». */
-      var INTERVALLE = 6000, APRES_CLIC = 10000;
-      var survol = false, focusClavier = false, repriseApres = 0;
-      function planifier(delai) {
-        clearTimeout(minut);
-        if (mouvementReduit.matches || !visible || document.hidden || survol || focusClavier) return;
-        delai = Math.max(delai || INTERVALLE, repriseApres - Date.now());
-        minut = setTimeout(function () {
-          if (survol || focusClavier || !visible || document.hidden) return;
-          promouvoir(courts[rang % courts.length], false);
-          rang += 1;
-          planifier(INTERVALLE);
-        }, delai);
+      function majBarre(r) { if (barre) barre.style.transform = 'scaleX(' + r + ')'; }
+      function enPause() { return arretUtilisateur || survol || focus || !visible || document.hidden; }
+      function boucle(t) {
+        raf = null;
+        if (enPause()) return;
+        ecoule += t - debut;
+        debut = t;
+        if (ecoule >= DUREE_TEMOIGNAGE) { afficher(courant + 1, false); }
+        majBarre(Math.min(1, ecoule / DUREE_TEMOIGNAGE));
+        raf = requestAnimationFrame(boucle);
       }
-      courts.forEach(function (fig) {
-        fig.querySelector('.temoignages__promouvoir').addEventListener('click', function () {
-          promouvoir(fig, true);
-          repriseApres = Date.now() + APRES_CLIC;
-          planifier(APRES_CLIC);
-        });
-      });
-      bloc.addEventListener('pointerenter', function (e) {
-        if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
-        survol = true;
-        clearTimeout(minut);
-      });
-      bloc.addEventListener('pointerleave', function (e) {
-        if (!survol) return;
-        survol = false;
-        planifier(INTERVALLE);
-      });
-      bloc.addEventListener('focusin', function (e) {
-        var t = e.target;
-        if (t.matches && t.matches(':focus-visible')) { focusClavier = true; clearTimeout(minut); }
-      });
-      bloc.addEventListener('focusout', function (e) {
-        if (bloc.contains(e.relatedTarget)) return;
-        if (focusClavier) { focusClavier = false; planifier(INTERVALLE); }
-      });
-      document.addEventListener('visibilitychange', function () { if (!document.hidden) planifier(INTERVALLE); });
-      if (!mouvementReduit.matches) visibleQuand(bloc, function (v) { visible = v; if (v) planifier(INTERVALLE); else clearTimeout(minut); }, 0.4);
+      function relancer() {
+        scene.classList.toggle('is-pause', enPause());
+        if (enPause() || raf) return;
+        debut = performance.now();
+        raf = requestAnimationFrame(boucle);
+      }
+      function majBoutonPause() {
+        if (!boutonPause) return;
+        boutonPause.setAttribute('aria-label', arretUtilisateur ? 'Relancer le défilement des témoignages' : 'Mettre en pause le défilement des témoignages');
+        boutonPause.classList.toggle('is-arrete', arretUtilisateur);
+      }
 
-      // Citation principale révélée mot à mot à la première apparition
-      var citation = principal.querySelector('[data-mots] p');
-      if (citation && !mouvementReduit.matches) {
-        var texte = citation.textContent;
-        var mots = texte.split(' ');
-        citation.textContent = '';
-        citation.setAttribute('aria-label', texte);
-        mots.forEach(function (m, i) {
-          var s = elt('span', 'mot', m);
-          s.setAttribute('aria-hidden', 'true');
-          s.style.transitionDelay = (i * 18) + 'ms';
-          citation.appendChild(s);
-          if (i < mots.length - 1) citation.appendChild(document.createTextNode(' '));
-        });
-        var vu = false;
-        visibleQuand(citation, function (v) {
-          if (!v || vu) return;
-          vu = true;
-          citation.classList.add('is-mots');
-          setTimeout(function () { citation.textContent = texte; citation.removeAttribute('aria-label'); }, mots.length * 18 + 600);
-        }, 0.5);
+      scene.querySelector('[data-temoignages-suivant]').addEventListener('click', function () { afficher(courant + 1, true); });
+      scene.querySelector('[data-temoignages-precedent]').addEventListener('click', function () { afficher(courant - 1, true); });
+      personnes.forEach(function (b) {
+        b.addEventListener('click', function () { afficher(+b.getAttribute('data-temoignage-aller'), true); });
+      });
+      if (boutonPause) {
+        if (mouvementReduit.matches) boutonPause.hidden = true;
+        boutonPause.addEventListener('click', function () { arretUtilisateur = !arretUtilisateur; majBoutonPause(); relancer(); });
       }
+      scene.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { afficher(courant + 1, true); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { afficher(courant - 1, true); e.preventDefault(); }
+      });
+      scene.addEventListener('mouseenter', function () { survol = true; relancer(); });
+      scene.addEventListener('mouseleave', function () { survol = false; relancer(); });
+      scene.addEventListener('focusin', function () { focus = true; relancer(); });
+      scene.addEventListener('focusout', function (e) { if (!scene.contains(e.relatedTarget)) { focus = false; relancer(); } });
+      document.addEventListener('visibilitychange', relancer);
+      // Balayage sur écran tactile
+      var x0 = null, y0 = null;
+      scene.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      scene.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) afficher(courant + (dx < 0 ? 1 : -1), true);
+      });
+      if (mouvementReduit.addEventListener) mouvementReduit.addEventListener('change', function () { if (mouvementReduit.matches) { arretUtilisateur = true; majBoutonPause(); relancer(); } });
+      visibleQuand(scene, function (v) { visible = v; relancer(); }, 0.35);
+      majBoutonPause();
+      majBarre(0);
+      relancer();
     });
   }
+
 
   /* ---------- Hero : parcours interactif (data-hero-parcours) ----------
      Un clic sur l'une des trois situations ne quitte plus la page : la carte s'agrandit sur place
@@ -1755,6 +1694,10 @@
 
   function initReveal() {
     if (mouvementReduit.matches || !('IntersectionObserver' in window)) return;
+    // Le hero (première section de la page) ne se révèle jamais au défilement : ce qui est en
+    // haut de page doit être visible tout de suite, même quand il dépasse la ligne de flottaison.
+    var hero = document.querySelector('main section');
+    if (hero) hero.setAttribute('data-no-reveal', '');
     toutes('main, .site-footer').forEach(function (racine) {
       toutes(CIBLES_REVEAL, racine).forEach(function (el) {
         if (el.hasAttribute('data-reveal') || el.closest('[data-no-reveal]')) return;
@@ -1763,7 +1706,7 @@
       });
     });
     toutes('main section').forEach(function (section) {
-      if (section.closest('[data-reveal]') || section.querySelector('[data-reveal]')) return;
+      if (section.closest('[data-reveal], [data-no-reveal]') || section.querySelector('[data-reveal]')) return;
       Array.prototype.forEach.call(section.children, function (enfant) { enfant.setAttribute('data-reveal', ''); });
     });
 
@@ -2149,8 +2092,66 @@
   if (ecranLarge.addEventListener) ecranLarge.addEventListener('change', surChangement);
   else if (ecranLarge.addListener) ecranLarge.addListener(surChangement);
 
+  /* ---------- Surtitres en pastille : une petite icône selon le sujet (manche 11) ---------- */
+  var ICONES_SURTITRE = [
+    [/individuel|tête-à-tête/i, 'user-round'],
+    [/collectif|équipes?\b|codir|comex/i, 'users-round'],
+    [/organisation|entreprise/i, 'building'],
+    [/cas clients?|ils nous|confi|autres cas|situations proches/i, 'book'],
+    [/enjeu|situation|défi/i, 'compass'],
+    [/parlent|témoign|avis|disent/i, 'message'],
+    [/contact|message|parlons|écrire/i, 'mail'],
+    [/expertise|\bIA\b|mentale/i, 'sparkle'],
+    [/formation|programme|objectifs|pédagog|évaluation|qualiopi|tarif|prérequis/i, 'list-checks'],
+    [/fondatrice|à propos|ilana|qui sommes|équipe de coachs/i, 'user'],
+    [/résultat|évolution|chiffre|qualité|impact|démontre/i, 'gauge'],
+    [/offre|échelle|coaching|accompagnement|méthode|démarche|étapes|ensuite/i, 'layers'],
+    [/question|faq/i, 'message']
+  ];
+  function initSurtitres() {
+    toutes('p.eyebrow').forEach(function (p) {
+      if (p.querySelector('svg') || p.closest('.mega, .carte-verre, .cas-30') || p.classList.contains('cas-30__eyebrow')) return;
+      if (!une(p, 'surtitre')) return;
+      var texte = p.textContent, nom = 'sparkle';
+      for (var i = 0; i < ICONES_SURTITRE.length; i++) {
+        if (ICONES_SURTITRE[i][0].test(texte)) { nom = ICONES_SURTITRE[i][1]; break; }
+      }
+      p.insertBefore(icone(nom, 16), p.firstChild);
+    });
+  }
+
+  /* ---------- Sommaire d'un cas client (data-sommaire) : section courante, repli sur mobile ---------- */
+  function initSommaire() {
+    toutes('[data-sommaire]').forEach(function (nav) {
+      if (!une(nav, 'sommaire')) return;
+      var details = nav.querySelector('details');
+      var courant = nav.querySelector('.cas-sommaire__courant');
+      var liens = toutes('a[href^="#"]', nav);
+      var cibles = liens.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+      function adapter() { if (details) details.open = ecranLarge.matches; }
+      adapter();
+      if (ecranLarge.addEventListener) ecranLarge.addEventListener('change', adapter);
+      function activer(i) {
+        liens.forEach(function (a, k) { if (k === i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+        if (courant && liens[i]) courant.textContent = liens[i].textContent;
+      }
+      liens.forEach(function (a) {
+        a.addEventListener('click', function () { if (!ecranLarge.matches && details) details.open = false; });
+      });
+      function surDefilement() {
+        var seuil = 220, i = 0;
+        cibles.forEach(function (c, k) { if (c && c.getBoundingClientRect().top - seuil <= 0) i = k; });
+        activer(i);
+      }
+      window.addEventListener('scroll', surDefilement, { passive: true });
+      surDefilement();
+    });
+  }
+
   function init() {
     majEntete();
+    initSommaire();
+    initSurtitres();
     initMenus();
     initMobile();
     initFormulaire();

@@ -1,75 +1,76 @@
-<!-- Partiel partagé : « Ils en parlent » (Figma 1231:5202). Une grande citation et quatre cartes avec photo ronde et logo de l’entreprise. -->
+<!-- Partiel partagé : « Ils en parlent » (Figma 1231:5202). Un grand témoignage à la fois, qui défile seul
+     (barre de progression, pause au survol ou au focus, bouton pause), flèches, visages et balayage sur mobile.
+     Mouvement réduit : pas de défilement automatique. -->
 <section class="section temoignages" aria-labelledby="temoignages-titre">
   <div class="section-head">
     <div class="section-head__text">
       <p class="eyebrow">Ils en parlent</p>
       <h2 class="section-head__title" id="temoignages-titre">Ce qu’ils en disent</h2>
+      <p class="section-head__intro">Des dirigeants et des responsables RH racontent leur accompagnement.</p>
     </div>
-    <a class="link-caps link-caps--accent section-head__link" href="https://www.google.com/search?q=Scoach%C3%A9+avis" target="_blank" rel="noopener">
-      Les avis Google<span class="visually-hidden"> (nouvel onglet)</span>
-      <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
-    </a>
+    <a class="link-caps section-head__link" href="https://www.google.com/search?q=Scoach%C3%A9+avis" target="_blank" rel="noopener">Les avis Google<span class="visually-hidden"> (nouvel onglet)</span></a>
   </div>
 
-  <div class="plateau plateau--10 temoignages__plateau" data-temoignages>
-    <figure class="carte temoignages__principal">
-      <p class="etoiles" role="img" aria-label="5 étoiles sur 5">
-        <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>
-        <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>
-        <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>
-        <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>
-        <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg>
-      </p>
-      <blockquote class="temoignages__citation" data-mots>
-        <p>« Ilana a un talent rare pour identifier tant les points de tension que les axes de développement. En quelques mois avec elle, je me sens avoir progressé de plusieurs années sur mon développement personnel et sur mes choix de carrière. »</p>
-      </blockquote>
-      <figcaption class="temoin">
-        <img class="temoin__photo temoin__photo--lg" src="/assets/temoins/jeremy-lamri.jpg" alt="" width="56" height="56" loading="lazy">
-        <span class="temoin__texte">
-          <span class="temoin__nom">Jérémy Lamri</span>
-          <span class="temoin__role">CIO, co-fondateur du Lab RH, Jobteaser</span>
-        </span>
-        <img class="temoin__logo" src="/assets/cas/logos/jobteaser.png" alt="" width="480" height="123" loading="lazy">
-      </figcaption>
-    </figure>
-
-    <div class="temoignages__liste">
-      <figure class="carte temoignages__court">
-        <button type="button" class="temoignages__promouvoir"><span class="visually-hidden">Afficher en grand le témoignage de Carla Murano</span></button>
-        <img class="temoin__photo" src="/assets/temoins/carla-murano.png" alt="" width="56" height="56" loading="lazy">
-        <div class="temoignages__court-texte">
-          <blockquote><p>« Une moyenne de satisfaction de 10/10. »</p></blockquote>
-          <figcaption>Carla Murano, HR Innovation Project Manager, ManoMano</figcaption>
-          <img class="temoin__logo" src="/assets/cas/logos/manomano.png" alt="" width="480" height="104" loading="lazy">
+  <div class="plateau temoignages__plateau">
+    <div class="carte temoignages__scene" role="region" aria-roledescription="carrousel" aria-label="Témoignages" data-temoignages>
+      <p class="etoiles" role="img" aria-label="5 étoiles sur 5"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-star"/></svg></p>
+      <div class="temoignages__piste" aria-live="off">
+        <figure class="temoignage temoignage--long is-actif" role="group" aria-roledescription="diapositive" aria-label="1 sur 5" data-temoignage>
+          <blockquote class="temoignage__citation"><p>« Ilana a un talent rare pour identifier tant les points de tension que les axes de développement. En quelques mois avec elle, je me sens avoir progressé de plusieurs années sur mon développement personnel et sur mes choix de carrière. »</p></blockquote>
+          <figcaption class="temoignage__auteur">
+            <img class="temoignage__photo" src="/assets/temoins/jeremy-lamri.jpg" alt="" width="64" height="64" loading="lazy" decoding="async">
+            <span class="temoignage__texte"><span class="temoignage__nom">Jérémy Lamri</span><span class="temoignage__role">CIO, co-fondateur du Lab RH, Jobteaser</span></span>
+            <span class="temoignage__logo"><img src="/assets/cas/logos/jobteaser.png" alt="Jobteaser" width="480" height="123" loading="lazy" decoding="async"></span>
+          </figcaption>
+        </figure>
+        <figure class="temoignage" role="group" aria-roledescription="diapositive" aria-label="2 sur 5" data-temoignage aria-hidden="true">
+          <blockquote class="temoignage__citation"><p>« Une moyenne de satisfaction de 10/10. »</p></blockquote>
+          <figcaption class="temoignage__auteur">
+            <img class="temoignage__photo" src="/assets/temoins/carla-murano.png" alt="" width="64" height="64" loading="lazy" decoding="async">
+            <span class="temoignage__texte"><span class="temoignage__nom">Carla Murano</span><span class="temoignage__role">HR Innovation Project Manager, ManoMano</span></span>
+            <span class="temoignage__logo"><img src="/assets/cas/logos/manomano.png" alt="ManoMano" width="480" height="104" loading="lazy" decoding="async"></span>
+          </figcaption>
+        </figure>
+        <figure class="temoignage" role="group" aria-roledescription="diapositive" aria-label="3 sur 5" data-temoignage aria-hidden="true">
+          <blockquote class="temoignage__citation"><p>« Une coach impliquée, efficace et empathique. Très utile d’avoir ses lumières pendant la crise. »</p></blockquote>
+          <figcaption class="temoignage__auteur">
+            <img class="temoignage__photo" src="/assets/temoins/wale-gbadamosi-oyekanmi.png" alt="" width="64" height="64" loading="lazy" decoding="async">
+            <span class="temoignage__texte"><span class="temoignage__nom">Wale Gbadamosi Oyekanmi</span><span class="temoignage__role">Président, Darewin</span></span>
+            <span class="temoignage__logo temoignage__logo--texte">Darewin</span>
+          </figcaption>
+        </figure>
+        <figure class="temoignage" role="group" aria-roledescription="diapositive" aria-label="4 sur 5" data-temoignage aria-hidden="true">
+          <blockquote class="temoignage__citation"><p>« Ilana a très bien compris le contexte et a rempli sa mission d’une main de maître. »</p></blockquote>
+          <figcaption class="temoignage__auteur">
+            <img class="temoignage__photo" src="/assets/temoins/sylvie-mignonne.png" alt="" width="64" height="64" loading="lazy" decoding="async">
+            <span class="temoignage__texte"><span class="temoignage__nom">Sylvie Mignonne</span><span class="temoignage__role">Responsable du développement RH, Nice-Matin</span></span>
+            <span class="temoignage__logo"><img src="/assets/cas/logos/groupe-nice-matin.png" alt="Groupe Nice-Matin" width="480" height="122" loading="lazy" decoding="async"></span>
+          </figcaption>
+        </figure>
+        <figure class="temoignage" role="group" aria-roledescription="diapositive" aria-label="5 sur 5" data-temoignage aria-hidden="true">
+          <blockquote class="temoignage__citation"><p>« Des résultats qui se sont inscrits dans la durée. »</p></blockquote>
+          <figcaption class="temoignage__auteur">
+            <img class="temoignage__photo" src="/assets/temoins/jean-claude-charlet.png" alt="" width="64" height="64" loading="lazy" decoding="async">
+            <span class="temoignage__texte"><span class="temoignage__nom">Jean-Claude Charlet</span><span class="temoignage__role">CEO, Schoolab</span></span>
+            <span class="temoignage__logo"><img src="/assets/cas/logos/schoolab.png" alt="Schoolab" width="480" height="96" loading="lazy" decoding="async"></span>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="temoignages__bas">
+        <div class="temoignages__personnes">
+          <button type="button" class="temoignages__personne" data-temoignage-aller="0" aria-label="Témoignage de Jérémy Lamri" aria-current="true"><img src="/assets/temoins/jeremy-lamri.jpg" alt="" width="44" height="44" loading="lazy" decoding="async"></button>
+          <button type="button" class="temoignages__personne" data-temoignage-aller="1" aria-label="Témoignage de Carla Murano"><img src="/assets/temoins/carla-murano.png" alt="" width="44" height="44" loading="lazy" decoding="async"></button>
+          <button type="button" class="temoignages__personne" data-temoignage-aller="2" aria-label="Témoignage de Wale Gbadamosi Oyekanmi"><img src="/assets/temoins/wale-gbadamosi-oyekanmi.png" alt="" width="44" height="44" loading="lazy" decoding="async"></button>
+          <button type="button" class="temoignages__personne" data-temoignage-aller="3" aria-label="Témoignage de Sylvie Mignonne"><img src="/assets/temoins/sylvie-mignonne.png" alt="" width="44" height="44" loading="lazy" decoding="async"></button>
+          <button type="button" class="temoignages__personne" data-temoignage-aller="4" aria-label="Témoignage de Jean-Claude Charlet"><img src="/assets/temoins/jean-claude-charlet.png" alt="" width="44" height="44" loading="lazy" decoding="async"></button>
         </div>
-      </figure>
-      <figure class="carte temoignages__court">
-        <button type="button" class="temoignages__promouvoir"><span class="visually-hidden">Afficher en grand le témoignage de Wale Gbadamosi Oyekanmi</span></button>
-        <img class="temoin__photo" src="/assets/temoins/wale-gbadamosi-oyekanmi.png" alt="" width="56" height="56" loading="lazy">
-        <div class="temoignages__court-texte">
-          <blockquote><p>« Une coach impliquée, efficace et empathique. Très utile d’avoir ses lumières pendant la crise. »</p></blockquote>
-          <figcaption>Wale Gbadamosi Oyekanmi, Président, Darewin</figcaption>
-          <span class="temoin__logo temoin__logo--texte" aria-hidden="true">Darewin</span>
+        <div class="temoignages__nav">
+          <button type="button" class="temoignages__bouton temoignages__pause" data-temoignages-pause aria-label="Mettre en pause le défilement des témoignages"><svg class="ico ico-pause" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-pause"/></svg><svg class="ico ico-lecture" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-play"/></svg></button>
+          <button type="button" class="temoignages__bouton" data-temoignages-precedent aria-label="Témoignage précédent"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-left"/></svg></button>
+          <button type="button" class="temoignages__bouton temoignages__bouton--noir" data-temoignages-suivant aria-label="Témoignage suivant"><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-chevron-right"/></svg></button>
         </div>
-      </figure>
-      <figure class="carte temoignages__court">
-        <button type="button" class="temoignages__promouvoir"><span class="visually-hidden">Afficher en grand le témoignage de Sylvie Mignonne</span></button>
-        <img class="temoin__photo" src="/assets/temoins/sylvie-mignonne.png" alt="" width="56" height="56" loading="lazy">
-        <div class="temoignages__court-texte">
-          <blockquote><p>« Ilana a très bien compris le contexte et a rempli sa mission d’une main de maître. »</p></blockquote>
-          <figcaption>Sylvie Mignonne, Responsable du développement RH, Nice-Matin</figcaption>
-          <img class="temoin__logo" src="/assets/cas/logos/groupe-nice-matin.png" alt="" width="480" height="122" loading="lazy">
-        </div>
-      </figure>
-      <figure class="carte temoignages__court">
-        <button type="button" class="temoignages__promouvoir"><span class="visually-hidden">Afficher en grand le témoignage de Jean-Claude Charlet</span></button>
-        <img class="temoin__photo" src="/assets/temoins/jean-claude-charlet.png" alt="" width="56" height="56" loading="lazy">
-        <div class="temoignages__court-texte">
-          <blockquote><p>« Des résultats qui se sont inscrits dans la durée. »</p></blockquote>
-          <figcaption>Jean-Claude Charlet, CEO, Schoolab</figcaption>
-          <img class="temoin__logo" src="/assets/cas/logos/schoolab.png" alt="" width="480" height="96" loading="lazy">
-        </div>
-      </figure>
+      </div>
+      <div class="temoignages__progression" aria-hidden="true"><span class="temoignages__barre"></span></div>
     </div>
   </div>
 </section>

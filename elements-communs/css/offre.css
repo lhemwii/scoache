@@ -102,7 +102,7 @@
   line-height: 1.1;
   letter-spacing: -0.34px;
 }
-.page-offre .of-echelle__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-echelle__texte { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 
 
 /* Lien pastille lavande « Découvrir » (petit accent, jamais un grand bloc) */
@@ -146,7 +146,7 @@
 .page-offre .of-table .of-table__vide { width: 200px; }
 .page-offre .of-table tbody tr { border-bottom: 1px solid var(--bordure); }
 .page-offre .of-table tbody th { padding-left: 0; font-size: 14px; font-weight: 600; color: var(--accent); }
-.page-offre .of-table td { font-size: 15px; line-height: 1.45; }
+.page-offre .of-table td { font-size: 16px; line-height: 1.45; }
 
 /* ---------- Cartes à numéro ou à icône (étapes, transitions, méthode, pour qui) ---------- */
 .page-offre .of-carte { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -154,8 +154,8 @@
 .page-offre .of-carte__titre { margin: 0; font-size: 24px; font-weight: 400; line-height: 1.25; letter-spacing: -0.12px; }
 .page-offre .of-carte__titre--26 { font-size: 26px; letter-spacing: -0.13px; }
 .page-offre .of-carte__titre--22 { font-size: 22px; letter-spacing: -0.11px; }
-.page-offre .of-carte__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
-.page-offre .of-carte__texte--14 { font-size: 15px; }
+.page-offre .of-carte__texte { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-carte__texte--14 { font-size: 16px; }
 .page-offre .of-carte__tete { display: flex; align-items: center; gap: 12px; }
 .page-offre .of-carte--qui { gap: 18px; }
 
@@ -182,7 +182,7 @@
   padding: 14px 20px;
 }
 .page-offre .of-formats > div + div { border-left: 1px solid var(--bordure); }
-.page-offre .of-formats dt { font-size: 13px; font-weight: 600; color: var(--accent); }
+.page-offre .of-formats dt { font-size: 14px; font-weight: 600; color: var(--accent); }
 .page-offre .of-formats dd { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.35; }
 
 /* ---------- /coaching-de-dirigeant : onglets « Trois échelles » ---------- */
@@ -252,7 +252,7 @@
 
 /* ---------- Barre tarif (pages d'échelle) ---------- */
 .page-offre .of-tarif { flex: 1; padding: 16px 24px; }
-.page-offre .of-tarif__texte { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; font-size: 15px; }
+.page-offre .of-tarif__texte { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; font-size: 16px; }
 .page-offre .of-tarif__texte strong { font-weight: 600; color: var(--accent); }
 .page-offre .of-tarif__texte span { color: var(--texte-2); }
 
@@ -381,7 +381,7 @@
 .page-offre .of-famille:hover .of-famille__photo img { scale: 1.04; }
 .page-offre .of-famille__texte { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 12px 0; }
 .page-offre .of-famille__titre { font-size: 22px; line-height: 1.25; letter-spacing: -0.11px; }
-.page-offre .of-famille__desc { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-famille__desc { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 .page-offre .of-famille__duree { font-size: 14px; color: #8a8a8a; }
 .page-offre .of-famille__lien {
   margin-top: 2px;
@@ -426,8 +426,8 @@
   border-bottom: 1px solid var(--bordure);
 }
 .page-offre .of-fiche__ligne:first-child { border-top: 1px solid var(--bordure); }
-.page-offre .of-fiche dt { padding-top: 2px; font-size: 13px; font-weight: 600; color: var(--accent); }
-.page-offre .of-fiche dd { margin: 0; font-size: 15px; line-height: 1.4; }
+.page-offre .of-fiche dt { padding-top: 2px; font-size: 14px; font-weight: 600; color: var(--accent); }
+.page-offre .of-fiche dd { margin: 0; font-size: 16px; line-height: 1.4; }
 
 .page-offre .of-echelle__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; padding-top: 4px; }
 .page-offre .of-echelle__actions .of-echelle__contact { align-self: center; margin: 0; }
@@ -557,7 +557,7 @@
 /* ---------- Pages d'échelle : situations typiques ---------- */
 .page-offre .of-situation { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 28px; }
 .page-offre .of-situation__titre { margin: 4px 0 0; font-size: 22px; font-weight: 400; line-height: 1.25; letter-spacing: -0.11px; }
-.page-offre .of-situation__texte { flex: 1; font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-situation__texte { flex: 1; font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 .page-offre .of-situation__cas {
   display: flex;
   align-items: center;
@@ -706,11 +706,11 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
 }
-.page-offre .of-familles > li { display: grid; grid-row: span 5; grid-template-rows: subgrid; min-width: 0; }
-.page-offre .of-famille { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 10px; padding: 8px 8px 24px; }
+.page-offre .of-familles > li { display: grid; grid-row: span 4; grid-template-rows: subgrid; min-width: 0; }
+.page-offre .of-famille { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 10px; padding: 8px 8px 24px; }
 .page-offre .of-famille__texte { display: contents; }
 .page-offre .of-famille__texte > * { margin-inline: 14px; }
-.page-offre .of-famille__titre { align-self: end; margin-top: 12px; }
+.page-offre .of-famille__desc { margin-top: 12px; }
 .page-offre .of-famille__lien { align-self: end; justify-self: start; }
 @media (max-width: 1100px) {
   .page-offre .of-familles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -737,3 +737,90 @@
   .page-offre .of-carte__texte { font-size: 16px; }
   .page-offre .of-table td { font-size: 16px; }
 }
+
+/* =====================================================================
+   Manche 11 : /coaching-de-dirigeant plus vivant, sans excès
+   ===================================================================== */
+.page-offre .of-palier__icone { background: var(--gris-clair); color: var(--noir); transition: background-color 0.25s ease, color 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.page-offre .of-palier,
+.page-offre .of-carte,
+.page-offre .of-echelle { transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.3s ease; }
+@media (hover: hover) and (pointer: fine) {
+  .page-offre .of-palier:hover,
+  .page-offre .of-bloc .of-carte:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(13, 13, 26, 0.08); }
+  .page-offre .of-palier:hover .of-palier__icone,
+  .page-offre .of-carte:hover .of-carte__tete .pastille { background: var(--noir); color: var(--blanc); }
+  .page-offre .of-carte__tete .pastille { transition: background-color 0.25s ease, color 0.25s ease; }
+}
+/* La flèche « ce qui fait la valeur ajoutée se déplace » glisse doucement d'une borne à l'autre */
+@media (prefers-reduced-motion: no-preference) {
+  .page-offre .of-bascule__fleche .ico { animation: of-glisse 2.4s ease-in-out infinite; }
+}
+@keyframes of-glisse { 0%, 100% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
+.page-offre .of-palier__ligne dt { font-size: 14px; }
+
+/* Lignes de cas dans un panneau étroit (onglets) : logo plus petit, sans sous-titre */
+.carte-verre--lignes { container-type: inline-size; }
+@container (max-width: 340px) {
+  .verre-ligne { gap: 10px; min-height: 56px; padding: 6px 8px 6px 6px; }
+  .verre-ligne__logo { width: 76px; height: 42px; padding: 5px 8px; }
+  .verre-ligne__sous { display: none; }
+  .verre-ligne__titre { font-size: 16px; }
+  .verre-ligne__fleche { width: 28px; height: 28px; }
+}
+
+/* Liens des cartes : casse normale, 15-16 px ; les liens vers des cas en pilule à contour */
+html .page-offre .of-pastille-lien {
+  padding: 8px 12px 8px 16px;
+  border: 1px solid var(--noir);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--noir);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+html .page-offre .of-pastille-lien:hover { background: var(--noir); color: var(--blanc); }
+html .page-offre .of-famille__lien {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  text-underline-offset: 4px;
+}
+html .page-offre .of-famille__lien::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask: var(--svg-fleche) center / 16px no-repeat;
+  mask: var(--svg-fleche) center / 16px no-repeat;
+  transition: transform 0.2s ease;
+}
+html .page-offre .of-famille:hover .of-famille__lien::after { transform: translateX(3px); }
+html .page-offre .of-famille__desc { font-size: 17px; }
+html .page-offre .of-famille__duree { color: var(--texte-2); }
+html .page-offre .of-situation__lien { flex: 0 1 auto; min-width: 0; justify-content: flex-start; font-size: 15px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+html .page-offre .of-situation__lien .ico { display: none; }
+
+/* Manche 9 : le thème de la famille, au milieu de la photo, sur une étiquette vitrée */
+.page-offre .of-famille__photo { display: flex; align-items: center; justify-content: center; }
+.page-offre .of-famille__photo > .carte-verre--etiquette {
+  position: relative;
+  z-index: 1;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 26px rgba(13, 13, 26, 0.14);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.page-offre .of-famille__photo .of-famille__titre { margin: 0; font-size: 20px; font-weight: 500; }
+.page-offre .of-famille__photo > img { position: absolute; inset: 0; }
+.page-offre .of-famille__photo > img { filter: blur(5px) saturate(0.9); scale: 1.1; }
+.page-offre .of-famille:hover .of-famille__photo img { scale: 1.15; }

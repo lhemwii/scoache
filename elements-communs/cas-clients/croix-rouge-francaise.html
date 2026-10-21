@@ -56,8 +56,22 @@
       </div>
     </section>
 
+    <nav class="cas-sommaire" aria-label="Sommaire du cas" data-sommaire>
+      <details class="cas-sommaire__details" open>
+        <summary class="cas-sommaire__resume"><span class="cas-sommaire__libelle">Sommaire</span><span class="cas-sommaire__courant" aria-hidden="true">En 30 secondes</span><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-chevron"/></svg></summary>
+        <ol class="cas-sommaire__liste">
+          <li><a href="#en-30-secondes">En 30 secondes</a></li>
+          <li><a href="#ce-que-ce-cas-demontre">Ce que ce cas démontre</a></li>
+          <li><a href="#situation">Situation de départ</a></li>
+          <li><a href="#enjeux">Enjeux</a></li>
+          <li><a href="#demarche">Démarche</a></li>
+          <li><a href="#evolutions">Évolutions</a></li>
+        </ol>
+      </details>
+    </nav>
+
     <!-- En 30 secondes : le défi, ce que nous avons fait, ce qui a changé -->
-    <section class="section cas-30" aria-labelledby="titre-30">
+    <section class="section cas-30" id="en-30-secondes" aria-labelledby="titre-30">
       <h2 class="visually-hidden" id="titre-30">Le cas en 30 secondes</h2>
       <p class="eyebrow cas-30__eyebrow" aria-hidden="true">En 30 secondes</p>
       <div class="plateau cas-30__plateau">
@@ -82,7 +96,7 @@
     </section>
 
     <!-- Ce que ce cas démontre : carte blanche bordée, filet d'accent de 3 px, énoncé de 30 px -->
-    <section class="section cas-demontre-bloc" aria-labelledby="titre-demontre">
+    <section class="section cas-demontre-bloc" id="ce-que-ce-cas-demontre" aria-labelledby="titre-demontre">
       <div class="cas-demontre">
         <h2 class="cas-surtitre-13" id="titre-demontre">Ce que ce cas démontre</h2>
         <p class="cas-demontre__texte">La capacité de Scoaché à combiner travail collectif et accompagnement individuel pour aider des leaders à tenir leur rôle dans des environnements humains et organisationnels complexes.</p>
@@ -90,7 +104,7 @@
     </section>
 
     <!-- Le détail, mot pour mot -->
-    <section class="section" aria-labelledby="titre-situation">
+    <section class="section" id="situation" aria-labelledby="titre-situation">
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">Situation</p>
@@ -104,7 +118,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="titre-enjeux">
+    <section class="section" id="enjeux" aria-labelledby="titre-enjeux">
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">Enjeux</p>
@@ -124,7 +138,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="titre-accompagnement">
+    <section class="section" id="demarche" aria-labelledby="titre-accompagnement">
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">L’accompagnement</p>
@@ -156,7 +170,7 @@
     </section>
 
     <!-- Évolutions : pleine largeur (Figma) -->
-    <section class="section cas-section-evolutions" aria-labelledby="titre-evolutions">
+    <section class="section cas-section-evolutions" id="evolutions" aria-labelledby="titre-evolutions">
       <div class="plateau">
         <div class="carte cas-evolutions__carte">
           <h2 class="cas-surtitre-13" id="titre-evolutions">Évolutions observées</h2>

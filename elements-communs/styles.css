@@ -2151,3 +2151,494 @@ html .photo.photo--texture > .logo-puce img { width: auto; max-width: 132px; hei
 .m-nav__sub .mega-apercu { margin: 4px 0 8px; }
 .footer__heading a { color: inherit; text-decoration: none; }
 .footer__heading a:hover { text-decoration: underline; text-underline-position: from-font; }
+
+/* =====================================================================
+   Manche 11 : objets au milieu, texte à gauche
+   Les objets (panneau vitré, logos, icônes d'échelle) se centrent ; le texte
+   reste aligné à gauche, sauf dans de petits objets centrés.
+   ===================================================================== */
+
+:root {
+  --svg-fleche: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
+}
+
+/* ---------- 1. Navbar : groupe central au milieu de la page, libellés sur l'axe des icônes ---------- */
+@media (min-width: 901px) {
+  .navbar { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; }
+  .navbar__logo { justify-self: start; }
+  .navbar__nav { justify-self: center; }
+  .navbar__actions { justify-self: end; }
+}
+.nav-pill__item { display: flex; align-items: center; }
+/* Icône, libellé et chevron partagent le même axe : boîtes de même hauteur, centrées. */
+.nav-pill__link > span { display: block; line-height: 20px; }
+.nav-pill__link > .ico { margin: 0; }
+
+/* ---------- 2. Surtitres : 15 px minimum ; en tête de page et de section, une pastille claire avec icône ---------- */
+.eyebrow,
+.eyebrow--lg { font-size: 15px; font-weight: 600; letter-spacing: 0; }
+p.eyebrow:not(.cas-30__eyebrow),
+.section-head .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  background: var(--blanc);
+  color: var(--noir);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+p.eyebrow > .ico { flex: none; color: var(--accent); }
+.eyebrow--lg { font-size: 16px; }
+.mega p.eyebrow,
+.carte-verre p.eyebrow { padding: 0; border: 0; background: none; color: var(--accent); }
+
+/* ---------- 3. Lien vers un cas : pilule à contour, flèche, remplie de noir au survol ---------- */
+.lien-cas,
+.carte-verre__lien,
+html .photo > .carte-verre .carte-verre__lien,
+.enjeu-cas__lien,
+.of-situation__lien,
+.feature-card__link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 8px 12px 8px 16px;
+  border: 1px solid var(--noir);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--noir);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.lien-cas > .ico,
+.enjeu-cas__lien > .ico,
+.of-situation__lien > .ico,
+.feature-card__link > .ico { display: none; }
+.lien-cas::after,
+.carte-verre__lien::after,
+.enjeu-cas__lien::after,
+.of-situation__lien::after,
+.feature-card__link::after {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask: var(--svg-fleche) center / 16px no-repeat;
+  mask: var(--svg-fleche) center / 16px no-repeat;
+  transition: transform 0.2s ease;
+}
+.lien-cas:hover,
+.lien-cas:focus-visible,
+a:hover .carte-verre__lien,
+a:focus-visible .carte-verre__lien,
+a:hover > .enjeu-cas__lien,
+.enjeu-cas__lien:hover,
+.of-situation__lien:hover,
+a:hover .of-situation__lien,
+.feature-card__link:hover,
+a:hover .feature-card__link { background: var(--noir); color: var(--blanc); }
+.lien-cas:hover::after,
+a:hover .carte-verre__lien::after,
+.enjeu-cas__lien:hover::after,
+a:hover > .enjeu-cas__lien::after,
+.of-situation__lien:hover::after,
+a:hover .of-situation__lien::after,
+.feature-card__link:hover::after,
+a:hover .feature-card__link::after { transform: translateX(2px); }
+
+/* Liens texte (« Découvrir l'offre », « Voir tous les cas clients »...) : casse normale, 16 px, flèche */
+.link-caps {
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.link-caps:not(:has(> .ico))::after {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask: var(--svg-fleche) center / 16px no-repeat;
+  mask: var(--svg-fleche) center / 16px no-repeat;
+  transition: transform 0.2s ease;
+}
+.link-caps:hover::after { transform: translateX(3px); }
+@media (max-width: 900px) { .link-caps { font-size: 15px; } }
+
+/* ---------- 4. Panneau vitré au milieu, logo centré et grand en haut du panneau ---------- */
+html .photo:has(> .carte-verre) { align-items: center; }
+html .photo > .carte-verre { align-self: center; width: 100%; max-width: 460px; }
+html .photo > .carte-verre .logo-puce {
+  align-self: center;
+  justify-content: center;
+  min-width: 148px;
+  margin: 0 0 10px;
+  padding: 12px 22px;
+  border-radius: 10px;
+}
+html .photo > .carte-verre .logo-puce img { max-width: 176px; height: 46px; }
+/* Photo floutée avec la seule puce logo : la puce est un objet, au milieu de l'image */
+html .photo.photo--texture:not(:has(> .carte-verre)) { align-items: center; }
+html .photo.photo--texture > .logo-puce { align-self: center; padding: 14px 24px; border-radius: 12px; }
+html .photo.photo--texture > .logo-puce img { max-width: 200px; height: 54px; }
+@media (max-width: 600px) {
+  html .photo > .carte-verre .logo-puce img { max-width: 156px; height: 42px; }
+  html .photo.photo--texture > .logo-puce img { max-width: 172px; height: 46px; }
+}
+
+/* ---------- 6. Boutons : marge généreuse, libellé 16 px, flèche dans un petit cercle, léger soulèvement ---------- */
+.btn {
+  gap: 12px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:has(> .ico:last-child),
+.btn:has(> span > .ico:last-child) { padding-right: 10px; }
+.btn > .ico:last-child,
+.btn-envoi__texte > .ico:last-child {
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  padding: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.btn--lg { gap: 14px; padding: 14px 26px; font-size: 16px; }
+.btn--lg:has(> .ico:last-child),
+.btn--lg:has(> span > .ico:last-child) { padding-right: 12px; }
+.btn--lg > .ico:last-child,
+.btn--lg .btn-envoi__texte > .ico:last-child { width: 32px; height: 32px; padding: 7px; }
+.btn--block { justify-content: center; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(13, 13, 26, 0.16); }
+  .btn:hover > .ico:last-child,
+  .btn:hover .btn-envoi__texte > .ico:last-child { transform: translateX(2px); background: rgba(255, 255, 255, 0.26); }
+}
+.btn:active { transform: none; box-shadow: none; }
+.navbar__cta { height: calc(var(--pill-h) - 14px); padding: 0 8px 0 18px; font-size: 15px; }
+.navbar__cta > .ico:last-child { width: 26px; height: 26px; padding: 5px; }
+.site-header .navbar__cta:hover { transform: none; box-shadow: none; }
+.cas-detail__actions .btn { padding: 10px 10px 10px 18px; font-size: 15px; }
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn:hover { transform: none; }
+}
+
+/* ---------- 6 bis. Lignes de cas dans le panneau vitré (CHANEL, VINCI Airports...) ---------- */
+html .photo > .carte-verre.carte-verre--lignes { gap: 6px; max-width: 480px; padding: 18px 18px 18px; }
+.verre-lignes { display: flex; flex-direction: column; gap: 6px; margin: 4px 0 2px; padding: 0; list-style: none; }
+.verre-ligne {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 8px 10px 8px 8px;
+  border: 1px solid rgba(13, 13, 26, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--noir);
+  text-decoration: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.verre-ligne__logo {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 92px;
+  height: 48px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--blanc);
+}
+.verre-ligne__logo img { width: 100%; height: 100%; object-fit: contain; }
+.verre-ligne__texte { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.verre-ligne__titre { font-size: 17px; font-weight: 500; line-height: 1.25; }
+.verre-ligne__sous { font-size: 14px; line-height: 1.3; color: var(--texte-2); }
+.verre-ligne__fleche {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--noir);
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.verre-ligne:hover,
+.verre-ligne:focus-visible { background: var(--blanc); box-shadow: 0 8px 20px rgba(13, 13, 26, 0.1); }
+.verre-ligne:hover .verre-ligne__fleche,
+.verre-ligne:focus-visible .verre-ligne__fleche { background: var(--noir); color: var(--blanc); transform: translateX(2px); }
+.carte-verre--lignes .lien-cas { margin-top: 8px; }
+@media (max-width: 600px) {
+  .verre-ligne { gap: 12px; min-height: 58px; }
+  .verre-ligne__logo { width: 76px; height: 42px; }
+  .verre-ligne__titre { font-size: 16px; }
+}
+
+/* ---------- 9. Cas ouvert (carrousel) : logo et en-tête centrés, plus grands ---------- */
+.cas-detail__haut { position: relative; justify-content: center; padding: 20px 56px 12px; }
+.cas-detail__gauche { align-items: center; gap: 10px; text-align: center; }
+html .cas-detail__logo {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  min-width: 150px;
+  padding: 10px 20px;
+  border: 1px solid var(--bordure);
+  border-radius: 10px;
+  background: var(--blanc);
+}
+html .cas-detail__logo img { width: auto; max-width: 170px; height: 44px; object-fit: contain; }
+.cas-detail__meta { align-items: center; font-size: 15px; }
+.cas-detail__meta .eyebrow { font-size: 15px; }
+.cas-detail__fermer { position: absolute; top: 14px; right: 12px; }
+.cas-detail__label { font-size: 15px; }
+.cas-detail__texte,
+.cas-detail__liste li { font-size: 16px; }
+@media (max-width: 900px) {
+  .cas-detail__haut { padding: 18px 52px 8px; }
+  html .cas-detail__logo img { max-width: 150px; height: 40px; }
+  .cas-detail__texte,
+  .cas-detail__liste li { font-size: 15px; }
+}
+
+/* ---------- 7. Tailles de texte : lecture 16 px (15 px mobile), libellés 14 px, rien sous 13 px ---------- */
+html body .texte-petit,
+html body .home-echelle__texte,
+html body .carte-lien__texte,
+html body .home-expertise__desc,
+html body .of-onglets__format,
+html body .of-situation__texte,
+html body .of-tarif__texte,
+html body .of-tarif__texte strong,
+html body .ap-texte p,
+html body .ap-pilier__texte,
+html body .carte > p,
+html body .fo-etape__texte p,
+html body .fo-carte__texte,
+html body .inst-checks li,
+html body .inst-ligne dd,
+html body .cas-etape__texte,
+html body .cas-detail__texte { font-size: 16px; }
+html body .hero__preuve,
+html body .inst-hero__preuve,
+html body .home-formations,
+html body .home-formations a,
+html body .ct-agenda,
+html body .ct-consentement__ligne,
+html body .of-bascule__borne,
+html body .field__label { font-size: 15px; }
+html body .of-onglets__format strong { font-size: 15px; }
+html body .inst-ligne dt,
+html body .of-tarif dt,
+html body dl dt,
+html body .field__facultatif,
+html body .fo-autre__eyebrow,
+html body .temoin__logo--texte { font-size: 14px; }
+html body .stat__libelle { font-size: 14px; letter-spacing: 0.2px; }
+html body .stat--lg .stat__libelle { font-size: 14px; }
+html body .page-cas .cas-30__pastille { font-size: 14px; }
+html body .fo-carte__lien { font-size: 15px; letter-spacing: 0; text-transform: none; }
+@media (max-width: 900px) {
+  html body .texte-petit,
+  html body .home-echelle__texte,
+  html body .carte-lien__texte,
+  html body .home-expertise__desc,
+  html body .of-onglets__format,
+  html body .of-situation__texte,
+  html body .of-tarif__texte,
+  html body .ap-texte p,
+  html body .ap-pilier__texte,
+  html body .carte > p,
+  html body .fo-etape__texte p,
+  html body .fo-carte__texte,
+  html body .inst-checks li,
+  html body .inst-ligne dd,
+  html body .cas-etape__texte,
+  html body .cas-detail__texte { font-size: 15px; }
+}
+html body.page-offre .of-onglets__format strong,
+html body.page-offre .of-bascule__borne { font-size: 15px; }
+html body.page-offre .of-palier__ligne dt { font-size: 14px; }
+html body .field__facultatif { font-size: 14px; }
+html body .page-offre dl dt,
+html body.page-offre dl dt { font-size: 14px; }
+
+/* Plus de petites capitales : libellés en casse normale, 14 px minimum */
+html body .stat__libelle,
+html body .page-cas .cas-30__libelle,
+html body .page-cas .cas-chiffre__libelle,
+html body .page-cas .cas-carte__surtitre { font-size: 14px; letter-spacing: 0; text-transform: none; }
+html body .parcours__retour { font-size: 15px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+html body .page-cas .cas-carte__lien {
+  gap: 10px;
+  padding: 8px 12px 8px 16px;
+  border: 1px solid var(--noir);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+html body .page-cas a:hover .cas-carte__lien,
+html body .page-cas .cas-carte__lien:hover { background: var(--noir); color: var(--blanc); }
+
+/* ---------- Manche 9 : rythme de page et en-têtes de section ---------- */
+/* Un seul écart entre deux sections ; chaque en-tête : surtitre, grand titre, une ligne d'intro, contenu.
+   Règles marquées !important : c'est le système de rythme, il passe devant les marges propres aux pages. */
+:root { --rythme: clamp(72px, 9vw, 128px); }
+main > section.section,
+main > section.contact,
+main > section.home-logos { padding-top: 0 !important; padding-bottom: 0 !important; }
+main > section ~ section { margin-top: var(--rythme) !important; }
+main > section.home-logos,
+.page-cas main > section.cas-30,
+.page-cas main > section.cas-demontre-bloc { margin-top: 16px !important; }
+main > section:last-child { margin-bottom: 24px; }
+.section-head__text { gap: 14px; }
+.section-head__intro { max-width: 62ch; margin: 0; font-size: 18px; line-height: 1.5; color: var(--texte-2); }
+@media (max-width: 900px) {
+  .section-head__intro { font-size: 16px; }
+}
+
+/* ---------- Manche 9 : témoignages, un grand témoignage à la fois ---------- */
+html body .temoignages { padding-top: 0; }
+.temoignages__plateau { display: block; padding: 8px; }
+.temoignages__scene { position: relative; display: flex; flex-direction: column; gap: 28px; overflow: hidden; padding: 48px 56px 40px; }
+.temoignages__scene .etoiles { display: flex; gap: 4px; margin: 0; }
+.temoignages__piste { display: grid; }
+.temoignage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  grid-area: 1 / 1;
+  min-width: 0;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 0.45s;
+}
+.temoignage.is-actif { opacity: 1; visibility: visible; transform: none; transition: opacity 0.45s ease 0.1s, transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s, visibility 0s; }
+.temoignage__citation { max-width: 30ch; margin: 0; font-size: 44px; font-weight: 400; line-height: 1.18; letter-spacing: -0.6px; }
+.temoignage--long .temoignage__citation { max-width: 46ch; font-size: 32px; line-height: 1.3; letter-spacing: -0.3px; }
+.temoignage__citation p { margin: 0; }
+.temoignage__auteur { display: flex; align-items: center; gap: 16px; padding-top: 24px; border-top: 1px solid var(--bordure); }
+.temoignage__photo { flex: none; width: 64px; height: 64px; border-radius: 50%; object-fit: cover; background: var(--gris-clair); }
+.temoignage__texte { display: flex; flex: 1; flex-direction: column; gap: 4px; min-width: 0; }
+.temoignage__nom { font-size: 18px; font-weight: 600; }
+.temoignage__role { font-size: 15px; line-height: 1.4; color: var(--texte-2); }
+.temoignage__logo { display: grid; place-items: center; flex: none; min-width: 120px; height: 56px; padding: 8px 16px; border: 1px solid var(--bordure); border-radius: 10px; background: var(--blanc); }
+.temoignage__logo img { width: auto; max-width: 150px; height: 36px; object-fit: contain; }
+.temoignage__logo--texte { font-size: 17px; font-weight: 600; letter-spacing: 0.2px; }
+.temoignages__bas { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+.temoignages__personnes { display: flex; gap: 8px; }
+.temoignages__personne {
+  width: 48px;
+  height: 48px;
+  padding: 2px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.temoignages__personne img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.temoignages__personne:hover { opacity: 1; transform: translateY(-2px); }
+.temoignages__personne[aria-current="true"] { border-color: var(--noir); opacity: 1; }
+.temoignages__nav { display: flex; align-items: center; gap: 8px; }
+.temoignages__bouton {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gris-clair);
+  color: var(--noir);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.temoignages__bouton:hover { background: var(--greige); }
+.temoignages__bouton--noir { background: var(--noir); color: var(--blanc); }
+.temoignages__bouton--noir:hover { background: #26262b; }
+.temoignages__pause { border: 1px solid var(--bordure); border-radius: 50%; background: var(--blanc); }
+.temoignages__pause .ico-lecture,
+.temoignages__pause.is-arrete .ico-pause { display: none; }
+.temoignages__pause.is-arrete .ico-lecture { display: block; }
+.temoignages__progression { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--gris-clair); }
+.temoignages__barre { display: block; height: 100%; background: var(--noir); transform: scaleX(0); transform-origin: left center; }
+.temoignages__scene.is-pause .temoignages__barre { background: var(--texte-2); }
+@media (prefers-reduced-motion: reduce) {
+  .temoignage, .temoignage.is-actif { transition: none; transform: none; }
+  .temoignages__progression { display: none; }
+}
+@media (max-width: 1100px) {
+  .temoignage__citation { font-size: 36px; }
+  .temoignage--long .temoignage__citation { font-size: 28px; }
+}
+@media (max-width: 900px) {
+  .temoignages__plateau { padding: 6px; }
+  .temoignages__scene { gap: 22px; padding: 28px 20px 28px; }
+  .temoignage { gap: 24px; }
+  .temoignage__citation { font-size: 28px; }
+  .temoignage--long .temoignage__citation { font-size: 22px; line-height: 1.35; }
+  .temoignage__auteur { flex-wrap: wrap; gap: 12px; padding-top: 18px; }
+  .temoignage__photo { width: 52px; height: 52px; }
+  .temoignage__texte { flex-basis: calc(100% - 64px); }
+  .temoignage__logo { min-width: 0; height: 48px; margin-left: 64px; }
+  .temoignage__logo img { height: 30px; max-width: 130px; }
+  .temoignages__personne { width: 42px; height: 42px; }
+  .temoignages__bas { gap: 14px; }
+}
+
+/* ---------- Manche 9 : pages intérieures ---------- */
+html:has(.cas-sommaire) { scroll-padding-top: 180px; }
+@media (max-width: 900px) { html:has(.cas-sommaire) { scroll-padding-top: 150px; } }
+/* Longs paragraphes : 70 caractères au plus */
+main p { max-width: 70ch; }
+main .carte-verre p,
+main .plateau__intro p,
+main .hero p { max-width: 70ch; }
+/* Intertitres plus affirmés */
+.titre-4,
+.inst-intertitre,
+.page-cas .cas-etape__titre { font-weight: 500; }
+/* Fil d'Ariane plus lisible */
+.fil-ariane { padding-top: 10px; padding-bottom: 18px; font-size: 15px; color: var(--noir); }
+.fil-ariane a { color: var(--noir); text-decoration: underline; text-decoration-color: var(--bordure); text-underline-offset: 4px; }
+.fil-ariane a:hover { text-decoration-color: var(--noir); }
+.fil-ariane li + li::before { color: var(--texte-2); }
+.fil-ariane [aria-current="page"] { color: var(--texte-2); font-weight: 500; }
+.lien-cas,
+.carte-verre__lien,
+.enjeu-cas__lien,
+.of-situation__lien,
+.feature-card__link { max-width: 100%; white-space: normal; text-align: left; }

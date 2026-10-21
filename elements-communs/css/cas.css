@@ -116,16 +116,32 @@
 .page-cas .cas-echelle__texte { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 24px 20px 0; }
 .page-cas .cas-echelle__label { font-size: 15px; font-weight: 600; color: var(--accent); }
 .page-cas .cas-echelle__titre { font-size: 26px; line-height: 1.2; letter-spacing: -0.13px; }
-.page-cas .cas-echelle__desc { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
-.page-cas .cas-echelle__lien {
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.65px;
-  text-transform: uppercase;
-  text-decoration: underline;
-  text-underline-position: from-font;
+.page-cas .cas-echelle__desc { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-echelle__lien { margin-top: auto; }
+.page-cas .cas-echelle__texte { flex: 1; }
+.page-cas .cas-echelle__desc { margin-bottom: 8px; font-size: 16px; }
+/* L'icône de l'échelle, au milieu de la photo : une grande pastille blanche */
+.page-cas .cas-echelle__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 13, 26, 0.04), rgba(13, 13, 26, 0.18)); }
+.page-cas .cas-echelle__icone {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 28px rgba(13, 13, 26, 0.18);
+  color: var(--noir);
+  transform: translate(-50%, -50%);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+.page-cas .cas-echelle:hover .cas-echelle__icone { transform: translate(-50%, -50%) scale(1.06); }
 
 /* ---------- Filtres ---------- */
 .page-cas .cas-filtres .filtre {
@@ -183,7 +199,7 @@
 }
 .page-cas .cas-ligne__titre a { text-decoration: none; }
 .page-cas .cas-ligne__titre a:hover { text-decoration: underline; text-underline-position: from-font; text-decoration-thickness: 1px; }
-.page-cas .cas-ligne__resume { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-ligne__resume { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 
 .page-cas .cas-ligne__photo {
   flex: 0 0 300px;
@@ -328,7 +344,7 @@
   line-height: 1.25;
   letter-spacing: -0.11px;
 }
-.page-cas .cas-etape__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-etape__texte { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 
 /* ---------- Évolutions et enseignement ---------- */
 .page-cas .cas-evolutions > .carte { flex: 1 1 0; padding: 36px; }
@@ -564,7 +580,7 @@
   color: var(--texte-2);
 }
 .page-cas .cas-30__texte { font-size: 17px; line-height: 1.45; }
-.page-cas .cas-30__texte--petit { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.page-cas .cas-30__texte--petit { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 .page-cas .cas-30__liste { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
 .page-cas .cas-30__liste li { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 500; line-height: 1.3; }
 .page-cas .cas-30__pastille {
@@ -642,7 +658,75 @@ html .page-cas .cas-fiche__photo .logo-puce img { max-width: 200px; height: 56px
 
 /* Mobile : petits libellés relevés (manche 7) */
 @media (max-width: 900px) {
-  .page-cas .cas-echelle__lien,
   .page-cas .cas-30__libelle,
   .page-cas .cas-chiffre__libelle { font-size: 14px; }
+}
+
+/* ---------- Manche 11 : la marque d'une ligne de cas est un objet centré (logo, échelle, profil) ---------- */
+.page-cas .cas-ligne__marque {
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 16px;
+  border-radius: 12px;
+  background: var(--gris-clair);
+  text-align: center;
+}
+.page-cas .cas-ligne__logo { justify-content: center; height: 56px; }
+.page-cas .cas-ligne__logo img { max-width: 180px; max-height: 56px; width: auto; }
+.page-cas .cas-ligne__echelle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--blanc);
+  color: var(--noir);
+  font-size: 14px;
+  font-weight: 500;
+}
+.page-cas .cas-ligne__echelle .ico { color: var(--accent); }
+.page-cas .cas-ligne__meta { max-width: 26ch; font-size: 14px; }
+.page-cas .cas-ligne__resume { font-size: 16px; }
+@media (max-width: 900px) {
+  .page-cas .cas-ligne__marque { align-self: auto; padding: 0; background: none; align-items: flex-start; text-align: left; }
+  .page-cas .cas-ligne__resume { font-size: 15px; }
+}
+
+/* ---------- Manche 9 : sommaire du cas, collant sur grand écran, repliable sur mobile ---------- */
+.page-cas .cas-sommaire { position: sticky; top: 100px; z-index: 20; margin: 16px var(--bloc-x) 0; }
+.page-cas .cas-sommaire__details { border: 1px solid var(--bordure); border-radius: 14px; background: rgba(255, 255, 255, 0.92); box-shadow: var(--ombre-pill); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.page-cas .cas-sommaire__resume { display: none; }
+.page-cas .cas-sommaire__liste { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 6px; list-style: none; }
+.page-cas .cas-sommaire__liste a {
+  display: block;
+  padding: 9px 14px;
+  border-radius: 10px;
+  color: var(--noir);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.page-cas .cas-sommaire__liste a:hover { background: var(--gris-clair); }
+.page-cas .cas-sommaire__liste a[aria-current="true"] { background: var(--noir); color: var(--blanc); }
+@media (max-width: 900px) {
+  .page-cas .cas-sommaire { top: 84px; margin: 12px 0 0; }
+  .page-cas .cas-sommaire__resume {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  .page-cas .cas-sommaire__resume::-webkit-details-marker { display: none; }
+  .page-cas .cas-sommaire__courant { flex: 1; min-width: 0; overflow: hidden; color: var(--texte-2); font-weight: 400; text-overflow: ellipsis; white-space: nowrap; }
+  .page-cas .cas-sommaire__resume .ico { transition: transform 0.2s ease; }
+  .page-cas .cas-sommaire__details[open] .cas-sommaire__resume .ico { transform: rotate(180deg); }
+  .page-cas .cas-sommaire__liste { flex-direction: column; padding: 0 6px 8px; }
 }

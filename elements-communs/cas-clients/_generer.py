@@ -868,6 +868,8 @@ PAGES_ECHELLES = {
     },
 }
 
+ICONES_ECHELLES = {'individuel': 'user-round', 'collectif': 'users-round', 'organisation': 'building'}
+
 NOMBRES = {1: 'Un axe', 2: 'Deux axes', 3: 'Trois axes', 4: 'Quatre axes', 5: 'Cinq axes', 6: 'Six axes'}
 
 FLECHE = '<svg class="ico" width="{0}" height="{0}" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>'
@@ -998,12 +1000,12 @@ def page_hub():
         url, _ = lien_echelle(echelle)
         cartes.append(f'''        <li>
           <a class="carte cas-echelle" href="{url}">
-            <span class="cas-echelle__photo"><img src="{photo(PAR_SLUG[infos['photo']], True)}" alt="" width="600" height="420" loading="lazy" decoding="async"></span>
+            <span class="cas-echelle__photo"><img src="{photo(PAR_SLUG[infos['photo']], True)}" alt="" width="600" height="420" loading="lazy" decoding="async"><span class="cas-echelle__icone" aria-hidden="true"><svg class="ico" width="28" height="28"><use href="/assets/icones.svg#i-{ICONES_ECHELLES[echelle]}"/></svg></span></span>
             <span class="cas-echelle__texte">
               <span class="cas-echelle__label">{infos['court']}</span>
               <span class="cas-echelle__titre">{ECHELLES[echelle]}</span>
               <span class="cas-echelle__desc">{e(infos['desc'])}</span>
-              <span class="cas-echelle__lien">Voir les cas<span class="visually-hidden">, {ECHELLES[echelle][0].lower() + ECHELLES[echelle][1:]}</span></span>
+              <span class="lien-cas cas-echelle__lien">Voir les cas<span class="visually-hidden">, {ECHELLES[echelle][0].lower() + ECHELLES[echelle][1:]}</span></span>
             </span>
           </a>
         </li>''')
@@ -1041,6 +1043,7 @@ def page_hub():
         <div class="section-head__text">
           <p class="eyebrow">Les cas clients</p>
           <h2 class="section-head__title" id="titre-echelles">Choisissez une échelle d’accompagnement</h2>
+          <p class="section-head__intro">Individuel, collectif ou organisation : les cas sont rangés comme l’offre.</p>
         </div>
       </div>
       <ul class="plateau cas-echelles">
@@ -1063,13 +1066,13 @@ def ligne(cas, rang):
     return f'''        <li class="cas-ligne" data-echelle="{cas['echelle']}">
           <div class="cas-ligne__marque">
             <span class="cas-ligne__logo">{logo(slug, 170, 48, 170 * 48 * 0.5)}</span>
-            <p class="cas-ligne__echelle">{ECHELLES[cas['echelle']]}</p>
+            <p class="cas-ligne__echelle"><svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-{ICONES_ECHELLES[cas['echelle']]}"/></svg>{ECHELLES[cas['echelle']]}</p>
             <p class="cas-ligne__meta">{e(meta_ligne(cas))}</p>
           </div>
           <div class="cas-ligne__corps">
             <h3 class="cas-ligne__titre"><a href="{url}">{e(cas['titre'])}</a></h3>
             <p class="cas-ligne__resume">{e(cas['resume'])}</p>
-            <a class="link-caps link-caps--accent" href="{url}">Lire le cas<span class="visually-hidden"> {e(cas['nom'])}</span> {FLECHE.format(16)}</a>
+            <a class="lien-cas" href="{url}">Lire le cas<span class="visually-hidden"> {e(cas['nom'])}</span></a>
           </div>
           <a class="photo photo--texture cas-ligne__photo" href="{url}" tabindex="-1" aria-hidden="true">
             <img src="{photo(cas, True)}" alt="" width="600" height="420" loading="{'eager' if rang < 2 else 'lazy'}" decoding="async">
@@ -1116,6 +1119,7 @@ def page_echelle(echelle):
         <a class="photo photo--texture cas-hero__photo" href="/cas-clients/{premier['slug']}">
           <img src="{photo(premier)}" alt="" width="1264" height="1200" fetchpriority="high" decoding="async">
           <span class="carte-verre cas-hero__verre">
+            <span class="logo-puce"><img src="/assets/cas/logos/{premier['slug']}.png" alt="{e(premier['nom'])}" width="96" height="32" decoding="async"></span>
             <span class="carte-verre__eyebrow">Cas client, {e(premier['nom'])}</span>
             <span class="carte-verre__titre">{e(premier['titre'])}</span>
             <span class="carte-verre__lien">Lire le cas</span>
@@ -1130,6 +1134,7 @@ def page_echelle(echelle):
         <div class="section-head__text">
           <p class="eyebrow">Cas clients, {infos['court'].lower()}</p>
           <h2 class="section-head__title" id="titre-liste">{nom}</h2>
+          <p class="section-head__intro">{e(infos['desc'])}</p>
         </div>
 {onglets_echelles(echelle)}
       </div>
@@ -1277,8 +1282,22 @@ def page_cas(cas):
       </div>
     </section>
 
+    <nav class="cas-sommaire" aria-label="Sommaire du cas" data-sommaire>
+      <details class="cas-sommaire__details" open>
+        <summary class="cas-sommaire__resume"><span class="cas-sommaire__libelle">Sommaire</span><span class="cas-sommaire__courant" aria-hidden="true">En 30 secondes</span><svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-chevron"/></svg></summary>
+        <ol class="cas-sommaire__liste">
+          <li><a href="#en-30-secondes">En 30 secondes</a></li>
+          <li><a href="#ce-que-ce-cas-demontre">Ce que ce cas démontre</a></li>
+          <li><a href="#situation">Situation de départ</a></li>
+          <li><a href="#enjeux">Enjeux</a></li>
+          <li><a href="#demarche">Démarche</a></li>
+          <li><a href="#evolutions">Évolutions</a></li>
+        </ol>
+      </details>
+    </nav>
+
     <!-- En 30 secondes : le défi, ce que nous avons fait, ce qui a changé -->
-    <section class="section cas-30" aria-labelledby="titre-30">
+    <section class="section cas-30" id="en-30-secondes" aria-labelledby="titre-30">
       <h2 class="visually-hidden" id="titre-30">Le cas en 30 secondes</h2>
       <p class="eyebrow cas-30__eyebrow" aria-hidden="true">En 30 secondes</p>
       <div class="plateau cas-30__plateau">
@@ -1300,7 +1319,7 @@ def page_cas(cas):
     </section>
 
     <!-- Ce que ce cas démontre : carte blanche bordée, filet d'accent de 3 px, énoncé de 30 px -->
-    <section class="section cas-demontre-bloc" aria-labelledby="titre-demontre">
+    <section class="section cas-demontre-bloc" id="ce-que-ce-cas-demontre" aria-labelledby="titre-demontre">
       <div class="cas-demontre">
         <h2 class="cas-surtitre-13" id="titre-demontre">Ce que ce cas démontre</h2>
         <p class="cas-demontre__texte">{e(cas['demontre'])}</p>
@@ -1308,7 +1327,7 @@ def page_cas(cas):
     </section>
 
     <!-- Le détail, mot pour mot -->
-    <section class="section" aria-labelledby="titre-situation">
+    <section class="section" id="situation" aria-labelledby="titre-situation">
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">Situation</p>
@@ -1322,7 +1341,7 @@ def page_cas(cas):
       </div>
     </section>
 
-    <section class="section" aria-labelledby="titre-enjeux">
+    <section class="section" id="enjeux" aria-labelledby="titre-enjeux">
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">Enjeux</p>
@@ -1338,7 +1357,7 @@ def page_cas(cas):
       </div>
     </section>
 
-    <section class="section" aria-labelledby="titre-accompagnement">
+    <section class="section" id="demarche" aria-labelledby="titre-accompagnement">
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">L’accompagnement</p>
@@ -1351,7 +1370,7 @@ def page_cas(cas):
     </section>
 
     <!-- Évolutions : pleine largeur (Figma) -->
-    <section class="section cas-section-evolutions" aria-labelledby="titre-evolutions">
+    <section class="section cas-section-evolutions" id="evolutions" aria-labelledby="titre-evolutions">
       <div class="plateau">
         <div class="carte cas-evolutions__carte">
           <h2 class="cas-surtitre-13" id="titre-evolutions">{e(titre_evolutions)}</h2>{chiffre}

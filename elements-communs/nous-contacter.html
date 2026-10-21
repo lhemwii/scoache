@@ -61,7 +61,7 @@
               </li>
             </ul>
             <div class="ct-ilana">
-              <img class="ct-ilana__photo" src="/assets/institutionnel/ilana-porteret.png" alt="" width="56" height="56" loading="lazy" decoding="async">
+              <img class="ct-ilana__photo" src="/assets/institutionnel/ilana-porteret.png" alt="" width="72" height="72" decoding="async">
               <p class="ct-ilana__texte"><span class="ct-ilana__titre">Ilana Porteret vous répond personnellement</span><span class="ct-ilana__sous">Fondatrice de Scoaché, executive coach. Réponse sous 48 h.</span></p>
             </div>
           </div>
@@ -122,36 +122,66 @@
       </div>
     </section>
 
-    <!-- Ce qui se passe ensuite (Figma 1178:5729) -->
+    <!-- Ce qui se passe ensuite : trois étapes (Figma 1178:5729) -->
     <section class="section" aria-labelledby="titre-ensuite">
       <div class="section-head">
         <div class="section-head__text">
           <p class="eyebrow">Après votre message</p>
           <h2 class="section-head__title" id="titre-ensuite">Ce qui se passe ensuite</h2>
+          <p class="section-head__intro">Trois étapes, de votre message au premier échange.</p>
         </div>
       </div>
       <div class="plateau">
         <ol class="ct-etapes">
           <li class="carte ct-etape">
-            <span class="inst-num inst-num--noir">01</span>
-            <h3 class="titre-4">Nous vous répondons sous 48 h</h3>
+            <span class="ct-etape__tete"><span class="pastille pastille--lg pastille--noir" aria-hidden="true"><svg class="ico" width="20" height="20"><use href="/assets/icones.svg#i-mail"/></svg></span><span class="ct-etape__num">01</span></span>
+            <h3 class="titre-4">Vous nous écrivez</h3>
+            <p>Quelques lignes sur votre situation suffisent, par ce formulaire, par e-mail ou sur LinkedIn.</p>
+          </li>
+          <li class="carte ct-etape">
+            <span class="ct-etape__tete"><span class="pastille pastille--lg" aria-hidden="true"><svg class="ico" width="20" height="20"><use href="/assets/icones.svg#i-message"/></svg></span><span class="ct-etape__num">02</span></span>
+            <h3 class="titre-4">Nous vous répondons sous 48 h</h3>
             <p>Nous revenons vers vous pour fixer un premier échange, en visio ou en présentiel.</p>
           </li>
           <li class="carte ct-etape">
-            <span class="inst-num">02</span>
+            <span class="ct-etape__tete"><span class="pastille pastille--lg" aria-hidden="true"><svg class="ico" width="20" height="20"><use href="/assets/icones.svg#i-compass"/></svg></span><span class="ct-etape__num">03</span></span>
             <h3 class="titre-4">Un premier échange de 30 minutes</h3>
             <p>Confidentiel et sans engagement, pour comprendre la situation et ce qui doit changer.</p>
-          </li>
-          <li class="carte ct-etape">
-            <span class="inst-num">03</span>
-            <h3 class="titre-4">Une proposition sur mesure</h3>
-            <p>Un dispositif adapté à votre contexte, avec un objectif, des indicateurs et un devis.</p>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- FAQ (Figma 1178:5750) -->
+    <!-- Bon à savoir : confidentialité, à distance ou en présentiel -->
+    <section class="section section--serre" aria-labelledby="titre-savoir">
+      <div class="section-head">
+        <div class="section-head__text">
+          <p class="eyebrow">Bon à savoir</p>
+          <h2 class="section-head__title" id="titre-savoir">Avant de nous écrire</h2>
+          <p class="section-head__intro">Confidentialité et format des séances, en deux mots.</p>
+        </div>
+      </div>
+      <div class="plateau">
+        <ul class="ct-savoir" role="list">
+          <li class="carte ct-savoir__item">
+            <span class="pastille pastille--lg" aria-hidden="true"><svg class="ico" width="20" height="20"><use href="/assets/icones.svg#i-check"/></svg></span>
+            <div class="ct-savoir__texte">
+              <h3 class="titre-4">Confidentialité</h3>
+              <p>Le contenu des séances reste entre vous et votre coach. Seuls l’objectif et les indicateurs de progrès sont partagés avec votre manager ou vos RH, si vous le souhaitez et selon ce qui a été convenu au départ.</p>
+            </div>
+          </li>
+          <li class="carte ct-savoir__item">
+            <span class="pastille pastille--lg" aria-hidden="true"><svg class="ico" width="20" height="20"><use href="/assets/icones.svg#i-users-round"/></svg></span>
+            <div class="ct-savoir__texte">
+              <h3 class="titre-4">À distance ou en présentiel</h3>
+              <p>Les deux&nbsp;: en présentiel à Paris ou dans vos locaux, et à distance.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ courte, réponses reprises de /offre (Figma 1178:5750) -->
     <section class="section section--serre" aria-labelledby="titre-faq">
       <div class="plateau" data-faq>
         <div class="faq__intro">
@@ -163,49 +193,33 @@
             <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="true" aria-controls="faq-1">
               <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
               <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
-              Coaching ou formation : quelle différence chez Scoaché ?
+              Comment financer un accompagnement ?
             </button></h3>
-            <div class="faq__reponse" id="faq-1"><p>Aucune obligation de choisir. La Méthode Scoaché © part d’un objectif de coaching, mesuré par des indicateurs, et y ajoute les apports de formation dont vous avez besoin. Chaque parcours mêle les deux, dans les proportions que votre situation demande.</p></div>
+            <div class="faq__reponse" id="faq-1"><p>Le coaching de dirigeant est en général pris en charge par l’entreprise. Nous vous aidons à monter le dossier.</p></div>
           </div>
           <div class="faq__item">
             <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-2">
               <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
               <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
-              Comment financer un accompagnement ?
+              Combien de temps dure un accompagnement ?
             </button></h3>
-            <div class="faq__reponse" id="faq-2" hidden><p>Le coaching de dirigeant est en général pris en charge par l’entreprise. Nos formations sont certifiées Qualiopi : elles peuvent être financées par votre OPCO dans le cadre du plan de développement des compétences. Nous vous aidons à monter le dossier.</p></div>
+            <div class="faq__reponse" id="faq-2" hidden><p>En individuel, de 4 à 12 sessions d’une heure, sur quelques semaines à quelques mois. En collectif et à l’échelle d’une organisation, le dispositif est construit sur mesure après un premier échange.</p></div>
           </div>
           <div class="faq__item">
             <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-3">
               <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
               <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
-              Les séances ont-elles lieu en présentiel ou à distance ?
+              Sous quel délai peut-on démarrer ?
             </button></h3>
-            <div class="faq__reponse" id="faq-3" hidden><p>Les deux. En présentiel à Paris ou dans vos locaux, et à distance sur Zoom, avec des ateliers visuels sur Mural.</p></div>
+            <div class="faq__reponse" id="faq-3" hidden><p>Un premier échange sous 48&nbsp;h, puis un démarrage en général sous 2 à 4 semaines, plus vite si la situation l’exige, par exemple avant une prise de poste.</p></div>
           </div>
           <div class="faq__item">
             <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-4">
               <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
               <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
-              Combien de temps dure un accompagnement ?
+              Coaching ou formation&nbsp;: quelle différence chez Scoaché ?
             </button></h3>
-            <div class="faq__reponse" id="faq-4" hidden><p>En individuel, de 4 à 12 sessions d’une heure, sur quelques semaines à quelques mois. En collectif et à l’échelle d’une organisation, le dispositif est construit sur mesure après un premier échange.</p></div>
-          </div>
-          <div class="faq__item">
-            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-5">
-              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
-              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
-              Qu’est-ce qui reste confidentiel ?
-            </button></h3>
-            <div class="faq__reponse" id="faq-5" hidden><p>Le contenu des séances reste entre vous et votre coach. Seuls l’objectif et les indicateurs de progrès sont partagés avec votre manager ou vos RH, si vous le souhaitez et selon ce qui a été convenu au départ.</p></div>
-          </div>
-          <div class="faq__item">
-            <h3 class="titre-reset"><button type="button" class="faq__question" aria-expanded="false" aria-controls="faq-6">
-              <svg class="ico faq__signe faq__signe--plus" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-plus"/></svg>
-              <svg class="ico faq__signe faq__signe--moins" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-minus"/></svg>
-              Sous quel délai peut-on démarrer ?
-            </button></h3>
-            <div class="faq__reponse" id="faq-6" hidden><p>Un premier échange sous 48 h, puis un démarrage en général sous 2 à 4 semaines, plus vite si la situation l’exige, par exemple avant une prise de poste.</p></div>
+            <div class="faq__reponse" id="faq-4" hidden><p>Aucune obligation de choisir. La Méthode Scoaché © part d’un objectif de coaching, mesuré par des indicateurs, et y ajoute les apports de formation dont vous avez besoin. Chaque parcours mêle les deux, dans les proportions que votre situation demande.</p></div>
           </div>
         </div>
       </div>

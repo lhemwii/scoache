@@ -63,9 +63,9 @@
 
 /* Liste à coches */
 .inst-checks { display: flex; flex-direction: column; gap: 10px; }
-.inst-checks li { display: flex; align-items: flex-start; gap: 8px; font-size: 15px; line-height: 1.4; }
+.inst-checks li { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.4; }
 .inst-checks .ico { margin-top: 2px; }
-.inst-checks--petit li { font-size: 15px; }
+.inst-checks--petit li { font-size: 16px; }
 
 /* Lignes clé / valeur (En bref, Modalités) */
 .inst-lignes { margin: 0; }
@@ -76,7 +76,7 @@
   border-top: 1px solid var(--bordure);
 }
 .inst-ligne dt { flex: 0 0 110px; padding-top: 2px; font-size: 13px; font-weight: 600; color: var(--accent); }
-.inst-ligne dd { flex: 1; min-width: 0; margin: 0; font-size: 15px; font-weight: 500; line-height: 1.4; }
+.inst-ligne dd { flex: 1; min-width: 0; margin: 0; font-size: 16px; font-weight: 500; line-height: 1.4; }
 .inst-lignes--large .inst-ligne dt { flex-basis: 120px; }
 .inst-lignes--sans-premier .inst-ligne:first-child { border-top: 0; }
 
@@ -146,7 +146,7 @@
 /* Raison d'être */
 .ap-raison__carte { flex: 1 1 0; min-width: 0; padding: 40px; }
 .ap-raison__enonce { margin: 0; font-size: 28px; font-weight: 400; line-height: 1.3; letter-spacing: -0.14px; }
-.ap-raison .ap-texte p { font-size: 15px; }
+.ap-raison .ap-texte p { font-size: 16px; }
 .ap-texte { display: flex; flex-direction: column; gap: 14px; }
 .ap-texte p { font-size: 16px; line-height: 1.6; color: var(--texte-2); }
 .ap-signature {
@@ -185,7 +185,7 @@
 .ap-bio { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 20px; padding: 40px 40px 36px; }
 .ap-bio__citation { margin: 0; font-size: 30px; line-height: 1.32; letter-spacing: -0.15px; }
 .ap-bio__citation p { margin: 0; }
-.ap-bio .ap-texte p { font-size: 15px; line-height: 1.6; }
+.ap-bio .ap-texte p { font-size: 16px; line-height: 1.6; }
 .ap-bio .inst-checks { width: 100%; padding-top: 18px; border-top: 1px solid var(--bordure); }
 
 /* Mission et valeurs */
@@ -196,19 +196,19 @@
 .ap-valeurs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
 .ap-valeur { display: flex; flex-direction: column; gap: 12px; padding: 28px 24px; }
 .ap-valeur .titre-4 { font-size: 22px; letter-spacing: -0.11px; }
-.ap-valeur p { font-size: 15px; line-height: 1.55; color: var(--texte-2); }
+.ap-valeur p { font-size: 16px; line-height: 1.55; color: var(--texte-2); }
 
 /* La méthode */
 .ap-methode { display: flex; flex-direction: column; gap: 8px; }
 .ap-methode__intro { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 40px; padding: 36px 40px; }
 .ap-methode__intro .titre-4 { max-width: 460px; }
-.ap-methode__intro .ap-texte p { font-size: 15px; }
+.ap-methode__intro .ap-texte p { font-size: 16px; }
 .ap-piliers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .ap-pilier { display: flex; flex-direction: column; gap: 12px; padding: 32px; }
 .ap-pilier__haut { display: flex; align-items: center; gap: 10px; }
 .ap-pilier__titre { margin: 0; font-size: 22px; font-weight: 400; line-height: 1.25; letter-spacing: -0.11px; }
 .ap-piliers { margin: 0; padding: 0; list-style: none; }
-.ap-pilier__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.ap-pilier__texte { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 
 .ap-outils { display: flex; align-items: stretch; gap: 24px; padding: 16px 24px; }
 .ap-outils__bloc { display: flex; flex: 1; flex-direction: column; gap: 10px; min-width: 0; }
@@ -361,7 +361,7 @@
 
 .ct-etapes { display: grid; margin: 0; padding: 0; list-style: none; flex: 1; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .ct-etape { display: flex; flex-direction: column; gap: 12px; }
-.ct-etape p { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.ct-etape p { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 
 /* =====================================================================
    Formations : catalogue (Figma 1174:4677) et fiches (1175:4760...)
@@ -396,7 +396,7 @@
 .fo-carte__photo::after { border-radius: 8px; }
 .fo-carte__corps { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 12px 0; }
 .fo-carte__titre { margin: 0; font-size: 22px; font-weight: 400; line-height: 1.25; letter-spacing: -0.11px; }
-.fo-carte__texte { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.fo-carte__texte { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 .fo-carte__meta { font-size: 14px; color: var(--placeholder); }
 .fo-carte__lien { margin-top: auto; padding-top: 12px; font-size: 12px; letter-spacing: 0.6px; }
 .fo-carte:hover .fo-carte__lien { color: var(--accent); }
@@ -409,7 +409,7 @@
 .fo-qualite { margin-top: 8px; }
 .fo-qualite .inst-stat { flex-basis: 230px; }
 .fo-accessibilite { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 14px; }
-.fo-accessibilite p { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.fo-accessibilite p { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 .fo-accessibilite .link-caps { margin-top: auto; }
 
 /* Fiche formation */
@@ -445,10 +445,10 @@
 .fo-etape:last-child { border-bottom: 0; }
 .fo-etape__texte { display: flex; flex: 1; flex-direction: column; gap: 4px; min-width: 0; padding-top: 6px; }
 .fo-etape__titre { margin: 0; font-size: 19px; font-weight: 500; line-height: 1.3; }
-.fo-etape__texte p { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.fo-etape__texte p { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 
 .fo-deroule { display: flex; flex: 0 0 420px; flex-direction: column; align-items: flex-start; gap: 14px; }
-.fo-deroule > p:not(.eyebrow) { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.fo-deroule > p:not(.eyebrow) { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 
 .fo-evaluation { display: flex; flex: 1; gap: 8px; min-width: 0; }
 .fo-evaluation > .carte:first-child { flex: 1; }
@@ -456,7 +456,7 @@
 
 .fo-acces { display: grid; flex: 1; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .fo-acces .carte { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
-.fo-acces .carte > p:not(.eyebrow) { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
+.fo-acces .carte > p:not(.eyebrow) { font-size: 16px; line-height: 1.5; color: var(--texte-2); }
 .fo-acces .btn,
 .fo-acces .link-caps { margin-top: 8px; }
 .fo-acces .carte > p.fo-tarif { margin: 0; color: var(--noir); font-size: 40px; font-weight: 400; line-height: 1.25; letter-spacing: -0.2px; }
@@ -689,3 +689,62 @@
   .fo-carte__lien { font-size: 13px; }
   .fo-autre__eyebrow { font-size: 14px; }
 }
+
+/* =====================================================================
+   Manche 11 : /nous-contacter
+   Bogue du hero : sous 1100 px, le hero passait en colonne ; le formulaire tombait
+   sous les coordonnées et la carte d'Ilana, sous la ligne de flottaison, et le
+   révélé au défilement le gardait invisible (opacité 0) alors que son bord était
+   déjà à l'écran : une bande grise vide en bas du hero. Désormais : deux colonnes
+   jusqu'à 901 px ; en dessous, le formulaire suit directement l'introduction ;
+   et rien dans le hero n'attend le défilement pour apparaître (script.js).
+   ===================================================================== */
+@media (min-width: 901px) {
+  .page-contact .inst-hero { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 8px; }
+  .page-contact .inst-hero__texte { flex-basis: auto; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .page-contact .inst-hero__texte { padding: 36px 24px 24px; }
+  .page-contact .inst-titre-hero { font-size: 44px; }
+  .page-contact .ct-form { padding: 28px 24px 24px; }
+  .page-contact .ct-form .fields-row { flex-direction: column; }
+}
+@media (max-width: 900px) {
+  .page-contact .inst-hero { display: flex; flex-direction: column; }
+  .page-contact .inst-hero__texte { display: contents; }
+  .page-contact .inst-hero__intro { order: 1; padding: 32px 20px 20px; }
+  .page-contact .ct-form { order: 2; }
+  .page-contact .ct-bas { order: 3; padding: 12px 12px 12px; }
+}
+.ct-bas { display: flex; flex-direction: column; gap: 8px; }
+.ct-ilana { align-items: center; gap: 16px; padding: 16px 20px; }
+.ct-ilana__photo { width: 72px; height: 72px; }
+.ct-ilana__titre { font-size: 17px; }
+.ct-ilana__sous { font-size: 15px; }
+.ct-coordonnee__titre { font-size: 16px; }
+
+/* Trois étapes avec icônes */
+.ct-etape__tete { display: flex; align-items: center; justify-content: space-between; }
+.ct-etape__num { font-size: 15px; font-weight: 600; color: var(--texte-2); }
+.ct-etape p { font-size: 16px; }
+.ct-etapes { position: relative; }
+
+/* Bon à savoir */
+.ct-savoir { display: grid; flex: 1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.ct-savoir__item { display: flex; align-items: flex-start; gap: 18px; }
+.ct-savoir__texte { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ct-savoir__texte h3 { margin: 0; }
+.ct-savoir__texte p { max-width: 60ch; font-size: 16px; line-height: 1.5; color: var(--texte-2); }
+@media (max-width: 900px) {
+  .ct-savoir { grid-template-columns: minmax(0, 1fr); }
+  .ct-etape p,
+  .ct-savoir__texte p { font-size: 15px; }
+}
+
+/* Manche 9 : le titre de la formation, au milieu de la photo floutée, sur le panneau vitré */
+html .fo-carte__photo:has(> .carte-verre) { height: 210px; padding: 16px; }
+html .fo-carte__photo > .carte-verre { max-width: 300px; padding: 14px 18px; }
+html .fo-carte__photo .fo-carte__titre { font-size: 20px; font-weight: 500; line-height: 1.25; }
+.fo-carte:hover .fo-carte__titre { text-decoration: none; }
+.fo-carte__meta { color: var(--texte-2); }
+.fo-carte__corps { padding-top: 16px; }
