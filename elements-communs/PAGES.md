@@ -227,7 +227,9 @@ leurs dans `assets/cas-clients/`.
 (7 px, zoom 1,12 pour des bords nets), grain et dégradé violet. Toutes les photos `.photo` en
 portent la classe, sauf celles de personnes, qui restent nettes : hero de l'accueil
 (`hero__photo`), portraits des témoins et portrait d'Ilana (hors `.photo`). Les générateurs
-`cas-clients/_generer.py` et `formations/_generer.py` l'ajoutent d'office.
+`cas-clients/_generer.py` et `formations/_generer.py` l'ajoutent d'office. Sur ces photos, la
+puce logo et la carte vitrée se placent au centre de l'image : textes blancs sur un voile sombre
+léger, titre en `clamp(22px, …, 25px)`, puce logo blanche (logo en couleur).
 
 ### Carrousel (progression, flèches, filtres optionnels) : JS fourni
 ```html
@@ -368,17 +370,22 @@ Durées de 0,3 à 0,6 s ; seuls le zoom du hero et le Ken Burns des cas sont len
   avec situation, enjeux, chiffre clé et « Ce que ce cas démontre » si la page contient
   `<script type="application/json" id="cas-apercus">` (voir l'accueil). Grand écran : hauteur
   fixe de 400 px (le corps du détail défile), animation en transform et clip-path seulement,
-  interruptible (double clic, autre carte pendant l'animation). Mobile : la carte s'allonge vers
-  le bas (grid-template-rows).
+  interruptible (double clic, autre carte pendant l'animation). Mobile : le détail s'ouvre en
+  pleine largeur juste sous le carrousel (`.carrousel__panneau`, créé par script.js), avec le logo
+  et le titre du cas ; la page défile pour le placer sous la barre de navigation, il ne dépasse
+  jamais l'écran (le corps défile, les actions restent visibles) et se referme par ×, Échap ou un
+  nouveau tap sur la carte.
 - **Enjeux ouvrables** (les six enjeux d'Ilana Porteret, mot pour mot) : `<ul data-enjeux>` de `li.enjeu` (bouton `.enjeu__bouton` +
   `.enjeu__panneau > .enjeu__interieur > .enjeu__contenu`), une seule carte ouverte à la fois,
   mise en avant tournante au repos. `li.enjeu` est en `display: contents` : script.js place le
   panneau sur une rangée pleine largeur sous la rangée de sa carte (propriété `order`), la carte
   ne change jamais de taille et le panneau s'ouvre en grid-template-rows (0fr vers 1fr).
   Carte ouverte : contour noir, titre plus grand, filet d'accent ; les autres s'estompent
-  (`.a-une-ouverte` sur la grille). Même principe dans le carrousel : la carte ouverte et son
-  détail partagent un contour noir et une languette (`.is-lie`), les autres cartes s'estompent
-  (`.a-un-ouvert`).
+  (`.a-une-ouverte` sur la grille). Mobile : la carte ouverte et son contenu ne forment qu'une
+  carte (même contour), placée sous la barre de navigation, cas en défilement horizontal et
+  bouton « Refermer ». Carrousel : la carte choisie est marquée (`.is-lie`), les autres
+  s'estompent (`.a-un-ouvert`) ; en grand écran, la carte et son détail partagent un fond et un
+  seul contour noir. Jamais de languette ni de pointe.
 - **Parcours du hero** (accueil) : un clic sur l'une des trois situations de la carte blanche
   (`a.mega-link[data-parcours="individuel|collectif|organisation"]`) ne quitte pas la page ; la
   carte s'agrandit sur place et déroule quatre étapes : la situation, l'accompagnement (échelle et

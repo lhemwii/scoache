@@ -681,3 +681,11 @@
 .ct-ilana__texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .ct-ilana__titre { font-size: 15px; font-weight: 500; }
 .ct-ilana__sous { font-size: 14px; color: var(--texte-2); }
+
+/* Mobile : petits libellés relevés (manche 7) */
+@media (max-width: 900px) {
+  .inst-ligne dt,
+  .ct-form .field__facultatif { font-size: 14px; }
+  .fo-carte__lien { font-size: 13px; }
+  .fo-autre__eyebrow { font-size: 14px; }
+}

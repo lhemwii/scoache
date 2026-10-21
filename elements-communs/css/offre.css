@@ -605,7 +605,7 @@
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
 }
 @media (prefers-reduced-motion: no-preference) {
   .page-offre .of-cas-carrousel .carte-photo > img { animation: of-ken-burns 24s ease-in-out infinite alternate; }
@@ -657,4 +657,15 @@
     .page-offre .of-echelle__corps > .of-echelle__actions { align-self: start; }
     .page-offre .of-echelle__corps > .of-echelle__cas { margin-top: 18px; }
   }
+}
+
+/* Mobile : petits libellés relevés (manche 7) */
+@media (max-width: 900px) {
+  .page-offre .of-fiche dt,
+  .page-offre .of-formats dt,
+  .page-offre .of-palier__ligne dt,
+  .page-offre .of-onglets__format strong,
+  .page-offre .of-pastille-lien { font-size: 14px; }
+  .page-offre .of-famille__lien,
+  .page-offre .of-situation__lien { font-size: 13px; }
 }

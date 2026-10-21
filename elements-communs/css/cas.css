@@ -487,7 +487,9 @@
   .page-cas .cas-ligne__marque { grid-area: marque; gap: 8px; }
   .page-cas .cas-ligne__corps { grid-area: corps; }
   .page-cas .cas-ligne__photo { grid-area: photo; width: 100%; height: auto; aspect-ratio: 16 / 10; }
-  .page-cas .cas-ligne__logo { height: 40px; }
+  /* Le logo est déjà au centre de la photo, juste au-dessus : gardé pour les lecteurs d'écran seulement */
+  .page-cas .cas-ligne__logo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .page-cas .cas-ligne__marque { position: relative; }
   .page-cas .cas-ligne__titre { font-size: 23px; }
 
   .page-cas .cas-fiche__carte { padding: 6px; }
@@ -629,4 +631,18 @@
 }
 @media (max-width: 600px) {
   .page-cas .cas-fiche .cas-fiche__photo { min-height: 200px; }
+}
+
+/* Hero d'une page cas : la puce logo, seule au centre de la photo floutée, en plus grand */
+html .page-cas .cas-fiche__photo .logo-puce { padding: 14px 22px; border-radius: 12px; }
+html .page-cas .cas-fiche__photo .logo-puce img { max-width: 200px; height: 56px; }
+@media (max-width: 600px) {
+  html .page-cas .cas-fiche__photo .logo-puce img { max-width: 160px; height: 46px; }
+}
+
+/* Mobile : petits libellés relevés (manche 7) */
+@media (max-width: 900px) {
+  .page-cas .cas-echelle__lien,
+  .page-cas .cas-30__libelle,
+  .page-cas .cas-chiffre__libelle { font-size: 14px; }
 }

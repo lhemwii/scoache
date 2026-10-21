@@ -409,10 +409,21 @@
     bloc.appendChild(interieur);
 
     var haut = elt('div', 'cas-detail__haut');
+    // Mobile : le détail s'ouvre en pleine largeur sous le carrousel ; il rappelle donc le client.
+    var puce = elt('span', 'logo-puce cas-detail__logo');
+    var logo = elt('img');
+    logo.src = '/assets/cas/logos/' + slug + '.png';
+    logo.alt = d.nom;
+    if (d.logo) { logo.width = d.logo.l; logo.height = d.logo.h; }
+    logo.loading = 'lazy';
+    puce.appendChild(logo);
     var meta = elt('p', 'cas-detail__meta');
     meta.appendChild(elt('span', 'eyebrow', d.echelle));
     meta.appendChild(elt('span', null, d.meta));
-    haut.appendChild(meta);
+    var gauche = elt('div', 'cas-detail__gauche');
+    gauche.appendChild(puce);
+    gauche.appendChild(meta);
+    haut.appendChild(gauche);
     var fermer = elt('button', 'cas-detail__fermer');
     fermer.type = 'button';
     fermer.setAttribute('aria-label', 'Refermer le cas ' + d.nom);
@@ -424,8 +435,8 @@
     corps.tabIndex = 0;
     corps.setAttribute('role', 'group');
     corps.setAttribute('aria-label', 'Aperçu du cas ' + d.nom);
-    // Titre déjà affiché sur la carte photo : gardé pour les lecteurs d'écran seulement.
-    corps.appendChild(elt('h3', 'visually-hidden', d.titre));
+    // Titre déjà affiché sur la carte photo (grand écran : lecteurs d'écran seulement ; mobile : visible).
+    corps.appendChild(elt('h3', 'cas-detail__titre', d.titre));
     corps.appendChild(elt('p', 'cas-detail__label', 'Situation'));
     corps.appendChild(elt('p', 'cas-detail__texte', d.situation));
     corps.appendChild(elt('p', 'cas-detail__label', 'Les enjeux de départ'));
@@ -506,8 +517,55 @@
       var donnees = lireDonneesCas();
       var boucle = null;
       var defil = null;
-      function tousItems() { return toutes('.carrousel__item', piste).filter(function (el) { return el.querySelector('.cas-detail'); }); }
-      function detailDe(item) { return item.querySelector('.cas-detail'); }
+      function tousItems() { return toutes('.carrousel__item', piste).filter(function (el) { return el._detail; }); }
+      function detailDe(item) { return item._detail; }
+
+      /* Mobile : le détail s'ouvre en pleine largeur, dans un panneau placé juste sous le carrousel
+         (la carte choisie reste marquée, les autres s'estompent). Le panneau ne dépasse jamais la
+         hauteur de l'écran : son corps défile, les actions restent visibles. Un seul détail à la fois ;
+         il retourne dans sa carte une fois le panneau refermé. */
+      var panneau = null, interieurPanneau = null, minuteRetour = null;
+      function panneauMobile() {
+        if (panneau) return panneau;
+        panneau = elt('div', 'carrousel__panneau');
+        interieurPanneau = elt('div', 'carrousel__panneau-interieur');
+        panneau.appendChild(interieurPanneau);
+        piste.parentNode.insertBefore(panneau, piste.nextSibling);
+        return panneau;
+      }
+      function rendreDetails(sauf) {
+        tousItems().forEach(function (item) {
+          var det = item._detail;
+          if (det !== sauf && det.parentNode !== item) item.appendChild(det);
+        });
+      }
+      function ouvrirMobile(cible, options) {
+        var p = panneauMobile();
+        var instant = options.instant || mouvementReduit.matches;
+        clearTimeout(minuteRetour);
+        if (cible) {
+          var det = detailDe(cible);
+          rendreDetails(det);
+          if (det.parentNode !== interieurPanneau) interieurPanneau.appendChild(det);
+          var deja = p.classList.contains('is-ouvert');
+          p.classList.add('is-ouvert');
+          if (!instant && deja) { det.classList.remove('is-entree'); void det.offsetWidth; det.classList.add('is-entree'); }
+          if (!options.sansDefilement) {
+            // Le panneau vient sous la barre de navigation (scroll-margin-top), sans à-coup.
+            window.requestAnimationFrame(function () { p.scrollIntoView({ behavior: instant ? 'auto' : 'smooth', block: 'start' }); });
+          }
+        } else {
+          if (!p.classList.contains('is-ouvert')) { rendreDetails(null); return; }
+          p.classList.remove('is-ouvert');
+          minuteRetour = setTimeout(function () { if (!voulu) rendreDetails(null); }, instant ? 0 : DUREE_OUVERTURE + 60);
+          if (options.depuis && !options.sansDefilement) {
+            // Retour à la carte refermée
+            var carte = carteDe(options.depuis);
+            var r = carte.getBoundingClientRect();
+            if (r.top < margeHaute() || r.bottom > window.innerHeight) racine.scrollIntoView({ behavior: instant ? 'auto' : 'smooth', block: 'start' });
+          }
+        }
+      }
       function carteDe(item) { return item.querySelector('[data-cas-carte]'); }
       function xContenu(item) { var premier = items()[0]; return item.offsetLeft - (premier ? premier.offsetLeft : 0); }
 
@@ -613,7 +671,7 @@
           item.classList.toggle('is-lie', ouvrir);
           carteDe(item).setAttribute('aria-expanded', ouvrir ? 'true' : 'false');
           detail.inert = !ouvrir;
-          if (!large) { item.classList.toggle('is-ouvert', ouvrir); return; }
+          if (!large) return;
           var o = item._ouv;
           if (ouvrir && !o) {
             var gap = parseFloat(getComputedStyle(item).columnGap) || 0;
@@ -636,32 +694,33 @@
           piste.classList.add('is-anime');
           defilementVers(cible, instant ? 0 : Math.max(dureeMax, 240));
           relancer();
-        } else if (cible && !instant) {
-          // Mobile : la carte reste dans le champ, le détail aussi si possible.
-          var r = cible.getBoundingClientRect(), p = piste.getBoundingClientRect();
-          if (r.left < p.left - 1 || r.right > p.right + 1) piste.scrollTo({ left: piste.scrollLeft + r.left - p.left, behavior: 'smooth' });
-          var carte = carteDe(cible);
-          var hautCarte = carte.getBoundingClientRect().top;
-          var bas = carte.getBoundingClientRect().bottom + detailDe(cible).querySelector('.cas-detail__interieur').scrollHeight;
-          var decalage = Math.max(0, Math.min(bas - (window.innerHeight - 16), hautCarte - margeHaute()));
-          if (decalage > 1) guiderFenetre(carte, decalage, DUREE_OUVERTURE);
-        } else if (!cible && options.depuis && !instant) {
-          var haut = carteDe(options.depuis).getBoundingClientRect().top;
-          if (haut < margeHaute()) guiderFenetre(carteDe(options.depuis), haut - margeHaute(), DUREE_OUVERTURE);
+        } else {
+          if (cible) {
+            // La carte choisie reste dans le champ du carrousel
+            var r = cible.getBoundingClientRect(), p = piste.getBoundingClientRect();
+            if (r.left < p.left - 1 || r.right > p.right + 1) piste.scrollTo({ left: piste.scrollLeft + r.left - p.left, behavior: instant ? 'auto' : 'smooth' });
+          }
+          ouvrirMobile(cible, options);
+          setTimeout(maj, DUREE_OUVERTURE + 50);
         }
-        if (!large) setTimeout(maj, DUREE_OUVERTURE + 50);
       }
       // Passage mobile / grand écran : on pose l'état final sans animation.
       function remettreAPlat() {
         if (boucle) window.cancelAnimationFrame(boucle);
         boucle = null;
         defil = null;
+        if (ecranLarge.matches) {
+          rendreDetails(null);
+          if (panneau) panneau.classList.remove('is-ouvert');
+        } else if (voulu) {
+          ouvrirMobile(voulu, { instant: true, sansDefilement: true });
+        }
         tousItems().forEach(function (item) {
           var ouvrir = item === voulu;
           item.style.transform = '';
           detailDe(item).style.clipPath = '';
           detailDe(item).classList.remove('is-anime');
-          item.classList.toggle('is-ouvert', ouvrir);
+          item.classList.toggle('is-ouvert', ouvrir && ecranLarge.matches);
           item._ouv = ouvrir && ecranLarge.matches
             ? { p: 1, vers: 1, fini: true, largeur: detailDe(item).offsetWidth, ecart: detailDe(item).offsetWidth + (parseFloat(getComputedStyle(item).columnGap) || 0) }
             : null;
@@ -683,6 +742,7 @@
           var detail = construireDetail(slug, d);
           detail.inert = true;
           item.appendChild(detail);
+          item._detail = detail;
           carte.setAttribute('aria-expanded', 'false');
           carte.setAttribute('aria-controls', detail.id);
           carte.addEventListener('click', function (e) {
@@ -851,14 +911,21 @@
         });
         // Les autres cartes s'effacent tant qu'un enjeu est ouvert
         grille.classList.toggle('a-une-ouverte', !!ouvrir);
-        if (mouvementReduit.matches) return;
+        if (mouvementReduit.matches) {
+          // Sans animation, mais la carte ouverte vient tout de même sous la barre de navigation (mobile)
+          if (ouvrir && !ecranLarge.matches) window.scrollBy(0, bouton.getBoundingClientRect().top - margeHaute());
+          return;
+        }
         var decalage = 0;
         if (ouvrir) {
           // Bas du panneau une fois ouvert, mesuré par rapport à la carte qui ne bouge pas.
           var panneau = carte.querySelector('.enjeu__panneau');
           var bas = hautAvant + (panneau.getBoundingClientRect().top - bouton.getBoundingClientRect().top)
             + carte.querySelector('.enjeu__interieur').scrollHeight;
-          decalage = Math.max(0, Math.min(bas - (window.innerHeight - 24), hautAvant - margeHaute()));
+          // Mobile : la carte ouverte vient se placer sous la barre de navigation, son contenu dessous.
+          decalage = ecranLarge.matches
+            ? Math.max(0, Math.min(bas - (window.innerHeight - 24), hautAvant - margeHaute()))
+            : hautAvant - margeHaute();
         } else if (hautAvant < margeHaute()) {
           decalage = hautAvant - margeHaute();
         }
@@ -867,6 +934,19 @@
       cartes.forEach(function (carte) {
         var bouton = carte.querySelector('.enjeu__bouton');
         carte.querySelector('.enjeu__panneau').inert = true;
+        // Bouton « Refermer » au bas du contenu ouvert (affiché sur mobile)
+        var contenu = carte.querySelector('.enjeu__contenu');
+        if (contenu && !contenu.querySelector('.enjeu__fermer')) {
+          var fermer = elt('button', 'enjeu__fermer');
+          fermer.type = 'button';
+          fermer.appendChild(elt('span', null, 'Refermer'));
+          fermer.appendChild(icone('x', 16));
+          fermer.addEventListener('click', function () {
+            basculer(carte, false);
+            bouton.focus({ preventScroll: true });
+          });
+          contenu.appendChild(fermer);
+        }
         bouton.addEventListener('click', function () {
           arreterInvitation();
           basculer(carte, bouton.getAttribute('aria-expanded') !== 'true');

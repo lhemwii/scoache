@@ -41,7 +41,7 @@
 /* Sans JavaScript, la vue du parcours n'existe pas */
 html:not(.js) .hero__vue--parcours { display: none; }
 
-.hero__photo { transition: flex-basis 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), height 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.hero__photo { transition: flex-basis 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), height 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.3s ease; }
 .hero__photo > img { transition: filter 0.45s ease, scale 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .hero__photo .carte-verre { transition: opacity 0.25s ease, transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.3s ease; }
 .hero__carte.is-parcours .hero__photo { flex-basis: 150px; }
@@ -288,6 +288,7 @@ html:not(.js) .hero__vue--parcours { display: none; }
 .enjeu-cas:hover { transform: translateY(-2px); background: var(--greige); }
 .enjeu-cas:hover .enjeu-cas__lien .ico { transform: translateX(3px); }
 .enjeu__parler { align-self: flex-start; }
+.enjeu__fermer { display: none; }
 
 /* ---------- Offre : trois échelles ---------- */
 .home-offre { padding-top: 48px; }
@@ -401,7 +402,7 @@ html:not(.js) .hero__vue--parcours { display: none; }
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
 }
 
 /* ---------- Écrans intermédiaires ---------- */
@@ -427,14 +428,57 @@ html:not(.js) .hero__vue--parcours { display: none; }
   .home-logos .marquee.is-anime .marquee__piste { padding-right: 40px; }
   .home-logos .marquee__piste li { height: 40px; }
 
-  .hero__carte.is-parcours .hero__photo { flex-basis: auto; height: 120px; }
+  .hero__carte.is-parcours .hero__photo { flex-basis: auto; height: 0; opacity: 0; }
+  .hero__carte { row-gap: 20px; }
+  .hero__carte.is-parcours { row-gap: 0; }
   .parcours__titre { font-size: 23px; }
   .parcours__cas { grid-template-columns: minmax(0, 1fr); }
   .home-enjeux .chapo { font-size: 17px; }
-  .enjeu__bouton { padding: 22px 20px 20px; }
-  .enjeu__contenu { padding: 18px 20px 22px; }
-  .enjeu__cas { grid-template-columns: minmax(0, 1fr); }
+  .enjeu__bouton { padding: 22px 20px 20px; border: 1.5px solid transparent; }
   .home-enjeux .carte-lien__titre { font-size: 20px; }
+  .home-enjeux .enjeu.is-ouvert .carte-lien__titre { font-size: 22px; }
+  /* Mobile : la carte ouverte et son contenu forment une seule carte (même contour noir),
+     directement sous le doigt ; les cas défilent à l'horizontale pour tenir dans l'écran. */
+  .enjeu.is-ouvert .enjeu__bouton {
+    margin-bottom: 0;
+    border-color: var(--noir);
+    border-bottom-color: transparent;
+    border-radius: 12px 12px 0 0;
+    box-shadow: none;
+  }
+  .enjeu__contenu { gap: 12px; padding: 16px 20px 18px; border: 1.5px solid transparent; border-top: 0; border-radius: 0 0 12px 12px; }
+  .enjeu.is-ouvert .enjeu__contenu { border-color: var(--noir); box-shadow: inset 0 1px 0 var(--bordure); }
+  .enjeu__cas {
+    display: flex;
+    gap: 8px;
+    margin: 0 -20px;
+    padding: 0 20px 4px;
+    overflow-x: auto;
+    scroll-padding: 0 20px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .enjeu__cas::-webkit-scrollbar { display: none; }
+  .enjeu__cas > li { flex: 0 0 78%; scroll-snap-align: start; }
+  .enjeu-cas { padding: 14px; }
+  .enjeu__fermer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 2px;
+    padding: 11px 16px;
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+    background: var(--blanc);
+    color: var(--noir);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .enjeu__fermer:hover { background: var(--gris-clair); }
 
   .home-offre { padding-top: 40px; }
   .home-offre .section-head { margin-bottom: 20px; }
@@ -456,4 +500,10 @@ html:not(.js) .hero__vue--parcours { display: none; }
   .home-expertise__texte { flex-basis: 100%; order: 2; }
   .home-expertise__titre { font-size: 19px; }
   .home-cas .carrousel__progression { width: 100%; max-width: none; }
+}
+
+/* Mobile : petits libellés relevés (manche 7) */
+@media (max-width: 900px) {
+  .enjeu-cas__lien { font-size: 13px; }
+  .home-formations { font-size: 14px; }
 }
