@@ -2642,3 +2642,59 @@ main .hero p { max-width: 70ch; }
 .enjeu-cas__lien,
 .of-situation__lien,
 .feature-card__link { max-width: 100%; white-space: normal; text-align: left; }
+
+/* ---------- Manche 12 : cartes de cas plus sobres, logos et icônes plus gros ---------- */
+/* Carte de cas (carrousels) : textes un cran plus petits, panneau compact qui laisse voir la photo,
+   logo toujours grand et centré. */
+html .photo.carte-photo { padding: 18px; }
+html .photo.carte-photo > .carte-verre { gap: 6px; max-width: 100%; padding: 14px 16px 16px; }
+html .photo.carte-photo > .carte-verre .carte-verre__eyebrow { font-size: 13px; line-height: 1.3; }
+html .photo.carte-photo > .carte-verre .carte-verre__titre {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 18px;
+  line-height: 1.28;
+  letter-spacing: 0;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+html .photo.carte-photo > .carte-verre .carte-verre__lien { margin-top: 4px; padding: 6px 10px 6px 14px; font-size: 14px; }
+html .photo.carte-photo > .carte-verre .logo-puce { margin-bottom: 6px; }
+html .photo.carte-photo > .carte-verre .logo-puce { align-self: stretch; justify-content: center; min-width: 0; height: 72px; padding: 10px 16px; }
+html .photo.carte-photo > .carte-verre .logo-puce img { max-width: 168px; height: 44px; }
+/* Pages d'échelle, situations typiques : le cas lié devient une tuile, logo grand et centré, lien centré dessous */
+html .page-offre .of-situation__cas { flex-direction: column; align-items: center; gap: 12px; padding: 14px 14px 16px; }
+html .page-offre .of-situation__logo { width: 100%; height: 80px; border-radius: 8px; }
+html .page-offre .of-situation__logo img { width: auto; max-width: 180px; height: 46px; }
+html .page-offre .of-situation__lien {
+  flex: none;
+  justify-content: center;
+  margin-top: 0;
+  background: var(--blanc);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+html .page-offre .of-situation__cas:hover .of-situation__lien { background: var(--noir); color: var(--blanc); }
+/* Lignes de cas du panneau vitré (CHANEL, VINCI Airports...) : logos plus grands */
+.verre-ligne { gap: 16px; min-height: 72px; }
+.verre-ligne__logo { width: 124px; height: 58px; padding: 8px 12px; }
+@media (max-width: 600px) {
+  .verre-ligne { gap: 12px; min-height: 64px; }
+  .verre-ligne__logo { width: 100px; height: 50px; }
+}
+/* Hub cas clients : l'icône de l'échelle, grande, au milieu de la photo */
+html .page-cas .cas-echelle__icone { width: 112px; height: 112px; }
+html .page-cas .cas-echelle__icone .ico { width: 48px; height: 48px; stroke-width: 1.6; }
+@media (max-width: 600px) {
+  html .page-cas .cas-echelle__icone { width: 92px; height: 92px; }
+  html .page-cas .cas-echelle__icone .ico { width: 40px; height: 40px; }
+}
+html .page-offre .of-situation__cas .of-situation__lien { align-self: center; }
+/* Liens texte sur deux lignes (mobile) : la flèche suit le dernier mot au lieu de flotter à droite */
+@media (max-width: 600px) {
+  .link-caps { display: inline; line-height: 1.55; }
+  .link-caps::after { display: inline-block; margin-left: 8px; vertical-align: -3px; }
+  .link-caps .ico { display: inline-block; margin-left: 6px; vertical-align: -3px; }
+}

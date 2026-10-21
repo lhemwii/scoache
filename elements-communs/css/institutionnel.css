@@ -748,3 +748,9 @@ html .fo-carte__photo .fo-carte__titre { font-size: 20px; font-weight: 500; line
 .fo-carte:hover .fo-carte__titre { text-decoration: none; }
 .fo-carte__meta { color: var(--texte-2); }
 .fo-carte__corps { padding-top: 16px; }
+
+/* Manche 12 : hero contact, colonne de gauche empilée sans trou (plus de bloc collé en bas) */
+.page-contact .inst-hero__texte { justify-content: flex-start; gap: 28px; }
+.page-contact .ct-bas { gap: 10px; }
+.page-contact .ct-ilana { border-radius: 12px; }
+.page-contact .ct-ilana__titre { text-wrap: balance; }

@@ -684,3 +684,7 @@ html .home-echelle__photo > .carte-verre--etiquette .carte-verre__titre { font-s
   .page-home .home-hero__accroche { font-size: 22px; }
   .page-home .hero__carte .mega-link__title { font-size: 17px; }
 }
+/* Volet latéral : la carte choisie n'a plus de chevron (le détail est à gauche, avec sa croix) */
+@media (min-width: 1024px) {
+  [data-enjeux-mode="b"] .enjeu.is-ouvert .enjeu__chevron { visibility: hidden; }
+}
