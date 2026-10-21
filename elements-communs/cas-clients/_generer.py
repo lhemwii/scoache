@@ -1183,8 +1183,8 @@ def carte_proche(cas):
     return f'''            <li class="carrousel__item">
               <a class="photo photo--texture carte-photo" href="/cas-clients/{slug}">
                 <img src="{photo_portrait(cas)}" alt="" width="564" height="800" loading="lazy" decoding="async">
-                <span class="logo-puce"><img src="/assets/cas/logos/{slug}.png" alt="{e(cas['nom'])}" width="96" height="32" loading="lazy"></span>
                 <span class="carte-verre">
+                  <span class="logo-puce"><img src="/assets/cas/logos/{slug}.png" alt="{e(cas['nom'])}" width="96" height="32" loading="lazy"></span>
                   <span class="carte-verre__eyebrow">{nom_echelle}, {e(minuscule(cas['meta'][0]))}</span>
                   <span class="carte-verre__titre">{e(cas['titre'])}</span>
                   <span class="carte-verre__lien">Lire le cas<span class="visually-hidden"> {e(cas['nom'])}</span></span>

@@ -359,30 +359,7 @@ html:not(.js) .hero__vue--parcours { display: none; }
   .home-echelle__liens li { opacity: 1 !important; transform: none !important; }
 }
 
-/* ---------- Offre : expertises ---------- */
-.home-expertises { margin: 0; padding: 0; list-style: none; }
-.home-expertises > li { display: flex; }
-.home-expertise {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  gap: 20px;
-  min-height: 145px;
-  padding: 24px 28px;
-  border-radius: 12px;
-  background: var(--blanc);
-  color: var(--noir);
-  text-decoration: none;
-  transition: box-shadow 0.2s ease;
-}
-.home-expertise:hover { box-shadow: 0 8px 24px rgba(13, 13, 26, 0.07); }
-.home-expertise__texte { display: flex; flex: 1; flex-direction: column; gap: 6px; min-width: 0; }
-.home-expertise__eyebrow { font-size: 15px; font-weight: 600; color: var(--accent); }
-.home-expertise__titre { font-size: 22px; font-weight: 400; letter-spacing: -0.11px; }
-.home-expertise__desc { font-size: 15px; line-height: 1.5; color: var(--texte-2); }
-.home-expertise__fleche { transition: transform 0.2s ease; }
-.home-expertise:hover .home-expertise__fleche { transform: translateX(3px); }
-.home-expertise:hover .home-expertise__titre { text-decoration: underline; text-underline-position: from-font; }
+/* Expertises : styles partagés avec /offre, dans styles.css */
 
 /* ---------- Offre : formations, en discret ---------- */
 .home-formations {
@@ -415,8 +392,6 @@ html:not(.js) .hero__vue--parcours { display: none; }
 @media (max-width: 1100px) {
   .home-echelle__corps { padding: 20px 22px 0; }
   .home-echelle__titre { font-size: 23px; }
-  .home-expertise { gap: 16px; padding: 22px 24px; }
-  .home-expertise__titre { font-size: 20px; }
 }
 
 /* ---------- Mobile, moins de 900 px ---------- */
@@ -487,8 +462,6 @@ html:not(.js) .hero__vue--parcours { display: none; }
   .home-echelle__photo { height: 180px; }
   .home-echelle__corps { padding: 20px 20px 0; }
   .home-echelle { padding-bottom: 24px; }
-  .home-expertise { align-items: flex-start; min-height: 0; padding: 20px; }
-  .home-expertise__fleche { margin-top: 12px; }
   .home-formations { margin-top: 16px; padding: 0 12px; line-height: 1.5; }
 
   .home-cas { padding-top: 40px; }
@@ -496,11 +469,6 @@ html:not(.js) .hero__vue--parcours { display: none; }
 }
 
 @media (max-width: 600px) {
-  .home-expertise { flex-wrap: wrap; gap: 14px; }
-  .home-expertise .pastille { order: 0; }
-  .home-expertise__fleche { order: 1; margin: 12px 0 0 auto; }
-  .home-expertise__texte { flex-basis: 100%; order: 2; }
-  .home-expertise__titre { font-size: 19px; }
   .home-cas .carrousel__progression { width: 100%; max-width: none; }
 }
 

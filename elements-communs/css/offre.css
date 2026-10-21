@@ -669,3 +669,71 @@
   .page-offre .of-famille__lien,
   .page-offre .of-situation__lien { font-size: 13px; }
 }
+
+/* =====================================================================
+   /offre, manche 10 : cartes alignées ligne à ligne, textes plus grands, plus d'air
+   ===================================================================== */
+.page-offre .of-echelle__texte { font-size: 17px; line-height: 1.5; color: var(--texte-2); }
+.page-offre .of-echelle__titre { font-size: 38px; }
+.page-offre .of-fiche__ligne { grid-template-columns: 84px minmax(0, 1fr); padding: 12px 0; }
+.page-offre .of-fiche dt { font-size: 14px; }
+.page-offre .of-fiche dd { font-size: 16px; line-height: 1.45; }
+.page-offre .of-table tbody th { font-size: 15px; }
+.page-offre .of-table td { font-size: 16px; line-height: 1.5; }
+.page-offre .of-table thead th { font-size: 20px; }
+.page-offre .of-carte__titre { font-size: 26px; }
+.page-offre .of-carte__texte { font-size: 17px; }
+.page-offre .of-famille__titre { font-size: 24px; }
+.page-offre .of-famille__desc { font-size: 17px; }
+.page-offre .of-famille__duree { font-size: 15px; color: var(--texte-2); }
+.page-offre .of-famille__lien { font-size: 14px; }
+
+/* Trois échelles : mêmes lignes d'une carte à l'autre (titre, texte, fiche, liens, clients) */
+@media (min-width: 1101px) {
+  .page-offre .of-echelles { grid-template-rows: repeat(7, auto); row-gap: 0; }
+  .page-offre .of-echelle { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 16px; padding: 12px 12px 30px; }
+  .page-offre .of-echelle__corps { display: contents; }
+  .page-offre .of-echelle__corps > * { margin-inline: 20px; }
+  .page-offre .of-echelle__corps > .eyebrow { align-self: end; margin-top: 12px; }
+  .page-offre .of-echelle .of-fiche { width: auto; }
+  .page-offre .of-echelle__actions { align-self: start; }
+  .page-offre .of-echelle__cas { align-self: end; margin-top: 0; }
+}
+
+/* Formations : quatre familles, titres, textes, durées et liens sur les mêmes lignes */
+.page-offre .of-familles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.page-offre .of-familles > li { display: grid; grid-row: span 5; grid-template-rows: subgrid; min-width: 0; }
+.page-offre .of-famille { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 10px; padding: 8px 8px 24px; }
+.page-offre .of-famille__texte { display: contents; }
+.page-offre .of-famille__texte > * { margin-inline: 14px; }
+.page-offre .of-famille__titre { align-self: end; margin-top: 12px; }
+.page-offre .of-famille__lien { align-self: end; justify-self: start; }
+@media (max-width: 1100px) {
+  .page-offre .of-familles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .page-offre .of-familles { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Quatre étapes : pastille, titre et texte alignés */
+.page-offre .of-bloc .grille--4:has(> .of-carte > :nth-child(3):last-child) { grid-template-rows: repeat(3, auto); }
+.page-offre .grille--4 > .of-carte:has(> :nth-child(3):last-child) { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 14px; justify-items: start; }
+@media (max-width: 1100px) {
+  .page-offre .of-bloc .grille--4:has(> .of-carte > :nth-child(3):last-child) { grid-template-rows: none; }
+}
+
+/* Expertises sur /offre : plateau greige, deux cartes blanches */
+.page-offre #expertises .home-expertises { flex: none; }
+.page-offre .home-expertise__desc { font-size: 17px; }
+
+@media (max-width: 900px) {
+  .page-offre .of-echelle__titre { font-size: 30px; }
+  .page-offre .of-echelle__texte,
+  .page-offre .of-famille__desc,
+  .page-offre .of-carte__texte { font-size: 16px; }
+  .page-offre .of-table td { font-size: 16px; }
+}

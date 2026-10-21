@@ -633,7 +633,7 @@
   .page-cas .cas-fiche .cas-fiche__photo { min-height: 200px; }
 }
 
-/* Hero d'une page cas : la puce logo, seule au centre de la photo floutée, en plus grand */
+/* Hero d'une page cas : la puce logo vitrée, au milieu de la hauteur, à gauche, en plus grand */
 html .page-cas .cas-fiche__photo .logo-puce { padding: 14px 22px; border-radius: 12px; }
 html .page-cas .cas-fiche__photo .logo-puce img { max-width: 200px; height: 56px; }
 @media (max-width: 600px) {
