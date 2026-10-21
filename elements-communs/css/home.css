@@ -208,11 +208,11 @@ html:not(.js) .hero__vue--parcours { display: none; }
 .enjeu__bouton::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: 12px;
   left: 26px;
   width: 0;
   height: 3px;
-  border-radius: 0 0 3px 3px;
+  border-radius: 3px;
   background: var(--accent);
   transition: width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -437,6 +437,8 @@ html:not(.js) .hero__vue--parcours { display: none; }
   .enjeu__bouton { padding: 22px 20px 20px; border: 1.5px solid transparent; }
   .home-enjeux .carte-lien__titre { font-size: 20px; }
   .home-enjeux .enjeu.is-ouvert .carte-lien__titre { font-size: 22px; }
+  /* Filet d'accent bien à l'intérieur de la carte (il semblait déborder au-dessus du contour) */
+  .enjeu__bouton::before { top: 10px; left: 20px; }
   /* Mobile : la carte ouverte et son contenu forment une seule carte (même contour noir),
      directement sous le doigt ; les cas défilent à l'horizontale pour tenir dans l'écran. */
   .enjeu.is-ouvert .enjeu__bouton {
