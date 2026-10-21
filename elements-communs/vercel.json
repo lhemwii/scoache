@@ -1,4 +1,198 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/formations/confiance-leadership",
+      "destination": "/formations/confiance-et-leadership",
+      "permanent": true
+    },
+    {
+      "source": "/formations/leadership-conduite-du-changement",
+      "destination": "/formations/leadership-et-conduite-du-changement",
+      "permanent": true
+    },
+    {
+      "source": "/formations/leadership-posture-communication",
+      "destination": "/formations/leadership-posture-et-communication",
+      "permanent": true
+    },
+    {
+      "source": "/formations/leadership-prise-de-parole-en-public",
+      "destination": "/formations/leadership-et-prise-de-parole-en-public",
+      "permanent": true
+    },
+    {
+      "source": "/formations/leadership-vision-strategique",
+      "destination": "/formations/leadership-et-vision-strategique",
+      "permanent": true
+    },
+    {
+      "source": "/formations/management-assertivite-2",
+      "destination": "/formations/management-et-assertivite",
+      "permanent": true
+    },
+    {
+      "source": "/formations/management-collaboration-delegation",
+      "destination": "/formations/management-collaboration-et-delegation",
+      "permanent": true
+    },
+    {
+      "source": "/formations/management-communication-impactante",
+      "destination": "/formations/management-et-communication-impactante",
+      "permanent": true
+    },
+    {
+      "source": "/formations/management-posture-coach",
+      "destination": "/formations/management-et-posture-coach",
+      "permanent": true
+    },
+    {
+      "source": "/formations/management-situations-complexes",
+      "destination": "/formations/management-et-situations-complexes",
+      "permanent": true
+    },
+    {
+      "source": "/formations/donner-recevoir-du-feedback",
+      "destination": "/formations/donner-et-recevoir-du-feedback",
+      "permanent": true
+    },
+    {
+      "source": "/formations/communication-non-violente-objectif-acquerir-les-fondamentaux-de-la-cnv-pour-des-echanges-sereins-et-efficaces-identifier-son-objectif-sa-problematique-principale-par-rapport-a-sa-maniere-de-commun",
+      "destination": "/formations/communication-non-violente",
+      "permanent": true
+    },
+    {
+      "source": "/formations/relation-de-confiance",
+      "destination": "/formations/relations-de-confiance",
+      "permanent": true
+    },
+    {
+      "source": "/formations/gestion-du-stress-2",
+      "destination": "/formations/gestion-du-stress",
+      "permanent": true
+    },
+    {
+      "source": "/formations/organisation-gestion-des-priorites",
+      "destination": "/formations/organisation-et-gestion-des-priorites",
+      "permanent": true
+    },
+    {
+      "source": "/formations/100-carte-blanche",
+      "destination": "/formations/carte-blanche",
+      "permanent": true
+    },
+    {
+      "source": "/nos-formations",
+      "destination": "/formations",
+      "permanent": true
+    },
+    {
+      "source": "/coaching-formation",
+      "destination": "/offre",
+      "permanent": true
+    },
+    {
+      "source": "/notre-offre",
+      "destination": "/offre",
+      "permanent": true
+    },
+    {
+      "source": "/notre-methode",
+      "destination": "/a-propos#methode",
+      "permanent": true
+    },
+    {
+      "source": "/pourquoi-scoache",
+      "destination": "/a-propos",
+      "permanent": true
+    },
+    {
+      "source": "/nos-clients",
+      "destination": "/cas-clients",
+      "permanent": true
+    },
+    {
+      "source": "/parcours-soft-skills",
+      "destination": "/formations",
+      "permanent": true
+    },
+    {
+      "source": "/particuliers-coaching",
+      "destination": "/coaching-de-dirigeant/individuel",
+      "permanent": true
+    },
+    {
+      "source": "/bilan-de-competences",
+      "destination": "/formations",
+      "permanent": true
+    },
+    {
+      "source": "/ecole-coaching",
+      "destination": "/a-propos",
+      "permanent": true
+    },
+    {
+      "source": "/politique-de-cookies-ue",
+      "destination": "/confidentialite",
+      "permanent": true
+    },
+    {
+      "source": "/customers-reviews",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/customers-reviews/:slug*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/category/:slug*",
+      "destination": "/formations",
+      "permanent": true
+    },
+    {
+      "source": "/bonjour-tout-le-monde",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/page-d-exemple",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-content/uploads/2024/02/CERTIFICAT_SCOACHE.pdf",
+      "destination": "/assets/documents/certificat-qualiopi.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/wp-content/uploads/2024/09/CGV-SCOACHE.pdf",
+      "destination": "/assets/documents/conditions-generales-de-vente.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/wp-content/uploads/2024/09/CHARTE-DE-LOF.pdf",
+      "destination": "/assets/documents/charte-qualite.pdf",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "scoache-site-web.vercel.app"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
 }
