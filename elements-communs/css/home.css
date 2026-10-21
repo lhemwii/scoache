@@ -688,3 +688,15 @@ html .home-echelle__photo > .carte-verre--etiquette .carte-verre__titre { font-s
 @media (min-width: 1024px) {
   [data-enjeux-mode="b"] .enjeu.is-ouvert .enjeu__chevron { visibility: hidden; }
 }
+
+/* Manche 13 : sur les cartes de l'offre, l'icône de l'échelle est grande, au-dessus du nom, dans une pastille vitrée */
+html .home-echelle__photo > .carte-verre--etiquette {
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 26px 16px;
+  border-radius: 16px;
+  text-align: center;
+}
+html .home-echelle__photo > .carte-verre--etiquette .pastille { width: 72px; height: 72px; border-radius: 50%; }
+html .home-echelle__photo > .carte-verre--etiquette .pastille > .ico { width: 38px; height: 38px; --ico-trait: 2; }
+html .home-echelle__photo > .carte-verre--etiquette .carte-verre__titre { font-size: 20px; }

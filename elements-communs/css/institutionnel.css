@@ -754,3 +754,47 @@ html .fo-carte__photo .fo-carte__titre { font-size: 20px; font-weight: 500; line
 .page-contact .ct-bas { gap: 10px; }
 .page-contact .ct-ilana { border-radius: 12px; }
 .page-contact .ct-ilana__titre { text-wrap: balance; }
+/* Manche 13 : page contact resserrée, sans grands blancs */
+.page-contact { --rythme: clamp(48px, 5vw, 72px); }
+.page-contact .ct-etapes { gap: 8px; }
+.page-contact .ct-etape { gap: 10px; padding: 24px 24px 26px; }
+
+/* ---------- Manche 13 : À propos refondue ---------- */
+/* Hero : le visage d'Ilana dans le panneau vitré, au milieu de la photo floutée */
+html .page-a-propos .photo > .ap-hero__verre { align-items: center; max-width: 380px; padding: 26px 24px 22px; text-align: center; }
+html .page-a-propos .photo > .ap-hero__verre .carte-verre__lien { align-self: center; }
+.ap-hero__portrait {
+  width: 132px;
+  height: 132px;
+  margin-bottom: 6px;
+  border: 3px solid var(--blanc);
+  border-radius: 50%;
+  background: var(--gris-clair);
+  box-shadow: 0 10px 26px rgba(13, 13, 26, 0.16);
+  object-fit: cover;
+}
+/* La fondatrice : citation et biographie côte à côte, repères en tuiles */
+.ap-parcours { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 8px; }
+.ap-citation { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; margin: 0; padding: 40px 36px; }
+.ap-citation blockquote { margin: 0; }
+main .ap-citation blockquote p { max-width: none; font-size: clamp(26px, 1.4rem + 1vw, 36px); font-weight: 400; line-height: 1.2; letter-spacing: -0.4px; }
+.ap-citation figcaption { display: flex; align-items: center; gap: 14px; }
+.ap-citation figcaption img { width: 56px; height: 56px; border-radius: 50%; background: var(--gris-clair); object-fit: cover; }
+.ap-citation figcaption span { display: flex; flex-direction: column; gap: 2px; font-size: 15px; color: var(--texte-2); }
+.ap-citation figcaption strong { font-size: 16px; font-weight: 500; color: var(--noir); }
+.ap-parcours .ap-bio { padding: 36px; }
+.ap-reperes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 24px 0 0; padding: 0; list-style: none; }
+.ap-reperes li { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 12px; background: var(--gris-clair); font-size: 15px; line-height: 1.4; }
+.ap-reperes .pastille { background: var(--blanc); }
+/* Ce qui nous guide : raison d'être et mission en vis-à-vis, valeurs dessous */
+.ap-guide { display: flex; flex-direction: column; gap: 8px; }
+.ap-guide__haut { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ap-enonce { display: flex; flex-direction: column; gap: 14px; padding: 32px; }
+.ap-enonce__label { font-size: 14px; font-weight: 600; color: var(--accent); }
+html main .ap-enonce .ap-enonce__texte { max-width: none; font-size: clamp(20px, 1rem + 0.6vw, 24px); line-height: 1.3; color: var(--noir); }
+@media (max-width: 900px) {
+  .ap-parcours, .ap-guide__haut { grid-template-columns: 1fr; }
+  .ap-reperes { grid-template-columns: 1fr; }
+  .ap-reperes li { flex-direction: row; align-items: center; padding: 12px 14px; }
+  .ap-citation, .ap-enonce, .ap-parcours .ap-bio { padding: 24px 20px; }
+}

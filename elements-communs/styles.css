@@ -2698,3 +2698,34 @@ html .page-offre .of-situation__cas .of-situation__lien { align-self: center; }
   .link-caps::after { display: inline-block; margin-left: 8px; vertical-align: -3px; }
   .link-caps .ico { display: inline-block; margin-left: 6px; vertical-align: -3px; }
 }
+
+/* ---------- Manche 13 : icônes d'échelle (individuel, collectif, organisation) grandes et épaisses partout ---------- */
+:where(main) .pastille:has(use[href$="#i-user-round"], use[href$="#i-users-round"], use[href$="#i-building"]) {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+}
+:where(main) .pastille:has(use[href$="#i-user-round"], use[href$="#i-users-round"], use[href$="#i-building"]) > .ico {
+  width: 30px;
+  height: 30px;
+  --ico-trait: 2;
+}
+/* Hub cas clients : grande pastille vitrée au milieu d'une photo floutée */
+html .page-cas .cas-echelle__photo img { filter: blur(6px) saturate(1.05); transform: scale(1.08); }
+html .page-cas .cas-echelle__icone {
+  width: 132px;
+  height: 132px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+}
+html .page-cas .cas-echelle__icone .ico { width: 60px; height: 60px; --ico-trait: 2; }
+@media (max-width: 600px) {
+  html .page-cas .cas-echelle__icone { width: 104px; height: 104px; }
+  html .page-cas .cas-echelle__icone .ico { width: 48px; height: 48px; }
+}
+/* Toutes les grandes pastilles d'icône (pour qui, enjeux, paliers...) : même taille, trait plus épais */
+main .pastille--lg { width: 56px; height: 56px; border-radius: 12px; }
+main .pastille--lg > .ico { width: 28px; height: 28px; --ico-trait: 1.9; }
+main .pastille > .ico { --ico-trait: 1.8; }
