@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "WebFetch",
+      "mcp__Figma",
+      "mcp__Figma__*",
+      "mcp__plugin_figma_figma",
+      "mcp__plugin_figma_figma__*",
+      "mcp__Vercel",
+      "mcp__Vercel__*"
+    ]
+  }
+}
