@@ -509,3 +509,142 @@ html:not(.js) .hero__vue--parcours { display: none; }
   .enjeu-cas__lien { font-size: 13px; }
   .home-formations { font-size: 14px; }
 }
+
+/* =====================================================================
+   VOS ENJEUX : trois variantes d'ouverture (manche 8), comparables avec ?enjeux=a|b|c
+   script.js (initEnjeux) pose data-enjeux-mode sur la section :
+   a = séparé, b = volet latéral (1024 px et plus ; en dessous, a), c = carte agrandie.
+   ===================================================================== */
+
+/* ---------- A : la carte et ses cas, séparés par un vrai écart ---------- */
+.enjeu__entete { display: none; margin: 0; font-size: 17px; line-height: 1.35; color: var(--texte-2); }
+.enjeu__entete-titre { font-weight: 500; color: var(--noir); }
+[data-enjeux-mode="a"] .enjeu__entete { display: block; }
+[data-enjeux-mode="a"] .enjeu__label { display: none; }
+[data-enjeux-mode="a"] .enjeu__bouton::before { display: none; }
+[data-enjeux-mode="a"] .enjeu__contenu { margin: 8px 0 8px; border: 1px solid var(--bordure); box-shadow: none; }
+
+/* ---------- B : le détail remplace l'introduction, dans la colonne de gauche ---------- */
+.enjeux-pile { display: grid; }
+.enjeux-pile > * { grid-area: 1 / 1; min-width: 0; }
+.enjeux-volet { display: none; }
+[data-enjeux-mode="b"] .plateau__texte { position: sticky; top: 72px; align-self: flex-start; }
+[data-enjeux-mode="b"] .enjeux-volet {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 0.3s;
+}
+[data-enjeux-mode="b"] .plateau__intro { transition: opacity 0.3s ease, visibility 0s linear 0s; }
+[data-enjeux-mode="b"].is-volet .plateau__intro { visibility: hidden; opacity: 0; transition: opacity 0.25s ease, visibility 0s linear 0.25s; }
+[data-enjeux-mode="b"].is-volet .enjeux-volet { visibility: visible; opacity: 1; transform: none; transition: opacity 0.35s ease 0.1s, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s, visibility 0s; }
+[data-enjeux-mode="b"].is-volet .enjeux-volet.is-change { opacity: 0; transform: translateY(4px); transition: opacity 0.15s ease, transform 0.15s ease; }
+[data-enjeux-mode="b"] .enjeu__panneau { display: none; }
+[data-enjeux-mode="b"] .a-une-ouverte .enjeu:not(.is-ouvert) .enjeu__bouton { opacity: 0.9; filter: none; }
+[data-enjeux-mode="b"] .enjeu.is-ouvert .enjeu__chevron { transform: rotate(90deg); }
+/* B : la carte choisie garde exactement sa taille, la grille ne bouge pas */
+.home-enjeux[data-enjeux-mode="b"] .enjeu.is-ouvert .carte-lien__titre { font-size: 20px; font-weight: 400; }
+.enjeux-volet__haut { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.enjeux-volet__fermer {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--bordure);
+  border-radius: 10px;
+  background: var(--blanc);
+  color: var(--noir);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.enjeux-volet__fermer:hover { background: var(--gris-clair); }
+.enjeux-volet__titre { margin: 0; font-size: 28px; font-weight: 400; line-height: 1.15; letter-spacing: -0.4px; }
+.enjeux-volet__texte { margin: 0; font-size: 16px; line-height: 1.5; color: var(--texte-2); }
+.enjeux-volet__label { margin: 6px 0 0; font-size: 15px; font-weight: 600; color: var(--accent); }
+.enjeux-volet__cas { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.enjeux-volet__cas .enjeu-cas {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: var(--blanc);
+}
+.enjeux-volet__cas .enjeu-cas img { width: 84px; height: 30px; }
+.enjeux-volet__cas .enjeu-cas__titre { font-size: 15px; line-height: 1.35; }
+.enjeux-volet__cas .enjeu-cas__lien { gap: 0; text-decoration: none; }
+.enjeux-volet__cas .enjeu-cas__lien > .visually-hidden + .ico,
+.enjeux-volet__cas .enjeu-cas__lien .ico { width: 16px; height: 16px; }
+.enjeux-volet__cas .enjeu-cas:hover { background: var(--gris-clair); }
+.enjeux-volet .enjeu__parler { margin-top: 4px; }
+
+/* ---------- C : la carte s'agrandit sur deux colonnes, ses cas dedans ---------- */
+[data-enjeux-mode="c"] .home-enjeux__grille { grid-auto-flow: row dense; row-gap: 8px; margin-bottom: 0; }
+[data-enjeux-mode="c"] .enjeu {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: 12px;
+  transition: box-shadow 0.35s ease;
+}
+[data-enjeux-mode="c"] .enjeu__bouton { flex: 1 0 auto; margin: 0; }
+[data-enjeux-mode="c"] .enjeu.is-ouvert { grid-column: 1 / -1; background: var(--blanc); box-shadow: 0 0 0 1.5px var(--noir), 0 16px 34px rgba(13, 13, 26, 0.1); }
+[data-enjeux-mode="c"] .enjeu.is-ouvert .enjeu__bouton { flex: none; background: transparent; box-shadow: none; transform: none; }
+[data-enjeux-mode="c"] .enjeu__contenu { position: relative; margin: 0; padding-top: 22px; border-radius: 0 0 12px 12px; background: transparent; }
+[data-enjeux-mode="c"] .enjeu__contenu::before { content: ""; position: absolute; top: 0; right: 26px; left: 26px; height: 1px; background: var(--bordure); }
+
+@media (max-width: 900px) {
+  /* A (et B replié) : la carte garde son contour entier, le panneau vient 12 px dessous */
+  [data-enjeux-mode="a"] .enjeu.is-ouvert .enjeu__bouton { margin-bottom: 8px; border-color: var(--noir); border-radius: 12px; }
+  [data-enjeux-mode="a"] .enjeu__contenu { margin-top: 4px; border: 1px solid var(--bordure); border-radius: 12px; }
+  [data-enjeux-mode="a"] .enjeu.is-ouvert .enjeu__contenu { border-color: var(--bordure); box-shadow: none; }
+  /* C : un seul contour, porté par la carte entière */
+  [data-enjeux-mode="c"] .enjeu.is-ouvert .enjeu__bouton { border-color: transparent; border-radius: 12px 12px 0 0; }
+  [data-enjeux-mode="c"] .enjeu__contenu { border: 0; }
+  [data-enjeux-mode="c"] .enjeu.is-ouvert .enjeu__contenu { box-shadow: none; }
+  [data-enjeux-mode="c"] .enjeu__contenu::before { right: 20px; left: 20px; }
+}
+
+/* ---------- Sélecteur de variantes (présent seulement avec ?enjeux=) ---------- */
+.variantes {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  z-index: 90;
+  display: flex;
+  gap: 4px;
+  max-width: calc(100vw - 24px);
+  padding: 4px;
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 24px rgba(13, 13, 26, 0.12);
+  transform: translateX(-50%);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.variantes__bouton {
+  flex: none;
+  padding: 7px 12px;
+  border: 1px solid var(--noir);
+  border-radius: 999px;
+  background: var(--blanc);
+  color: var(--noir);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.variantes__bouton[aria-pressed="true"] { background: var(--noir); color: var(--blanc); }
+.variantes__bouton:hover { background: var(--gris-clair); }
+.variantes__bouton[aria-pressed="true"]:hover { background: var(--noir); }
+@media (max-width: 420px) {
+  .variantes__bouton { padding: 6px 9px; font-size: 12px; }
+}

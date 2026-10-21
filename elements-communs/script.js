@@ -873,13 +873,30 @@
     }, mouvementReduit.matches ? 0 : 600);
   });
 
-  /* ---------- Vos enjeux : une carte s'ouvre sur place pour montrer les cas liés ---------- */
+  /* ---------- Vos enjeux : une carte s'ouvre pour montrer les cas liés ---------- */
+  /* Trois variantes d'ouverture, comparables avec ?enjeux=a|b|c (sélecteur en bas d'écran) :
+     a = séparé (la carte, puis ses cas dans un panneau à part, 16 px dessous),
+     b = volet latéral (le détail remplace l'introduction dans la colonne de gauche, dès 1024 px ;
+         en dessous, comportement a), c = carte agrandie (sur deux colonnes, ses cas dedans).
+     Sans paramètre : b. */
+
+  var VARIANTES = [['a', 'A Séparé'], ['b', 'B Volet latéral'], ['c', 'C Carte agrandie']];
+  function varianteDemandee() {
+    var v = (new URLSearchParams(window.location.search).get('enjeux') || '').toLowerCase();
+    return /^[abc]$/.test(v) ? v : null;
+  }
 
   function initEnjeux() {
+    var demandee = varianteDemandee();
+    var choisie = demandee || 'b';
+    var large = window.matchMedia('(min-width: 1024px)');
+    var grilles = [];
+
     toutes('[data-enjeux]').forEach(function (grille) {
       if (!une(grille, 'enjeux')) return;
+      var section = grille.closest('.home-enjeux') || grille.parentNode;
       var cartes = toutes('.enjeu', grille);
-      var interagi = false, visible = false, rang = 0, minut = null;
+      var interagi = false, visible = false, rang = 0, minut = null, mode = null;
 
       // Ordre visuel : la rangée de cartes, puis les panneaux de cette rangée en pleine largeur.
       // L'ordre du DOM (bouton puis son panneau) reste celui du clavier et des lecteurs d'écran.
@@ -894,34 +911,160 @@
           carte.querySelector('.enjeu__panneau').style.order = base + n;
         });
       }
-      ordonner();
-      window.addEventListener('resize', function () { window.requestAnimationFrame(ordonner); });
 
-      // Ouvrir ou fermer : seule la classe change, la hauteur du panneau suit en CSS
-      // (grid-template-rows 0fr vers 1fr), interruptible à tout moment. La carte cliquée
-      // reste immobile à l'écran même si un panneau situé au-dessus se referme.
-      function basculer(carte, ouvrir) {
-        var bouton = carte.querySelector('.enjeu__bouton');
-        var hautAvant = bouton.getBoundingClientRect().top;
+      // En-tête du panneau (variante a) : nomme l'enjeu choisi, le lien se lit sans que les blocs se touchent.
+      cartes.forEach(function (carte) {
+        var contenu = carte.querySelector('.enjeu__contenu');
+        if (!contenu || contenu.querySelector('.enjeu__entete')) return;
+        var entete = elt('p', 'enjeu__entete');
+        entete.appendChild(elt('span', 'enjeu__entete-titre', carte.querySelector('.carte-lien__titre').textContent.trim()));
+        entete.appendChild(document.createTextNode(' : des situations proches'));
+        contenu.insertBefore(entete, contenu.firstChild);
+      });
+
+      // Volet latéral (variante b) : posé dans la colonne d'introduction, en pile avec elle.
+      var texte = section.querySelector('.plateau__texte');
+      var intro = texte && texte.querySelector('.plateau__intro');
+      var volet = null, voletTitre, voletTexte, voletCas, voletParler, voletFermer;
+      if (intro) {
+        var pile = elt('div', 'enjeux-pile');
+        intro.parentNode.insertBefore(pile, intro);
+        pile.appendChild(intro);
+        volet = elt('div', 'enjeux-volet');
+        volet.id = 'enjeux-volet';
+        volet.setAttribute('role', 'region');
+        volet.setAttribute('aria-label', 'Enjeu sélectionné et cas clients liés');
+        var haut = elt('div', 'enjeux-volet__haut');
+        haut.appendChild(elt('p', 'eyebrow eyebrow--lg', 'Vos enjeux'));
+        voletFermer = elt('button', 'enjeux-volet__fermer');
+        voletFermer.type = 'button';
+        voletFermer.setAttribute('aria-label', 'Refermer et revenir à l’introduction');
+        voletFermer.appendChild(icone('x', 18));
+        haut.appendChild(voletFermer);
+        volet.appendChild(haut);
+        voletTitre = elt('h3', 'enjeux-volet__titre');
+        voletTexte = elt('p', 'enjeux-volet__texte');
+        voletCas = elt('ul', 'enjeux-volet__cas');
+        voletParler = elt('a', 'link-caps enjeu__parler');
+        volet.appendChild(voletTitre);
+        volet.appendChild(voletTexte);
+        volet.appendChild(elt('p', 'enjeux-volet__label', 'Des situations proches, dans nos cas clients'));
+        volet.appendChild(voletCas);
+        volet.appendChild(voletParler);
+        volet.inert = true;
+        pile.appendChild(volet);
+      }
+      var changement = null;
+      function remplirVolet(carte) {
+        if (!volet) return;
+        function afficher() {
+          if (carte) {
+            voletTitre.textContent = carte.querySelector('.carte-lien__titre').textContent.trim();
+            voletTexte.textContent = carte.querySelector('.carte-lien__texte').textContent.trim();
+            voletCas.textContent = '';
+            toutes('.enjeu__cas > li', carte).forEach(function (li) {
+              // Mini-carte compacte : logo, titre, flèche ; « Voir le cas » reste lu par les lecteurs d'écran
+              var copie = li.cloneNode(true);
+              var lien = copie.querySelector('.enjeu-cas__lien');
+              if (lien) {
+                var ico = lien.querySelector('svg');
+                lien.textContent = '';
+                lien.appendChild(elt('span', 'visually-hidden', 'Voir le cas'));
+                if (ico) lien.appendChild(ico);
+              }
+              voletCas.appendChild(copie);
+            });
+            var parler = carte.querySelector('.enjeu__parler').cloneNode(true);
+            volet.replaceChild(parler, voletParler);
+            voletParler = parler;
+          }
+          section.classList.toggle('is-volet', !!carte);
+          volet.inert = !carte;
+        }
+        clearTimeout(changement);
+        volet.classList.remove('is-change');
+        if (carte && section.classList.contains('is-volet') && !mouvementReduit.matches) {
+          // D'un enjeu à l'autre : fondu bref du contenu, la colonne ne bouge pas.
+          volet.classList.add('is-change');
+          changement = setTimeout(function () { afficher(); volet.classList.remove('is-change'); }, 160);
+        } else {
+          afficher();
+        }
+      }
+
+      function etat(carte, ouvrir) {
         cartes.forEach(function (c) {
           var o = c === carte && ouvrir;
           c.classList.toggle('is-ouvert', o);
           c.querySelector('.enjeu__bouton').setAttribute('aria-expanded', o ? 'true' : 'false');
-          c.querySelector('.enjeu__panneau').inert = !o;
+          c.querySelector('.enjeu__panneau').inert = mode === 'b' || !o;
         });
-        // Les autres cartes s'effacent tant qu'un enjeu est ouvert
+        // Les autres cartes s'effacent tant qu'un enjeu est ouvert (très peu en variante b)
         grille.classList.toggle('a-une-ouverte', !!ouvrir);
-        if (mouvementReduit.matches) {
-          // Sans animation, mais la carte ouverte vient tout de même sous la barre de navigation (mobile)
-          if (ouvrir && !ecranLarge.matches) window.scrollBy(0, bouton.getBoundingClientRect().top - margeHaute());
+      }
+
+      // Change de variante (paramètre, sélecteur ou passage sous 1024 px) : tout se referme.
+      function appliquerMode() {
+        var m = choisie === 'b' && !large.matches ? 'a' : choisie;
+        if (m === mode) return;
+        mode = m;
+        etat(null, false);
+        remplirVolet(null);
+        section.setAttribute('data-enjeux-mode', m);
+        cartes.forEach(function (c) {
+          var bouton = c.querySelector('.enjeu__bouton');
+          bouton.setAttribute('aria-controls', m === 'b' && volet ? volet.id : c.querySelector('.enjeu__panneau').id);
+        });
+        colonnes = 0;
+        ordonner();
+      }
+
+      // Ouvrir ou fermer : seule la classe change, la hauteur du panneau suit en CSS
+      // (grid-template-rows 0fr vers 1fr), interruptible à tout moment.
+      function basculer(carte, ouvrir) {
+        var bouton = carte.querySelector('.enjeu__bouton');
+        if (mode === 'b') {
+          etat(carte, ouvrir);
+          remplirVolet(ouvrir ? carte : null);
           return;
         }
-        var decalage = 0;
-        if (ouvrir) {
+        var hautAvant = bouton.getBoundingClientRect().top;
+        var avant = mode === 'c' && !mouvementReduit.matches
+          ? cartes.map(function (c) { return c.getBoundingClientRect(); }) : null;
+        etat(carte, ouvrir);
+        if (mouvementReduit.matches) {
+          // Sans animation, mais la carte ouverte vient tout de même sous la barre de navigation (mobile)
+          if (ouvrir && !ecranLarge.matches) window.scrollBy(0, carte.querySelector('.enjeu__bouton').getBoundingClientRect().top - margeHaute());
+          return;
+        }
+        var interieur = carte.querySelector('.enjeu__interieur');
+        var decalage = 0, ancre = bouton;
+        if (mode === 'c') {
+          // Positions finales (avant toute animation), puis FLIP : chaque carte part de son ancienne place.
+          var apres = cartes.map(function (c) { return c.getBoundingClientRect(); });
+          var hautApres = apres[cartes.indexOf(carte)].top;
+          cartes.forEach(function (c, i) {
+            var a = avant[i], b = apres[i];
+            var dx = a.left - b.left, dy = a.top - b.top, dl = Math.abs(a.width - b.width) > 1;
+            if (Math.abs(dx) < 1 && Math.abs(dy) < 1 && !dl) return;
+            var de = { transform: 'translate(' + dx + 'px, ' + dy + 'px)' }, vers = { transform: 'none' };
+            if (dl) { de.width = a.width + 'px'; vers.width = b.width + 'px'; }
+            c.animate([de, vers], { duration: DUREE_OUVERTURE, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' });
+          });
+          ancre = grille;
+          if (ouvrir) {
+            var basC = hautApres + bouton.offsetHeight + interieur.scrollHeight;
+            decalage = ecranLarge.matches
+              ? Math.max(0, Math.min(basC - (window.innerHeight - 24), hautApres - margeHaute()))
+              : hautApres - margeHaute();
+          } else if (hautApres < margeHaute()) {
+            decalage = hautApres - margeHaute();
+          }
+        } else if (ouvrir) {
           // Bas du panneau une fois ouvert, mesuré par rapport à la carte qui ne bouge pas.
           var panneau = carte.querySelector('.enjeu__panneau');
           var bas = hautAvant + (panneau.getBoundingClientRect().top - bouton.getBoundingClientRect().top)
-            + carte.querySelector('.enjeu__interieur').scrollHeight;
+            + interieur.scrollHeight;
           // Mobile : la carte ouverte vient se placer sous la barre de navigation, son contenu dessous.
           decalage = ecranLarge.matches
             ? Math.max(0, Math.min(bas - (window.innerHeight - 24), hautAvant - margeHaute()))
@@ -929,7 +1072,15 @@
         } else if (hautAvant < margeHaute()) {
           decalage = hautAvant - margeHaute();
         }
-        guiderFenetre(bouton, decalage, DUREE_OUVERTURE + 30);
+        guiderFenetre(ancre, decalage, DUREE_OUVERTURE + 30);
+      }
+
+      function ouverte() { return grille.querySelector('.enjeu.is-ouvert'); }
+      function refermer() {
+        var o = ouverte();
+        if (!o) return;
+        basculer(o, false);
+        o.querySelector('.enjeu__bouton').focus({ preventScroll: true });
       }
       cartes.forEach(function (carte) {
         var bouton = carte.querySelector('.enjeu__bouton');
@@ -952,11 +1103,14 @@
           basculer(carte, bouton.getAttribute('aria-expanded') !== 'true');
         });
       });
-      grille.addEventListener('keydown', function (e) {
-        if (e.key !== 'Escape') return;
-        var ouverte = grille.querySelector('.enjeu.is-ouvert');
-        if (ouverte) { basculer(ouverte, false); ouverte.querySelector('.enjeu__bouton').focus({ preventScroll: true }); }
+      if (voletFermer) voletFermer.addEventListener('click', refermer);
+      section.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && ouverte()) refermer();
       });
+
+      appliquerMode();
+      window.addEventListener('resize', function () { window.requestAnimationFrame(function () { appliquerMode(); ordonner(); }); });
+      grilles.push(function (v) { choisie = v; appliquerMode(); });
 
       // Invitation discrète : une carte à la fois est mise en avant, jusqu'à la première interaction.
       function arreterInvitation() {
@@ -966,7 +1120,7 @@
       }
       function inviter() {
         clearTimeout(minut);
-        if (interagi || !visible || document.hidden || grille.querySelector('.enjeu.is-ouvert')) return;
+        if (interagi || !visible || document.hidden || ouverte()) return;
         cartes.forEach(function (c) { c.classList.remove('is-invite'); });
         cartes[rang % cartes.length].classList.add('is-invite');
         rang += 1;
@@ -983,6 +1137,27 @@
         }, 0.4);
       }
     });
+
+    // Sélecteur discret en bas d'écran, seulement quand ?enjeux= est présent dans l'adresse.
+    if (!demandee || !grilles.length || document.querySelector('.variantes')) return;
+    var barre = elt('nav', 'variantes');
+    barre.setAttribute('aria-label', 'Comparer les variantes d’ouverture des enjeux');
+    var boutons = VARIANTES.map(function (v) {
+      var b = elt('button', 'variantes__bouton', v[1]);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', v[0] === choisie ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        choisie = v[0];
+        boutons.forEach(function (x, i) { x.setAttribute('aria-pressed', VARIANTES[i][0] === choisie ? 'true' : 'false'); });
+        var url = new URL(window.location.href);
+        url.searchParams.set('enjeux', choisie);
+        window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+        grilles.forEach(function (f) { f(choisie); });
+      });
+      barre.appendChild(b);
+      return b;
+    });
+    document.body.appendChild(barre);
   }
 
   /* ---------- Hero : le titre apparaît ligne par ligne ([data-lignes]) ---------- */
