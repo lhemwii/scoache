@@ -1,0 +1,146 @@
+<!-- Partiel d'essai « version BCG » (retours d'Ilana) : logo dans un petit encadré, rubriques en petites
+     majuscules dans l'ordre Vos enjeux / Nos offres / Cas clients / À propos, page active encadrée,
+     sous-menus courts. Utilisé par /accueil-bcg uniquement, le site garde partials/header.html. -->
+<header class="site-header site-header--bcg" id="haut">
+  <div class="navbar">
+    <a class="navbar__logo" href="/accueil-bcg">
+      <img src="/assets/logo-scoache.png" alt="Scoaché, accueil" width="140" height="39">
+    </a>
+
+    <nav class="navbar__nav" aria-label="Navigation principale">
+      <ul class="nav-pill">
+        <li class="nav-pill__item" data-menu-item>
+          <button type="button" class="nav-pill__link" id="toggle-enjeux" aria-expanded="false" aria-controls="menu-enjeux" data-menu-toggle>Vos enjeux</button>
+          <div class="menu-leger" id="menu-enjeux" data-menu-panel>
+            <ul class="menu-leger__liste">
+              <li><a href="/accueil-bcg#enjeu-1" data-close-menu>Sécuriser une prise de fonction</a></li>
+              <li><a href="/accueil-bcg#enjeu-2" data-close-menu>Renforcer sa posture et son influence</a></li>
+              <li><a href="/accueil-bcg#enjeu-3" data-close-menu>Faire évoluer ses pratiques managériales</a></li>
+              <li><a href="/accueil-bcg#enjeu-4" data-close-menu>Renforcer une équipe de direction</a></li>
+              <li><a href="/accueil-bcg#enjeu-5" data-close-menu>Mobiliser dans une transformation</a></li>
+              <li><a href="/accueil-bcg#enjeu-6" data-close-menu>Décider et agir sous pression</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-pill__item" data-menu-item>
+          <button type="button" class="nav-pill__link" id="toggle-offres" aria-expanded="false" aria-controls="menu-offres" data-menu-toggle>Nos offres</button>
+          <div class="menu-leger" id="menu-offres" data-menu-panel>
+            <ul class="menu-leger__liste">
+              <li><a href="/coaching-de-dirigeant/individuel" data-close-menu>Coaching individuel</a></li>
+              <li><a href="/coaching-de-dirigeant/collectif" data-close-menu>Coaching collectif</a></li>
+              <li><a href="/coaching-de-dirigeant/organisation" data-close-menu>Coaching d’organisation</a></li>
+              <li><a href="/formations" data-close-menu>Formations</a></li>
+            </ul>
+            <a class="menu-leger__tout" href="/offre" data-close-menu>Toute l’offre</a>
+          </div>
+        </li>
+        <li class="nav-pill__item" data-menu-item>
+          <button type="button" class="nav-pill__link" id="toggle-cas" aria-expanded="false" aria-controls="menu-cas" data-menu-toggle>Cas clients</button>
+          <div class="menu-leger" id="menu-cas" data-menu-panel>
+            <ul class="menu-leger__liste">
+              <li><a href="/cas-clients/individuel" data-close-menu>Coaching individuel</a></li>
+              <li><a href="/cas-clients/collectif" data-close-menu>Coaching collectif</a></li>
+              <li><a href="/cas-clients/organisation" data-close-menu>Coaching d’organisation</a></li>
+            </ul>
+            <a class="menu-leger__tout" href="/cas-clients" data-close-menu>Tous les cas clients</a>
+          </div>
+        </li>
+        <li class="nav-pill__item">
+          <a class="nav-pill__link" href="/a-propos">À propos</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="navbar__actions">
+      <button type="button" class="navbar__search" aria-label="Rechercher sur le site (Ctrl+K)" data-recherche-ouvrir>
+        <svg class="ico" width="22" height="22" aria-hidden="true"><use href="/assets/icones.svg#i-search"/></svg>
+      </button>
+      <a class="btn btn--noir navbar__cta" href="/nous-contacter">
+        Nous contacter
+        <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
+      </a>
+      <button type="button" class="navbar__burger" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu" data-burger>
+        <svg class="ico" width="24" height="24" aria-hidden="true"><use href="/assets/icones.svg#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ MENU MOBILE (moins de 900 px) ============ -->
+  <div class="mobile-panel" id="menu-mobile" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    <div class="mobile-panel__top">
+      <a class="navbar__logo" href="/accueil-bcg" data-close-mobile>
+        <img src="/assets/logo-scoache.png" alt="Scoaché, accueil" width="140" height="39">
+      </a>
+      <button type="button" class="mobile-panel__close" aria-label="Fermer le menu" data-close-mobile>
+        <svg class="ico" width="24" height="24" aria-hidden="true"><use href="/assets/icones.svg#i-x"/></svg>
+      </button>
+    </div>
+
+    <button type="button" class="mobile-panel__recherche" data-recherche-ouvrir>
+      <svg class="ico" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-search"/></svg>
+      <span>Rechercher sur le site</span>
+    </button>
+
+    <nav class="mobile-panel__nav" aria-label="Navigation principale, mobile">
+      <ul class="m-nav">
+        <li class="m-nav__item">
+          <button type="button" class="m-nav__toggle" aria-expanded="false" aria-controls="m-enjeux" data-accordion>
+            <span class="m-nav__label">Vos enjeux</span>
+            <svg class="ico chevron" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-chevron"/></svg>
+          </button>
+          <div class="m-nav__sub" id="m-enjeux" hidden>
+            <ul class="menu-leger__liste">
+              <li><a href="/accueil-bcg#enjeu-1" data-close-mobile>Sécuriser une prise de fonction</a></li>
+              <li><a href="/accueil-bcg#enjeu-2" data-close-mobile>Renforcer sa posture et son influence</a></li>
+              <li><a href="/accueil-bcg#enjeu-3" data-close-mobile>Faire évoluer ses pratiques managériales</a></li>
+              <li><a href="/accueil-bcg#enjeu-4" data-close-mobile>Renforcer une équipe de direction</a></li>
+              <li><a href="/accueil-bcg#enjeu-5" data-close-mobile>Mobiliser dans une transformation</a></li>
+              <li><a href="/accueil-bcg#enjeu-6" data-close-mobile>Décider et agir sous pression</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="m-nav__item">
+          <button type="button" class="m-nav__toggle" aria-expanded="false" aria-controls="m-offres" data-accordion>
+            <span class="m-nav__label">Nos offres</span>
+            <svg class="ico chevron" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-chevron"/></svg>
+          </button>
+          <div class="m-nav__sub" id="m-offres" hidden>
+            <ul class="menu-leger__liste">
+              <li><a href="/coaching-de-dirigeant/individuel" data-close-mobile>Coaching individuel</a></li>
+              <li><a href="/coaching-de-dirigeant/collectif" data-close-mobile>Coaching collectif</a></li>
+              <li><a href="/coaching-de-dirigeant/organisation" data-close-mobile>Coaching d’organisation</a></li>
+              <li><a href="/formations" data-close-mobile>Formations</a></li>
+            </ul>
+            <a class="menu-leger__tout" href="/offre" data-close-mobile>Toute l’offre</a>
+          </div>
+        </li>
+        <li class="m-nav__item">
+          <button type="button" class="m-nav__toggle" aria-expanded="false" aria-controls="m-cas" data-accordion>
+            <span class="m-nav__label">Cas clients</span>
+            <svg class="ico chevron" width="18" height="18" aria-hidden="true"><use href="/assets/icones.svg#i-chevron"/></svg>
+          </button>
+          <div class="m-nav__sub" id="m-cas" hidden>
+            <ul class="menu-leger__liste">
+              <li><a href="/cas-clients/individuel" data-close-mobile>Coaching individuel</a></li>
+              <li><a href="/cas-clients/collectif" data-close-mobile>Coaching collectif</a></li>
+              <li><a href="/cas-clients/organisation" data-close-mobile>Coaching d’organisation</a></li>
+            </ul>
+            <a class="menu-leger__tout" href="/cas-clients" data-close-mobile>Tous les cas clients</a>
+          </div>
+        </li>
+        <li class="m-nav__item">
+          <a class="m-nav__toggle" href="/a-propos" data-close-mobile>
+            <span class="m-nav__label">À propos</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="mobile-panel__bottom">
+      <a class="btn btn--noir btn--block" href="/nous-contacter" data-close-mobile>
+        Nous contacter
+        <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
