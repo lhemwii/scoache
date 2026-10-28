@@ -67,7 +67,7 @@
     function relancer() {
       clearTimeout(minuteur);
       if (enPause || survol || mouvementReduit.matches) return;
-      minuteur = setTimeout(suivant, 5000);
+      minuteur = setTimeout(suivant, 4000);
     }
 
     cartes.forEach(function (carte, i) {
@@ -163,32 +163,42 @@
 
   function initCas(piste) {
     var section = piste.closest('.bcg-cas');
-    function pas() {
-      var carte = piste.querySelector('.bcg-impact:not(.bcg-impact--large)');
-      return carte ? carte.getBoundingClientRect().width + 24 : 320;
-    }
-    function avancer(sens) {
-      var fin = piste.scrollLeft + piste.clientWidth >= piste.scrollWidth - 4;
-      if (sens > 0 && fin) piste.scrollTo({ left: 0, behavior: 'smooth' });
-      else piste.scrollBy({ left: sens * pas(), behavior: 'smooth' });
-    }
-    section.querySelector('[data-cas-suiv]').addEventListener('click', function () { avancer(1); relancer(); });
-    section.querySelector('[data-cas-prec]').addEventListener('click', function () { avancer(-1); relancer(); });
+    var cartes = toutes('.bcg-impact', piste);
+    var n = cartes.length, actif = 0;
+    if (!n) return;
 
-    // Défilement automatique, en pause au survol, au focus ou quand la section n'est pas à l'écran
-    var minuteur = null, arret = false, visible = false;
+    // La carte active s'agrandit (comme la première carte « client impact » de BCG) et se cale à gauche
+    function activer(i, defiler) {
+      actif = (i % n + n) % n;
+      var petite = cartes.filter(function (c, k) { return k !== actif; })[0] || cartes[0];
+      var largeurPetite = petite.getBoundingClientRect().width;
+      cartes.forEach(function (c, k) { c.classList.toggle('is-grand', k === actif); });
+      if (defiler) {
+        var ecart = parseFloat(getComputedStyle(piste).columnGap) || 24;
+        piste.scrollTo({ left: actif * (largeurPetite + ecart), behavior: mouvementReduit.matches ? 'auto' : 'smooth' });
+      }
+    }
+    section.querySelector('[data-cas-suiv]').addEventListener('click', function () { activer(actif + 1, true); relancer(); });
+    section.querySelector('[data-cas-prec]').addEventListener('click', function () { activer(actif - 1, true); relancer(); });
+
+    // Défilement automatique, en pause au survol, au focus, après un geste ou hors de l'écran
+    var minuteur = null, arret = false, visible = false, geste = null;
     function relancer() {
       clearInterval(minuteur);
-      if (arret || !visible || mouvementReduit.matches) return;
-      minuteur = setInterval(function () { avancer(1); }, 4000);
+      if (arret || geste || !visible || mouvementReduit.matches || n < 2) return;
+      minuteur = setInterval(function () { activer(actif + 1, true); }, 4500);
     }
     section.addEventListener('mouseenter', function () { arret = true; relancer(); });
     section.addEventListener('mouseleave', function () { arret = false; relancer(); });
     section.addEventListener('focusin', function () { arret = true; relancer(); });
     section.addEventListener('focusout', function () { arret = false; relancer(); });
+    piste.addEventListener('touchstart', function () {
+      clearTimeout(geste); geste = setTimeout(function () { geste = null; relancer(); }, 8000); relancer();
+    }, { passive: true });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (e) { visible = e[0].isIntersecting; relancer(); }, { threshold: 0.3 }).observe(piste);
     } else { visible = true; relancer(); }
+    activer(0, false);
   }
 
   /* ---------- Navbar : la rubrique de la section affichée s'allume ---------- */
@@ -248,6 +258,7 @@
   function rubriqueDeLaPage() {
     var ici = window.location.pathname.replace(/^\/bcg/, '').replace(/\.html$/, '').replace(/\/+$/, '') || '/';
     var regles = [
+      [/^\/enjeux(\/|$)/, '#toggle-enjeux'],
       [/^\/(offre|coaching-de-dirigeant|formations)(\/|$)/, '#toggle-offres'],
       [/^\/cas-clients(\/|$)/, '#toggle-cas'],
       [/^\/a-propos$/, '.nav-pill__link[href="/bcg/a-propos"]']

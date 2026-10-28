@@ -23,9 +23,15 @@
 
   /* ---------- Navbar flottante : pastille du logo une fois la page défilée ---------- */
 
+  // Deux seuils : la navbar se resserre au-delà de 64 px et ne revient qu'en dessous de 4 px.
+  // Avec un seul seuil, le resserrement (20 px de moins) faisait repasser sous le seuil
+  // et la navbar clignotait entre ses deux états près du haut de page.
   function majEntete() {
     var entete = document.querySelector('.site-header');
-    if (entete) entete.classList.toggle('is-scrolled', window.scrollY > 8);
+    if (!entete) return;
+    var y = window.scrollY;
+    if (y > 64) entete.classList.add('is-scrolled');
+    else if (y < 4) entete.classList.remove('is-scrolled');
   }
   window.addEventListener('scroll', majEntete, { passive: true });
 

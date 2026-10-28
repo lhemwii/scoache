@@ -49,10 +49,10 @@ hero = f'''    <!-- Hero « version BCG » : titre centré, cartes de cas client
         </div>
       </div>
       <nav class="bcg-situations" aria-label="Situations fréquentes">
-        <span class="bcg-situations__label">Vos situations</span>
-        <a href="/coaching-de-dirigeant/individuel">Prendre un poste de direction</a>
-        <a href="/coaching-de-dirigeant/collectif">Souder un CODIR recomposé</a>
-        <a href="/coaching-de-dirigeant/organisation">Traverser une réorganisation</a>
+        <span class="bcg-situations__label">Vous vous reconnaissez ?</span>
+        <a href="/enjeux/prise-de-fonction"><span>Vous prenez un poste plus large ?</span>{ico('arrow', 16)}</a>
+        <a href="/enjeux/equipes-de-direction"><span>Votre CODIR ne décide plus ensemble ?</span>{ico('arrow', 16)}</a>
+        <a href="/enjeux/transformations"><span>Vous embarquez l’entreprise dans une transformation ?</span>{ico('arrow', 16)}</a>
       </nav>
     </section>
 '''
@@ -66,7 +66,10 @@ logos = logos.replace('<!-- Logos clients (Figma 1222:7982) : défilement contin
 
 # ---------- Vos enjeux : cartes blanches à gauche, ouverture à droite ----------
 blocs = re.findall(r'<li class="enjeu">(.*?)</li>\s*(?=<li class="enjeu">|</ul>\s*</div>\s*</section>)', src, re.S)
-IMG_ENJEU = ['le-lab-rh', 'chanel', 'michael-page', 'michael-page-collectif', 'cic', 'jobteaser']
+# Photos de personnes pour illustrer chaque enjeu, et la page de l'enjeu (bcg/enjeux/<slug>, _generer_enjeux.py)
+PHOTO_ENJEU = ['/assets/offre/hero-individuel.jpg', '/assets/hero-accueil.jpg', '/assets/offre/echelle-individuel.jpg',
+               '/assets/offre/echelle-collectif.jpg', '/assets/offre/hero-coaching-de-dirigeant.jpg', '/assets/offre/cas-michael-page.jpg']
+PAGE_ENJEU = ['prise-de-fonction', 'posture-et-influence', 'pratiques-manageriales', 'equipes-de-direction', 'transformations', 'decision-sous-pression']
 COURT = ['Sécuriser une prise de fonction', 'Renforcer sa posture et son influence', 'Faire évoluer ses pratiques managériales',
          'Renforcer une équipe de direction', 'Mobiliser dans une transformation', 'Décider et agir sous pression']
 onglets, panneaux = [], []
@@ -85,9 +88,9 @@ for i, b in enumerate(blocs):
             <span class="bcg-enjeu__titre">{titre}</span>
           </button></li>''')
     cas_html = '\n'.join(f'''                <li><a class="bcg-enjeu-cas" href="{h}"><span class="bcg-enjeu-cas__logo"><img src="{im}" alt="{a}" loading="lazy" decoding="async"></span><span class="bcg-enjeu-cas__titre">{t}</span>{ARROW}</a></li>''' for h, im, a, t in lis)
-    slug = IMG_ENJEU[i]
+    photo, page = PHOTO_ENJEU[i], PAGE_ENJEU[i]
     panneaux.append(f'''        <article class="bcg-enjeu-panneau" role="tabpanel" id="enjeu-{n}" aria-labelledby="enjeu-onglet-{n}" data-enjeu-panneau{'' if n == 1 else ' hidden'}>
-          <img class="bcg-enjeu-panneau__image" src="{img(slug)}" alt="" width="564" height="800" loading="lazy" decoding="async">
+          <img class="bcg-enjeu-panneau__image" src="{photo}" alt="" width="1400" height="900" loading="lazy" decoding="async">
           <div class="bcg-enjeu-panneau__verre">
             <p class="bcg-enjeu-panneau__surtitre">Enjeu 0{n}</p>
             <h3 class="bcg-enjeu-panneau__titre">{titre}</h3>
@@ -96,7 +99,7 @@ for i, b in enumerate(blocs):
             <ul class="bcg-enjeu-panneau__cas">
 {cas_html}
             </ul>
-            {parler}
+            <div class="bcg-enjeu-panneau__actions">{parler}<a class="link-caps" href="/enjeux/{page}">Lire l’enjeu</a></div>
           </div>
         </article>''')
 enjeux = f'''    <!-- Vos enjeux « version BCG » : les six cartes blanches à gauche, l'enjeu choisi s'ouvre à droite
@@ -135,7 +138,7 @@ for i, s in enumerate(CAS):
     puce = ''
     if d.get('kpi') and '/10' in d['kpi'][0]:
         puce = f'''<span class="bcg-impact__puce"><span class="bcg-impact__chiffre">{esc(d['kpi'][0])}</span><span class="bcg-impact__unite">{esc(d['kpi'][1])}</span></span>'''
-    fiches.append(f'''          <li class="bcg-impact{' bcg-impact--large' if i == 0 else ''}"><a class="bcg-impact__carte" href="/cas-clients/{s}">
+    fiches.append(f'''          <li class="bcg-impact{' is-grand' if i == 0 else ''}"><a class="bcg-impact__carte" href="/cas-clients/{s}">
             <img class="bcg-impact__image" src="{img(s)}" alt="" width="564" height="800" loading="lazy" decoding="async">
             {puce}
             <div class="bcg-impact__verre">

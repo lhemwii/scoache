@@ -2,7 +2,8 @@
 # Génère le site d'essai « version BCG » : bcg/<page>.html pour chaque page du site, plus bcg/index.html
 # (l'accueil BCG, fabriqué par _generer_accueil.py). Rien n'est modifié dans les pages d'origine.
 # En plus du thème (css/bcg.css), chaque page reçoit : une sous-navigation de rubrique encadrée,
-# un haut de page en bande beige (photo large ou deux colonnes) et un bloc « Explorer aussi ».
+# un haut de page en bande beige (photo large ou deux colonnes), et finit par « Ils en parlent » puis le contact.
+# Les pages « Vos enjeux » n'existent que dans cette version (_generer_enjeux.py).
 import os, re, subprocess, sys
 R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAUTER = {'404.html', 'elements-communs.html', 'accueil-bcg.html', 'index.html'}
@@ -55,41 +56,22 @@ def sousnav(url, s):
     return '\n    <nav class="bcg-sousnav" aria-label="%s"><span class="bcg-sousnav__label">%s :</span><ul>%s</ul></nav>' % (nom, nom, items)
 
 
-# ---------- « Explorer aussi » en fin de page, comme « Explore More » chez BCG ----------
-GRANDS = {
-    'offres': ('Nos offres', 'Le coaching de dirigeant, à trois échelles, et des formations certifiées Qualiopi.', '/offre', 'Voir l’offre'),
-    'cas': ('Nos cas clients', 'La situation de départ, l’accompagnement et les évolutions observées, cas par cas.', '/cas-clients', 'Voir les cas'),
-}
-PETITS = {
-    'individuel': ('Offre', 'Coaching individuel', '/coaching-de-dirigeant/individuel', '/assets/home/offre-individuel.jpg'),
-    'formations': ('Offre', 'Formations', '/formations', '/assets/visuel-offre.jpg'),
-    'apropos': ('Scoaché', 'À propos', '/a-propos', '/assets/institutionnel/hero-a-propos.jpg'),
-    'contact': ('Scoaché', 'Nous contacter', '/nous-contacter', '/assets/hero-accueil.jpg'),
-    'cas': ('Cas clients', 'Tous les cas clients', '/cas-clients', '/assets/visuel-cas-mazars.jpg'),
-}
+# ---------- Fiches de cas : la situation et les enjeux de départ, illustrés par une photo ----------
+PHOTOS_ECHELLE = {'individuel': '/assets/offre/hero-individuel.jpg', 'collectif': '/assets/offre/echelle-collectif.jpg',
+                  'organisation': '/assets/offre/hero-coaching-de-dirigeant.jpg'}
+PHOTOS_ENJEUX = {'individuel': '/assets/home/offre-organisation.jpg', 'collectif': '/assets/home/offre-collectif.jpg',
+                 'organisation': '/assets/offre/echelle-individuel.jpg'}
 
 
-def explorer(url):
-    nom, _ = rubrique(url)
-    if nom == 'Nos offres': grand, petits = 'cas', (['apropos', 'contact'] if url.startswith('/formations') else ['formations', 'apropos'])
-    elif nom == 'Cas clients': grand, petits = 'offres', ['individuel', 'apropos']
-    elif nom: grand, petits = 'offres', ['cas', 'formations']
-    else: return ''
-    titre, texte, href, bouton = GRANDS[grand]
-    tuiles = ''.join(
-        '<a class="bcg-explorer__tuile" href="%s"><span class="bcg-explorer__tuile-texte"><span class="bcg-explorer__surtitre">%s</span>'
-        '<span class="bcg-explorer__tuile-titre">%s</span></span><img src="%s" alt="" loading="lazy" decoding="async"></a>' % (h, sur, t, im)
-        for sur, t, h, im in (PETITS[k] for k in petits))
-    return ('\n    <!-- Explorer aussi (version BCG) -->\n'
-            '    <section class="bcg-section bcg-explorer" aria-labelledby="explorer-titre">\n'
-            '      <h2 class="bcg-titre bcg-titre--moyen" id="explorer-titre">Explorer aussi</h2>\n'
-            '      <div class="bcg-explorer__grille">\n'
-            '        <a class="bcg-explorer__grand" href="%s"><span class="bcg-explorer__surtitre">Section suivante</span>'
-            '<span class="bcg-explorer__titre">%s</span><span class="bcg-explorer__texte">%s</span>'
-            '<span class="bcg-btn bcg-btn--noir">%s %s</span></a>\n'
-            '        <div class="bcg-explorer__colonne">%s</div>\n'
-            '      </div>\n'
-            '    </section>\n') % (href, titre, texte, bouton, FLECHE, tuiles)
+def illustrer_cas(s, slug):
+    ariane = s.split('class="fil-ariane"', 1)[-1].split('</nav>', 1)[0]
+    m = re.search(r'href="/cas-clients/(individuel|collectif|organisation)"', ariane)
+    echelle = m.group(1) if m else 'individuel'
+    for ident, photo in (('situation', PHOTOS_ECHELLE[echelle]), ('enjeux', PHOTOS_ENJEUX[echelle])):
+        motif = re.compile(r'(<section class="section" id="%s"[^>]*>.*?<div class="plateau)(">)(.*?)(\n      </div>\n    </section>)' % ident, re.S)
+        s, n = motif.subn(lambda m: m.group(1) + ' bcg-illustre' + m.group(2) + m.group(3) +
+                          '\n        <div class="photo bcg-illustre__photo"><img src="%s" alt="" loading="lazy" decoding="async"></div>' % photo + m.group(4), s, count=1)
+    return s
 
 
 def mode_entete(s):
@@ -104,10 +86,12 @@ def convertir(s, url='/'):
     if mode:
         s = s.replace('<section class="section section--plateau"', '<section class="section section--plateau bcg-entete bcg-entete--%s"' % mode, 1)
     s = s.replace('<main id="contenu" tabindex="-1">', '<main id="contenu" tabindex="-1">' + sousnav(url, s), 1)
-    bloc = explorer(url)
-    if bloc:
-        if '    <div data-include="contact"></div>' in s: s = s.replace('    <div data-include="contact"></div>', bloc + '    <div data-include="contact"></div>', 1)
-        else: s = s.replace('  </main>', bloc + '  </main>', 1)
+    # Fin de page : « Ils en parlent », puis le contact, et rien d'autre
+    if '<div data-include="contact"></div>' in s:
+        s = re.sub(r'\n?[ \t]*<div data-include="temoignages"></div>', '', s)
+        s = s.replace('    <div data-include="contact"></div>', '    <div data-include="temoignages"></div>\n    <div data-include="contact"></div>', 1)
+    if url.startswith('/cas-clients/') and url.count('/') == 2:
+        s = illustrer_cas(s, url.split('/')[-1])
     s = s.replace('family=Outfit:wght@400;500;600', 'family=Outfit:wght@200;300;400;500;600')
     s = re.sub(r'(<script>document\.documentElement\.classList\.add\(\'js\'\);</script>)',
                r'<link rel="stylesheet" href="/css/bcg.css">\n  \1', s, count=1)
@@ -141,4 +125,5 @@ acc = os.path.join(R, 'bcg', 'index.html')
 s = open(acc, encoding='utf-8').read()
 s = re.sub(r'(href)="([^"]*)"', lien_bcg, s)
 open(acc, 'w', encoding='utf-8').write(s)
-print('pages', n + 1)
+subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), '_generer_enjeux.py')], check=True)
+print('pages', n + 1 + 7)

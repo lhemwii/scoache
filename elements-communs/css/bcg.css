@@ -121,6 +121,12 @@ a:hover .bcg-btn { gap: 20px; padding-right: 16px; background: #26262b; }
 .site-header--bcg .navbar__actions { gap: 14px; padding: 0 10px 0 20px; }
 .site-header--bcg .navbar__cta { height: 46px; border-radius: 12px; }
 .site-header--bcg.is-scrolled .navbar__logo { border: 0; background: var(--verre); box-shadow: var(--ombre-bcg); }
+/* La navbar BCG garde la même taille en défilant (pas de resserrement, donc pas de saut près du haut de page) */
+@media (min-width: 901px) {
+  .site-header--bcg.is-scrolled { --pill-h: 66px; }
+  .site-header--bcg.is-scrolled .navbar { padding-top: 24px; padding-bottom: 24px; }
+}
+.site-header--bcg.is-scrolled :is(.nav-pill, .navbar__actions, .navbar__logo) { box-shadow: var(--ombre-bcg); }
 
 /* Sous-menus courts : une liste, un lien « tout voir » */
 .menu-leger {
@@ -227,10 +233,9 @@ a:hover .bcg-btn { gap: 20px; padding-right: 16px; background: #26262b; }
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
-.bcg-defile__etiquette,
-.bcg-defile__verre { opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s ease; }
-.bcg-defile__carte.is-centre .bcg-defile__etiquette,
-.bcg-defile__carte.is-centre .bcg-defile__verre { opacity: 1; transform: none; transition: opacity 0.5s ease 0.45s, transform 0.5s ease 0.45s; }
+/* Toutes les cartes montrent leur cas (échelle, logo, titre) ; seule celle du centre propose « Lire le cas » */
+.bcg-defile__lire { max-height: 0; overflow: hidden; opacity: 0; transition: opacity 0.4s ease, max-height 0.4s ease; }
+.bcg-defile__carte.is-centre .bcg-defile__lire { max-height: 30px; opacity: 1; transition: opacity 0.5s ease 0.4s, max-height 0.5s ease 0.3s; }
 .bcg-defile__logo img { width: auto; height: 22px; max-width: 120px; object-fit: contain; object-position: left center; }
 .bcg-defile__titre {
   display: -webkit-box;
@@ -399,8 +404,8 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
   scrollbar-width: none;
 }
 .bcg-cas__piste::-webkit-scrollbar { display: none; }
-.bcg-impact { flex: 0 0 auto; width: 304px; height: 440px; scroll-snap-align: start; }
-.bcg-impact--large { width: 620px; }
+.bcg-impact { flex: 0 0 auto; width: 304px; height: 440px; scroll-snap-align: start; transition: width 0.7s cubic-bezier(0.45, 0, 0.15, 1); }
+.bcg-impact.is-grand { width: 620px; }
 .bcg-impact__carte { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; color: var(--noir); text-decoration: none; }
 .bcg-impact__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .bcg-impact__carte:hover .bcg-impact__image { transform: scale(1.05); }
@@ -476,11 +481,11 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
 .bcg-impact__carte:focus-visible .bcg-impact__btn { opacity: 1; transition: opacity 0.4s ease 0.2s; }
 
 /* La grande carte montre d'emblée sa situation et son bouton, sur la moitié droite */
-.bcg-impact--large .bcg-impact__verre { width: 46%; height: calc(100% - 40px); }
-.bcg-impact--large .bcg-impact__texte,
-.bcg-impact--large .bcg-impact__btn { opacity: 1; }
-.bcg-impact--large .bcg-impact__texte { -webkit-line-clamp: 4; }
-.bcg-impact--large .bcg-impact__carte:hover .bcg-impact__texte { -webkit-line-clamp: 6; }
+.bcg-impact.is-grand .bcg-impact__verre { width: 46%; height: calc(100% - 40px); }
+.bcg-impact.is-grand .bcg-impact__texte,
+.bcg-impact.is-grand .bcg-impact__btn { opacity: 1; }
+.bcg-impact.is-grand .bcg-impact__texte { -webkit-line-clamp: 4; }
+.bcg-impact.is-grand .bcg-impact__carte:hover .bcg-impact__texte { -webkit-line-clamp: 6; }
 
 .bcg-cas__commandes { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; padding-inline: calc(var(--page-x) + var(--bloc-x)); }
 .bcg-cas .bcg-commande { background: var(--blanc); }
@@ -648,86 +653,111 @@ body.page-bcg { overflow-x: clip; }
 .page-bcg .stat--lg .stat__valeur { color: var(--noir); font-size: clamp(44px, 2rem + 1.8vw, 66px); font-weight: 200; letter-spacing: -0.03em; line-height: 1; }
 .page-bcg .stat__libelle { font-size: 12.5px; font-weight: 400; letter-spacing: 0.06em; }
 
-/* Explorer aussi (« Explore More » chez BCG) */
+/* Titre de section moyen (pages intérieures) */
 .page-bcg .bcg-titre--moyen { padding-inline: 36px; font-size: clamp(36px, 1.6rem + 1.6vw, 56px); }
-.bcg-explorer__grille { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: clamp(28px, 3vw, 44px); }
-.bcg-explorer__grand {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-height: 360px;
-  padding: 36px;
-  border-radius: 20px;
-  background: var(--greige);
-  color: var(--noir);
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-.bcg-explorer__grand:hover { background: #dcdad3; }
-.bcg-explorer__grand .bcg-btn { margin-top: auto; }
-.bcg-explorer__surtitre { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
-.bcg-explorer__titre { font-size: clamp(30px, 1.4rem + 1vw, 40px); font-weight: 300; line-height: 1.08; letter-spacing: -0.02em; }
-.bcg-explorer__texte { max-width: 42ch; font-size: 17px; font-weight: 300; line-height: 1.5; color: #2b2b2b; }
-.bcg-explorer__colonne { display: grid; grid-template-rows: 1fr 1fr; gap: 16px; }
-.bcg-explorer__tuile {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 44%;
-  min-height: 172px;
-  overflow: hidden;
-  border-radius: 20px;
+
+/* =====================================================================
+   Retours du 28 octobre
+   ===================================================================== */
+
+/* Vos situations : des questions dans des pastilles, plutôt que des liens soulignés */
+.bcg-situations { gap: 10px 12px; padding: 14px 16px 14px 24px; }
+.bcg-situations__label { margin-right: 6px; }
+.bcg-situations a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px 11px 18px;
+  border-radius: 999px;
   background: var(--gris-clair);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease, gap 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.bcg-situations a:hover { gap: 16px; background: var(--noir); color: var(--blanc); }
+
+/* Accueil, enjeu ouvert : « En parler avec Ilana » et « Lire l'enjeu » côte à côte */
+.bcg-enjeu-panneau__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 6px; }
+.bcg-enjeu-panneau__actions .bcg-btn { margin-top: 0; }
+
+/* Angles vifs : photos, tuiles, bandes et cadres ont des coins droits ;
+   seuls les éléments d'interface (navbar, boutons, pastilles, panneaux en verre) restent arrondis */
+.page-bcg .plateau,
+.page-bcg main .plateau :is(.carte, .carte-lien, .carte-etiree, .barre),
+.page-bcg .bcg-entete .carte,
+.page-bcg .bcg-entete--photo > .plateau > :last-child,
+.page-bcg .bcg-entete--photo .photo,
+.page-bcg .bcg-entete--photo > .plateau > .carte > .photo,
+.page-bcg .bcg-entete--photo > .plateau > .photo,
+.page-bcg .bcg-enjeux__corps,
+.page-bcg .bcg-enjeu,
+.page-bcg .bcg-enjeux__scene,
+.page-bcg .temoignages--bcg .temoignages__scene,
+.page-bcg .contact__tray,
+.page-bcg .contact__tray > *,
+.page-bcg .site-footer,
+.page-bcg .home-echelle,
+.page-bcg .home-expertise,
+.page-bcg main .faq__liste,
+.page-bcg main .faq__item { border-radius: 0 !important; }
+
+/* Rythme : des espaces larges avant les grands blocs, serrés entre les parties d'un même récit */
+.page-bcg { --rythme: clamp(64px, 7vw, 104px); --rythme-fort: clamp(112px, 12vw, 176px); --rythme-serre: clamp(36px, 3.6vw, 52px); }
+.page-bcg main > :is(.bcg-cas, .temoignages, .contact, .bcg-enjeux, .home-offre, .bcg-tuiles, .bcg-logos, .cas-proches-bloc) { margin-top: var(--rythme-fort) !important; }
+.page-bcg main > :is(.bcg-cas, .bcg-enjeux) + section { margin-top: var(--rythme-fort) !important; }
+.page-bcg main > :is(#ce-que-ce-cas-demontre, #enjeux, #demarche) { margin-top: var(--rythme-serre) !important; }
+
+/* Fiches de cas : la situation et les enjeux de départ, à côté d'une photo */
+.page-bcg .plateau.bcg-illustre { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: stretch; gap: 16px; }
+.page-bcg .bcg-illustre__photo { min-height: 280px; padding: 0; border-radius: 0; }
+
+/* Pages Vos enjeux */
+.bcg-entete__texte { display: flex; flex: 1 1 0; flex-direction: column; justify-content: center; align-items: flex-start; gap: 20px; min-width: 0; padding-block: 12px; }
+.bcg-entete__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 8px; }
+.page-bcg .bcg-entete--colonnes .bcg-entete__visuel { flex: 0 0 42%; min-height: 460px; padding: 0; border-radius: 0; }
+.bcg-verre-liste ul { display: flex; flex-direction: column; margin-top: 6px; }
+.bcg-verre-cas {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   color: var(--noir);
+  font-size: 14.5px;
+  line-height: 1.3;
   text-decoration: none;
 }
-.bcg-explorer__tuile-texte { display: flex; flex-direction: column; gap: 10px; padding: 26px 28px; }
-.bcg-explorer__tuile-titre { font-size: 24px; font-weight: 300; line-height: 1.15; }
-.bcg-explorer__tuile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.bcg-explorer__tuile:hover img { transform: scale(1.06); }
-.bcg-explorer__tuile:hover .bcg-explorer__tuile-titre { text-decoration: underline; text-underline-position: from-font; }
+.bcg-verre-cas__logo { display: flex; align-items: center; height: 28px; }
+.bcg-verre-cas__logo img { width: auto; height: auto; max-width: 84px; max-height: 26px; object-fit: contain; }
+.bcg-verre-cas .ico { transition: transform 0.3s ease; }
+.bcg-verre-cas:hover { color: var(--accent); }
+.bcg-verre-cas:hover .ico { transform: translateX(4px); }
 
-/* Bandes de contenu : arrondis plus larges, cartes blanches à l'ombre douce */
-.page-bcg .plateau { border-radius: 24px; }
-.page-bcg .plateau .carte,
-.page-bcg .plateau .carte-lien { border-radius: 16px; }
+.bcg-duo { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: center; gap: clamp(32px, 5vw, 80px); }
+.bcg-duo__texte { display: flex; flex-direction: column; gap: 20px; padding-left: 36px; }
+.bcg-duo__texte .bcg-titre--moyen { padding-inline: 0; }
+.bcg-duo__chapo { font-size: clamp(19px, 1rem + 0.4vw, 23px); line-height: 1.45; }
+.bcg-duo__suite { max-width: 60ch; font-size: 17px; line-height: 1.6; color: #2b2b2b; }
+.bcg-duo__image { aspect-ratio: 4 / 5; overflow: hidden; }
+.bcg-duo__image img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Boutons à la BCG : capitales, flèche simple qui s'écarte au survol */
-.page-bcg .btn {
-  border-radius: 12px;
-  font-size: 13.5px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: gap 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), padding 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.2s ease;
-}
-.page-bcg .btn > .ico:last-child,
-.page-bcg .btn .btn-envoi__texte > .ico:last-child,
-.page-bcg .btn--lg > .ico:last-child { width: 16px; height: 16px; padding: 0; border-radius: 0; background: none; }
-.page-bcg .btn:has(> .ico:last-child) { padding-right: 18px; }
-.page-bcg .btn--lg { padding: 15px 24px; }
-@media (hover: hover) and (pointer: fine) {
-  .page-bcg .btn:hover { gap: 16px; padding-right: 14px; transform: none; box-shadow: none; }
-  .page-bcg .btn:hover > .ico:last-child { background: none; transform: none; }
-}
-
-/* Cartes photo des cas : au survol, le panneau en verre couvre toute la carte */
-.page-bcg .photo.carte-photo { border-radius: 0; transition: padding 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.page-bcg .photo.carte-photo > .carte-verre {
-  border-radius: 20px;
-  transition: flex-grow 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), border-radius 0.45s ease, background-color 0.3s ease;
-}
-@media (hover: hover) and (pointer: fine) {
-  .page-bcg a.photo.carte-photo:hover { padding: 0; }
-  .page-bcg a.photo.carte-photo:hover > .carte-verre { flex-grow: 1; justify-content: center; transform: none; border-radius: 0; background: rgba(255, 255, 255, 0.86); }
-}
-
-/* Logos clients en noir adouci, couleur d'origine au survol */
-.page-bcg main img[src*="/cas/logos/"] { filter: grayscale(1) brightness(0); opacity: 0.78; transition: filter 0.3s ease, opacity 0.3s ease; }
-.page-bcg main img[src*="/cas/logos/cic"] { filter: grayscale(1) contrast(1.4); opacity: 0.85; }
-.page-bcg main a:hover img[src*="/cas/logos/"] { filter: none; opacity: 1; }
-
-/* Pied de page : bande claire, comme chez BCG */
-.page-bcg .site-footer { margin-top: var(--rythme); border-top: 0; border-radius: 24px 24px 0 0; background: var(--gris-clair); }
-.page-bcg .site-footer .footer__brand p:first-of-type { font-weight: 300; }
+.bcg-tuiles > .eyebrow { padding-inline: 36px; margin-bottom: 18px; }
+.bcg-tuiles__grille { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: clamp(28px, 3vw, 44px); }
+.bcg-tuile { display: flex; flex-direction: column; background: var(--gris-clair); color: var(--noir); text-decoration: none; transition: background-color 0.25s ease; }
+.bcg-tuile:hover { background: var(--greige); }
+.bcg-tuile__image { display: block; aspect-ratio: 16 / 10; overflow: hidden; }
+.bcg-tuile__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.bcg-tuile:hover .bcg-tuile__image img { transform: scale(1.05); }
+.bcg-tuile__corps { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 22px 24px 26px; }
+.bcg-tuile__surtitre { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+.bcg-tuile__titre { font-size: 22px; font-weight: 300; line-height: 1.2; }
+.bcg-tuile__texte { font-size: 15px; font-weight: 300; line-height: 1.5; color: #2b2b2b; }
+.bcg-tuile__lien { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: gap 0.3s ease; }
+.bcg-tuile:hover .bcg-tuile__lien { gap: 14px; }
 
 /* ---------- Tablette et mobile ---------- */
 
@@ -753,8 +783,14 @@ body.page-bcg { overflow-x: clip; }
   .page-bcg .bcg-entete--photo .photo { padding: 14px !important; }
   .bcg-sousnav { max-width: 100%; margin-inline: 0; padding-left: 14px; }
   .page-bcg .bcg-titre--moyen { padding-inline: 4px; }
-  .bcg-explorer__grille { grid-template-columns: minmax(0, 1fr); }
-  .bcg-explorer__grand { min-height: 0; padding: 26px; }
+  .page-bcg .plateau.bcg-illustre { grid-template-columns: minmax(0, 1fr); }
+  .page-bcg .bcg-illustre__photo { min-height: 200px; }
+  .page-bcg .bcg-entete--colonnes .bcg-entete__visuel { flex: none; width: 100%; min-height: 260px; }
+  .bcg-duo { grid-template-columns: minmax(0, 1fr); }
+  .bcg-duo__texte, .bcg-tuiles > .eyebrow { padding-inline: 4px; }
+  .bcg-tuiles__grille { grid-template-columns: minmax(0, 1fr); }
+  .bcg-situations { align-items: stretch; padding: 16px; }
+  .bcg-situations a { justify-content: space-between; }
   .bcg-cas .bcg-tete { padding-inline: calc(var(--page-x) + var(--bloc-x)); }
   .bcg-tete--ligne { flex-direction: column; align-items: flex-start; }
   .bcg-enjeux__corps { grid-template-columns: minmax(0, 1fr); padding: 10px; }
@@ -768,8 +804,8 @@ body.page-bcg { overflow-x: clip; }
   .bcg-enjeu-panneau__image { position: relative; height: 240px; border-radius: 16px; }
   .bcg-enjeu-panneau__verre { position: relative; left: auto; right: auto; bottom: auto; max-height: none; margin: -48px 10px 0; padding: 22px; }
   .bcg-impact { width: 78vw; max-width: 320px; height: 420px; }
-  .bcg-impact--large { width: 86vw; max-width: 420px; }
-  .bcg-impact--large .bcg-impact__verre { width: calc(100% - 40px); }
+  .bcg-impact.is-grand { width: 86vw; max-width: 420px; }
+  .bcg-impact.is-grand .bcg-impact__verre { width: calc(100% - 40px); }
   .bcg-situations { flex-direction: column; gap: 12px; }
 }
 
