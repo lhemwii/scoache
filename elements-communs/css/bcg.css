@@ -540,19 +540,148 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
 .page-bcg .chapo,
 .page-bcg .contact__lead { font-weight: 300; }
 
-/* Haut de page : le titre se pose sur le blanc, l'objet de droite devient une carte arrondie */
-.page-bcg main > .section--plateau:first-of-type > .plateau {
-  gap: clamp(24px, 3vw, 48px);
-  padding: 0;
-  background: transparent;
+/* Haut de page : bande beige pleine largeur qui passe sous la navbar, comme les pages BCG */
+body.page-bcg { overflow-x: clip; }
+.page-bcg .bcg-entete { position: relative; isolation: isolate; padding-bottom: clamp(48px, 5vw, 80px) !important; }
+.page-bcg .bcg-entete::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -420px;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: var(--gris-clair);
 }
-.page-bcg main > .section--plateau:first-of-type > .plateau > :first-child { padding-left: 36px; padding-right: 0; }
-.page-bcg main > .section--plateau:first-of-type > .plateau > .carte,
-.page-bcg main > .section--plateau:first-of-type > .plateau > :not(:first-child) .carte { border-radius: 24px; box-shadow: var(--ombre-bcg); }
-.page-bcg main > .section--plateau:first-of-type > .plateau .photo { border-radius: 24px; }
-/* Ce qui était blanc sur le greige garde un fond clair, maintenant que le haut de page est blanc */
-.page-bcg .cas-pastilles li,
-.page-bcg .fo-objectif { background: var(--gris-clair); }
+.page-bcg .bcg-entete > .plateau { gap: clamp(24px, 3vw, 48px); padding: 0; border-radius: 0; background: transparent; }
+.page-bcg .bcg-entete > .plateau > :first-child { padding-left: 36px; padding-right: 0; }
+.page-bcg .bcg-entete .carte { border-radius: 24px; box-shadow: none; }
+
+/* Haut de page avec photo : le texte au-dessus, la photo en grand sur toute la largeur (BCG People, BCG Paris) */
+.page-bcg .bcg-entete--photo > .plateau { flex-direction: column; }
+.page-bcg .bcg-entete--photo > .plateau > :first-child { flex: none; width: 100%; max-width: none; padding: 0 36px; }
+.page-bcg .bcg-entete--photo :is(.inst-titre-hero, .of-hero__titre, .cas-hero__titre, .cas-fiche__titre) { max-width: 22ch; }
+.page-bcg .bcg-entete--photo :is(.chapo, .of-hero__texte, .cas-hero__lead, .of-hero__accroche) { max-width: 62ch; }
+.page-bcg .bcg-entete--photo > .plateau > :last-child {
+  flex: none;
+  width: 100%;
+  height: clamp(320px, 34vw, 500px);
+  overflow: hidden;
+  padding: 0;
+  border-radius: 24px;
+  background: none;
+}
+.page-bcg .bcg-entete--photo > .plateau > .carte > .photo { height: 100% !important; min-height: 0 !important; max-height: none !important; border-radius: 24px; }
+.page-bcg .bcg-entete--photo > .plateau > .photo { height: clamp(320px, 34vw, 500px) !important; min-height: 0 !important; max-height: none !important; border-radius: 24px; }
+.page-bcg .bcg-entete--photo > .plateau > .carte > .photo { flex: 1; }
+.page-bcg .bcg-entete--photo .photo { justify-content: flex-end; align-items: flex-end; padding: 28px !important; border-radius: 24px; }
+.page-bcg .bcg-entete--photo .photo > .carte-verre {
+  align-self: flex-end !important;
+  width: 100%;
+  max-width: 460px;
+  max-height: 100%;
+  margin: auto 0 0 auto !important;
+  overflow-y: auto;
+  transform: none !important;
+}
+.page-bcg .bcg-entete--photo .photo.photo--texture:not(:has(> .carte-verre)) { justify-content: center; align-items: center; }
+
+/* Le fil d'Ariane laisse la place à la sous-navigation de rubrique */
+.page-bcg:has(.bcg-sousnav) .fil-ariane { display: none; }
+.bcg-sousnav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: calc(100% - 2 * var(--bloc-x));
+  margin: 4px var(--bloc-x) clamp(28px, 3.4vw, 48px);
+  padding: 8px 8px 8px 20px;
+  overflow-x: auto;
+  border-radius: 20px;
+  background: var(--verre);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--ombre-bcg);
+  scrollbar-width: none;
+}
+.bcg-sousnav::-webkit-scrollbar { display: none; }
+.bcg-sousnav__label { flex: none; font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
+.bcg-sousnav ul { display: flex; gap: 2px; }
+.bcg-sousnav a {
+  display: block;
+  padding: 11px 10px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.bcg-sousnav a:hover { background: var(--accent-survol); color: var(--encre); }
+.bcg-sousnav a[aria-current] { background: var(--accent-doux); color: var(--encre); }
+.bcg-sousnav a[aria-current]:hover { background: var(--accent-survol); }
+
+/* Contenu : page blanche et tuiles beiges (à la place du plateau gris garni de cartes blanches) */
+.page-bcg main .plateau:not(.bcg-entete .plateau):not(.temoignages__plateau) { gap: 16px; padding: 0; border-radius: 0; background: transparent; }
+.page-bcg main .plateau:not(.bcg-entete .plateau) :is(.carte, .carte-lien, .carte-etiree, .barre) { border-radius: 12px; background: var(--gris-clair); box-shadow: none; }
+.page-bcg main .plateau:not(.bcg-entete .plateau) :is(.carte, .carte-lien, .carte-etiree) { transition: background-color 0.25s ease; }
+.page-bcg main .plateau:not(.bcg-entete .plateau) a:is(.carte, .carte-lien):hover,
+.page-bcg main .plateau:not(.bcg-entete .plateau) .carte-etiree:hover { background: var(--greige); }
+.page-bcg main .plateau:not(.bcg-entete .plateau) :is(.carte, .carte-lien, .carte-etiree) :is(.carte, .pastille:not(.pastille--noir):not(.pastille--accent)) { background: var(--blanc); }
+
+/* Photos à angles droits dans les pages (les panneaux en verre et les cartes restent arrondis) */
+.page-bcg main .photo:not(.bcg-entete .photo),
+.page-bcg main .carrousel .photo,
+.page-bcg main .home-echelle__photo,
+.page-bcg main figure img { border-radius: 0; }
+
+/* Chiffres : grands et fins, sans cadre */
+.page-bcg .stat { gap: 8px; padding: 0; border-radius: 0; background: none; align-items: flex-start; text-align: left; }
+.page-bcg .stat__valeur,
+.page-bcg .stat--lg .stat__valeur { color: var(--noir); font-size: clamp(44px, 2rem + 1.8vw, 66px); font-weight: 200; letter-spacing: -0.03em; line-height: 1; }
+.page-bcg .stat__libelle { font-size: 12.5px; font-weight: 400; letter-spacing: 0.06em; }
+
+/* Explorer aussi (« Explore More » chez BCG) */
+.page-bcg .bcg-titre--moyen { padding-inline: 36px; font-size: clamp(36px, 1.6rem + 1.6vw, 56px); }
+.bcg-explorer__grille { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: clamp(28px, 3vw, 44px); }
+.bcg-explorer__grand {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 360px;
+  padding: 36px;
+  border-radius: 20px;
+  background: var(--greige);
+  color: var(--noir);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+.bcg-explorer__grand:hover { background: #dcdad3; }
+.bcg-explorer__grand .bcg-btn { margin-top: auto; }
+.bcg-explorer__surtitre { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+.bcg-explorer__titre { font-size: clamp(30px, 1.4rem + 1vw, 40px); font-weight: 300; line-height: 1.08; letter-spacing: -0.02em; }
+.bcg-explorer__texte { max-width: 42ch; font-size: 17px; font-weight: 300; line-height: 1.5; color: #2b2b2b; }
+.bcg-explorer__colonne { display: grid; grid-template-rows: 1fr 1fr; gap: 16px; }
+.bcg-explorer__tuile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44%;
+  min-height: 172px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--gris-clair);
+  color: var(--noir);
+  text-decoration: none;
+}
+.bcg-explorer__tuile-texte { display: flex; flex-direction: column; gap: 10px; padding: 26px 28px; }
+.bcg-explorer__tuile-titre { font-size: 24px; font-weight: 300; line-height: 1.15; }
+.bcg-explorer__tuile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.bcg-explorer__tuile:hover img { transform: scale(1.06); }
+.bcg-explorer__tuile:hover .bcg-explorer__tuile-titre { text-decoration: underline; text-underline-position: from-font; }
 
 /* Bandes de contenu : arrondis plus larges, cartes blanches à l'ombre douce */
 .page-bcg .plateau { border-radius: 24px; }
@@ -614,7 +743,16 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
   .site-header--bcg .navbar__actions { gap: 4px; padding: 0 4px 0 6px; }
   .site-header--bcg .navbar__cta { height: 40px; padding: 0 14px; }
   .bcg-tete { padding-inline: 0; }
-  .page-bcg main > .section--plateau:first-of-type > .plateau > :first-child { padding-left: 4px; }
+  .page-bcg .bcg-entete > .plateau > :first-child,
+  .page-bcg .bcg-entete--photo > .plateau > :first-child { padding: 0 4px; }
+  .page-bcg .bcg-entete--photo > .plateau > :last-child,
+  .page-bcg .bcg-entete--photo > .plateau > .photo,
+  .page-bcg .bcg-entete--photo > .plateau > .carte > .photo { height: auto !important; min-height: 280px !important; }
+  .page-bcg .bcg-entete--photo .photo { padding: 14px !important; }
+  .bcg-sousnav { max-width: 100%; margin-inline: 0; padding-left: 14px; }
+  .page-bcg .bcg-titre--moyen { padding-inline: 4px; }
+  .bcg-explorer__grille { grid-template-columns: minmax(0, 1fr); }
+  .bcg-explorer__grand { min-height: 0; padding: 26px; }
   .bcg-cas .bcg-tete { padding-inline: calc(var(--page-x) + var(--bloc-x)); }
   .bcg-tete--ligne { flex-direction: column; align-items: flex-start; }
   .bcg-enjeux__corps { grid-template-columns: minmax(0, 1fr); padding: 10px; }

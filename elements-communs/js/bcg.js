@@ -167,8 +167,28 @@
       var carte = piste.querySelector('.bcg-impact:not(.bcg-impact--large)');
       return carte ? carte.getBoundingClientRect().width + 24 : 320;
     }
-    section.querySelector('[data-cas-suiv]').addEventListener('click', function () { piste.scrollBy({ left: pas(), behavior: 'smooth' }); });
-    section.querySelector('[data-cas-prec]').addEventListener('click', function () { piste.scrollBy({ left: -pas(), behavior: 'smooth' }); });
+    function avancer(sens) {
+      var fin = piste.scrollLeft + piste.clientWidth >= piste.scrollWidth - 4;
+      if (sens > 0 && fin) piste.scrollTo({ left: 0, behavior: 'smooth' });
+      else piste.scrollBy({ left: sens * pas(), behavior: 'smooth' });
+    }
+    section.querySelector('[data-cas-suiv]').addEventListener('click', function () { avancer(1); relancer(); });
+    section.querySelector('[data-cas-prec]').addEventListener('click', function () { avancer(-1); relancer(); });
+
+    // Défilement automatique, en pause au survol, au focus ou quand la section n'est pas à l'écran
+    var minuteur = null, arret = false, visible = false;
+    function relancer() {
+      clearInterval(minuteur);
+      if (arret || !visible || mouvementReduit.matches) return;
+      minuteur = setInterval(function () { avancer(1); }, 4000);
+    }
+    section.addEventListener('mouseenter', function () { arret = true; relancer(); });
+    section.addEventListener('mouseleave', function () { arret = false; relancer(); });
+    section.addEventListener('focusin', function () { arret = true; relancer(); });
+    section.addEventListener('focusout', function () { arret = false; relancer(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { visible = e[0].isIntersecting; relancer(); }, { threshold: 0.3 }).observe(piste);
+    } else { visible = true; relancer(); }
   }
 
   /* ---------- Navbar : la rubrique de la section affichée s'allume ---------- */

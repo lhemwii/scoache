@@ -24,6 +24,7 @@
   <div data-include="header-bcg"></div>
 
   <main id="contenu" tabindex="-1">
+    <nav class="bcg-sousnav" aria-label="Nos offres"><span class="bcg-sousnav__label">Nos offres :</span><ul><li><a href="/bcg/offre">Vue d’ensemble</a></li><li><a href="/bcg/coaching-de-dirigeant">Coaching de dirigeant</a></li><li><a href="/bcg/coaching-de-dirigeant/individuel">Individuel</a></li><li><a href="/bcg/coaching-de-dirigeant/collectif">Collectif</a></li><li><a href="/bcg/coaching-de-dirigeant/organisation">Organisation</a></li><li><a href="/bcg/formations" aria-current="true">Formations</a></li></ul></nav>
     <nav class="fil-ariane" aria-label="Fil d’Ariane">
       <ol>
         <li><a href="/bcg">Accueil</a></li>
@@ -32,7 +33,7 @@
     </nav>
 
     <!-- Hero (Figma 1174:4708) -->
-    <section class="section section--plateau" aria-labelledby="titre-page">
+    <section class="section section--plateau bcg-entete bcg-entete--colonnes" aria-labelledby="titre-page">
       <div class="plateau inst-hero">
         <div class="inst-hero__texte">
           <div class="inst-hero__intro">
@@ -236,6 +237,15 @@
       </div>
     </section>
 
+
+    <!-- Explorer aussi (version BCG) -->
+    <section class="bcg-section bcg-explorer" aria-labelledby="explorer-titre">
+      <h2 class="bcg-titre bcg-titre--moyen" id="explorer-titre">Explorer aussi</h2>
+      <div class="bcg-explorer__grille">
+        <a class="bcg-explorer__grand" href="/bcg/cas-clients"><span class="bcg-explorer__surtitre">Section suivante</span><span class="bcg-explorer__titre">Nos cas clients</span><span class="bcg-explorer__texte">La situation de départ, l’accompagnement et les évolutions observées, cas par cas.</span><span class="bcg-btn bcg-btn--noir">Voir les cas <svg class="ico" width="16" height="16" aria-hidden="true"><use href="/assets/icones.svg#i-arrow"/></svg></span></a>
+        <div class="bcg-explorer__colonne"><a class="bcg-explorer__tuile" href="/bcg/a-propos"><span class="bcg-explorer__tuile-texte"><span class="bcg-explorer__surtitre">Scoaché</span><span class="bcg-explorer__tuile-titre">À propos</span></span><img src="/assets/institutionnel/hero-a-propos.jpg" alt="" loading="lazy" decoding="async"></a><a class="bcg-explorer__tuile" href="/bcg/nous-contacter"><span class="bcg-explorer__tuile-texte"><span class="bcg-explorer__surtitre">Scoaché</span><span class="bcg-explorer__tuile-titre">Nous contacter</span></span><img src="/assets/hero-accueil.jpg" alt="" loading="lazy" decoding="async"></a></div>
+      </div>
+    </section>
     <div data-include="contact"></div>
   </main>
 
