@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/accueil-bcg",
+      "destination": "/bcg",
+      "permanent": false
+    },
+    {
       "source": "/formations/confiance-leadership",
       "destination": "/formations/confiance-et-leadership",
       "permanent": true

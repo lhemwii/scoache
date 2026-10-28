@@ -194,15 +194,65 @@
     });
   }
 
+  /* ---------- Site d'essai : tous les liens internes restent dans /bcg ---------- */
+
+  function versBcg(href) {
+    if (!href || href.charAt(0) !== '/' || href.charAt(1) === '/') return null;
+    if (/^\/(bcg([\/?#]|$)|assets\/|css\/|js\/|partials\/)/.test(href)) return null;
+    if (/\.[a-z0-9]{2,4}$/i.test(href.split(/[?#]/)[0])) return null;
+    if (href === '/') return '/bcg';
+    if (href.charAt(1) === '#' || href.charAt(1) === '?') return '/bcg' + href.slice(1);
+    return '/bcg' + href;
+  }
+  function reecrire(racine) {
+    toutes('a[href^="/"]', racine).forEach(function (a) {
+      var cible = versBcg(a.getAttribute('href'));
+      if (cible) a.setAttribute('href', cible);
+    });
+  }
+  function initLiensBcg() {
+    reecrire(document);
+    // Liens fabriqués plus tard par script.js (recherche, aperçus de cas, parcours)
+    new MutationObserver(function (changements) {
+      changements.forEach(function (c) {
+        c.addedNodes.forEach(function (n) {
+          if (n.nodeType !== 1) return;
+          if (n.matches && n.matches('a[href^="/"]')) reecrire(n.parentNode);
+          else reecrire(n);
+        });
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Rubrique de la navbar allumée selon la page (le site d'origine le fait dans include.js)
+  function rubriqueDeLaPage() {
+    var ici = window.location.pathname.replace(/^\/bcg/, '').replace(/\.html$/, '').replace(/\/+$/, '') || '/';
+    var regles = [
+      [/^\/(offre|coaching-de-dirigeant|formations)(\/|$)/, '#toggle-offres'],
+      [/^\/cas-clients(\/|$)/, '#toggle-cas'],
+      [/^\/a-propos$/, '.nav-pill__link[href="/bcg/a-propos"]']
+    ];
+    regles.forEach(function (r) {
+      var el = document.querySelector(r[1]);
+      if (el && r[0].test(ici)) el.classList.add('is-current');
+    });
+  }
+
   function init() {
     toutes('[data-bcg-defile]').forEach(initDefile);
     toutes('[data-bcg-enjeux]').forEach(initEnjeux);
     toutes('[data-bcg-cas]').forEach(initCas);
   }
 
+  function apresPartiels() {
+    initLiensBcg();
+    rubriqueDeLaPage();
+    if (document.querySelector('[data-bcg-enjeux]')) initRubriques();
+  }
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
-  // La navbar arrive avec les partiels
-  document.addEventListener('scoache:partiels', initRubriques);
-  if (window.ScoachePartielsPrets) initRubriques();
+  // La navbar et le pied de page arrivent avec les partiels
+  document.addEventListener('scoache:partiels', apresPartiels);
+  if (window.ScoachePartielsPrets) apresPartiels();
 })();

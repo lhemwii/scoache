@@ -500,6 +500,104 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
   letter-spacing: 0 !important;
 }
 
+/* =====================================================================
+   Site entier « version BCG » (/bcg) : les mêmes règles sur toutes les pages
+   ===================================================================== */
+
+/* Surtitres : petites capitales, sans pastille ni icône */
+.page-bcg p.eyebrow:not(.cas-30__eyebrow),
+.page-bcg .section-head .eyebrow,
+.page-bcg .eyebrow {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--noir);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.page-bcg p.eyebrow > svg:first-child,
+.page-bcg .section-head .eyebrow > svg:first-child { display: none; }
+
+/* Titres : grands et fins */
+.page-bcg main h2,
+.page-bcg main h3 { font-weight: 300; }
+.page-bcg main h3 { font-weight: 400; }
+.page-bcg :is(.inst-titre-hero, .of-hero__titre, .cas-hero__titre, .titre-1) {
+  font-size: clamp(42px, 1.8rem + 2.6vw, 76px);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.page-bcg .cas-fiche__titre { font-size: clamp(34px, 1.4rem + 1.9vw, 58px); font-weight: 300; line-height: 1.06; letter-spacing: -0.03em; }
+.page-bcg:not(.page-home) .section-head__title,
+.page-bcg .titre-2,
+.page-bcg .contact__title { font-size: clamp(38px, 1.8rem + 1.7vw, 62px); font-weight: 300; line-height: 1.04; letter-spacing: -0.03em; }
+.page-bcg .chapo,
+.page-bcg .contact__lead { font-weight: 300; }
+
+/* Haut de page : le titre se pose sur le blanc, l'objet de droite devient une carte arrondie */
+.page-bcg main > .section--plateau:first-of-type > .plateau {
+  gap: clamp(24px, 3vw, 48px);
+  padding: 0;
+  background: transparent;
+}
+.page-bcg main > .section--plateau:first-of-type > .plateau > :first-child { padding-left: 36px; padding-right: 0; }
+.page-bcg main > .section--plateau:first-of-type > .plateau > .carte,
+.page-bcg main > .section--plateau:first-of-type > .plateau > :not(:first-child) .carte { border-radius: 24px; box-shadow: var(--ombre-bcg); }
+.page-bcg main > .section--plateau:first-of-type > .plateau .photo { border-radius: 24px; }
+/* Ce qui était blanc sur le greige garde un fond clair, maintenant que le haut de page est blanc */
+.page-bcg .cas-pastilles li,
+.page-bcg .fo-objectif { background: var(--gris-clair); }
+
+/* Bandes de contenu : arrondis plus larges, cartes blanches à l'ombre douce */
+.page-bcg .plateau { border-radius: 24px; }
+.page-bcg .plateau .carte,
+.page-bcg .plateau .carte-lien { border-radius: 16px; }
+
+/* Boutons à la BCG : capitales, flèche simple qui s'écarte au survol */
+.page-bcg .btn {
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: gap 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), padding 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.2s ease;
+}
+.page-bcg .btn > .ico:last-child,
+.page-bcg .btn .btn-envoi__texte > .ico:last-child,
+.page-bcg .btn--lg > .ico:last-child { width: 16px; height: 16px; padding: 0; border-radius: 0; background: none; }
+.page-bcg .btn:has(> .ico:last-child) { padding-right: 18px; }
+.page-bcg .btn--lg { padding: 15px 24px; }
+@media (hover: hover) and (pointer: fine) {
+  .page-bcg .btn:hover { gap: 16px; padding-right: 14px; transform: none; box-shadow: none; }
+  .page-bcg .btn:hover > .ico:last-child { background: none; transform: none; }
+}
+
+/* Cartes photo des cas : au survol, le panneau en verre couvre toute la carte */
+.page-bcg .photo.carte-photo { border-radius: 0; transition: padding 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.page-bcg .photo.carte-photo > .carte-verre {
+  border-radius: 20px;
+  transition: flex-grow 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), border-radius 0.45s ease, background-color 0.3s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .page-bcg a.photo.carte-photo:hover { padding: 0; }
+  .page-bcg a.photo.carte-photo:hover > .carte-verre { flex-grow: 1; justify-content: center; transform: none; border-radius: 0; background: rgba(255, 255, 255, 0.86); }
+}
+
+/* Logos clients en noir adouci, couleur d'origine au survol */
+.page-bcg main img[src*="/cas/logos/"] { filter: grayscale(1) brightness(0); opacity: 0.78; transition: filter 0.3s ease, opacity 0.3s ease; }
+.page-bcg main img[src*="/cas/logos/cic"] { filter: grayscale(1) contrast(1.4); opacity: 0.85; }
+.page-bcg main a:hover img[src*="/cas/logos/"] { filter: none; opacity: 1; }
+
+/* Pied de page : bande claire, comme chez BCG */
+.page-bcg .site-footer { margin-top: var(--rythme); border-top: 0; border-radius: 24px 24px 0 0; background: var(--gris-clair); }
+.page-bcg .site-footer .footer__brand p:first-of-type { font-weight: 300; }
+
 /* ---------- Tablette et mobile ---------- */
 
 @media (max-width: 1100px) {
@@ -516,6 +614,7 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
   .site-header--bcg .navbar__actions { gap: 4px; padding: 0 4px 0 6px; }
   .site-header--bcg .navbar__cta { height: 40px; padding: 0 14px; }
   .bcg-tete { padding-inline: 0; }
+  .page-bcg main > .section--plateau:first-of-type > .plateau > :first-child { padding-left: 4px; }
   .bcg-cas .bcg-tete { padding-inline: calc(var(--page-x) + var(--bloc-x)); }
   .bcg-tete--ligne { flex-direction: column; align-items: flex-start; }
   .bcg-enjeux__corps { grid-template-columns: minmax(0, 1fr); padding: 10px; }
