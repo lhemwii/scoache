@@ -264,14 +264,24 @@
     toutes('[data-bcg-cas]').forEach(initCas);
   }
 
+  /* ---------- Haut de page : la bande beige part du tout haut de la page, sans déborder au-dessus ---------- */
+
+  function caleBande() {
+    var s = document.querySelector('.bcg-entete');
+    if (s) s.style.setProperty('--haut-bande', Math.round(s.getBoundingClientRect().top + window.scrollY) + 'px');
+  }
+  window.addEventListener('resize', caleBande);
+  window.addEventListener('load', caleBande);
+
   function apresPartiels() {
+    caleBande();
     initLiensBcg();
     rubriqueDeLaPage();
     if (document.querySelector('[data-bcg-enjeux]')) initRubriques();
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { init(); caleBande(); });
+  else { init(); caleBande(); }
   // La navbar et le pied de page arrivent avec les partiels
   document.addEventListener('scoache:partiels', apresPartiels);
   if (window.ScoachePartielsPrets) apresPartiels();

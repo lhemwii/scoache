@@ -547,7 +547,7 @@ body.page-bcg { overflow-x: clip; }
   content: "";
   position: absolute;
   z-index: -1;
-  top: -420px;
+  top: calc(-1 * var(--haut-bande, 0px));
   bottom: 0;
   left: 50%;
   width: 100vw;
@@ -586,6 +586,8 @@ body.page-bcg { overflow-x: clip; }
   transform: none !important;
 }
 .page-bcg .bcg-entete--photo .photo.photo--texture:not(:has(> .carte-verre)) { justify-content: center; align-items: center; }
+/* L'image floutée reste dans son cadre (le flou déborde à peine, la mise à l'échelle masque les bords) */
+.page-bcg .bcg-entete--photo .photo > img { inset: 0 !important; width: 100% !important; height: 100% !important; scale: 1 !important; transform: scale(1.06); }
 
 /* Le fil d'Ariane laisse la place à la sous-navigation de rubrique */
 .page-bcg:has(.bcg-sousnav) .fil-ariane { display: none; }
