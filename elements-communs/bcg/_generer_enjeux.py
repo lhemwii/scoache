@@ -81,7 +81,6 @@ def tete(titre, description):
 
 
 PIED = '''
-    <div data-include="temoignages-bcg"></div>
     <div data-include="contact"></div>
   </main>
 
@@ -191,6 +190,7 @@ def page_enjeu(e):
 {cartes_cas(e['cas'])}
         </ul>
         <div class="bcg-cas__commandes">
+          <div class="bcg-cas__barre" aria-hidden="true"><span></span></div>
           <button type="button" class="bcg-commande" data-cas-prec aria-label="Cas précédent">{ico('chevron-left', 18)}</button>
           <button type="button" class="bcg-commande" data-cas-suiv aria-label="Cas suivant">{ico('chevron-right', 18)}</button>
         </div>

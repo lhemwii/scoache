@@ -46,6 +46,7 @@ hero = f'''    <!-- Hero « version BCG » : titre centré, cartes de cas client
           <button type="button" class="bcg-commande" data-defile-pause aria-label="Mettre en pause le défilement">{ico('pause', 16).replace('class="ico"', 'class="ico ico-pause"')}{ico('play', 16).replace('class="ico"', 'class="ico ico-lecture"')}</button>
           <button type="button" class="bcg-commande" data-defile-prec aria-label="Cas précédent">{ico('chevron-left', 18)}</button>
           <button type="button" class="bcg-commande" data-defile-suiv aria-label="Cas suivant">{ico('chevron-right', 18)}</button>
+          <div class="bcg-defile__barre" aria-hidden="true"><span></span></div>
         </div>
       </div>
       <nav class="bcg-situations" aria-label="Situations fréquentes">
@@ -164,6 +165,7 @@ cas_sec = f'''    <!-- Cas clients « version BCG » : grand fond à angles droi
 {chr(10).join(fiches)}
         </ul>
         <div class="bcg-cas__commandes">
+          <div class="bcg-cas__barre" aria-hidden="true"><span></span></div>
           <button type="button" class="bcg-commande" data-cas-prec aria-label="Cas précédents">{ico('chevron-left', 18)}</button>
           <button type="button" class="bcg-commande" data-cas-suiv aria-label="Cas suivants">{ico('chevron-right', 18)}</button>
         </div>

@@ -683,26 +683,26 @@ body.page-bcg { overflow-x: clip; }
 .bcg-enjeu-panneau__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 6px; }
 .bcg-enjeu-panneau__actions .bcg-btn { margin-top: 0; }
 
-/* Angles vifs : photos, tuiles, bandes et cadres ont des coins droits ;
-   seuls les éléments d'interface (navbar, boutons, pastilles, panneaux en verre) restent arrondis */
-.page-bcg .plateau,
+/* Angles : les photos des carrousels (hero, cas clients) et les illustrations gardent des coins droits ;
+   tuiles, bandes, cadres et éléments d'interface sont arrondis, sans excès */
 .page-bcg main .plateau :is(.carte, .carte-lien, .carte-etiree, .barre),
+.page-bcg .bcg-enjeu,
+.page-bcg .bcg-tuile,
+.page-bcg main .faq__item { border-radius: 12px; }
 .page-bcg .bcg-entete .carte,
+.page-bcg .bcg-enjeux__corps,
+.page-bcg .temoignages--bcg .temoignages__scene,
+.page-bcg .contact__tray { border-radius: 20px; }
+.page-bcg .bcg-enjeux__scene,
+.page-bcg .contact__tray > * { border-radius: 14px; }
+.page-bcg .bcg-tuile { overflow: hidden; }
 .page-bcg .bcg-entete--photo > .plateau > :last-child,
 .page-bcg .bcg-entete--photo .photo,
 .page-bcg .bcg-entete--photo > .plateau > .carte > .photo,
 .page-bcg .bcg-entete--photo > .plateau > .photo,
-.page-bcg .bcg-enjeux__corps,
-.page-bcg .bcg-enjeu,
-.page-bcg .bcg-enjeux__scene,
-.page-bcg .temoignages--bcg .temoignages__scene,
-.page-bcg .contact__tray,
-.page-bcg .contact__tray > *,
-.page-bcg .site-footer,
-.page-bcg .home-echelle,
-.page-bcg .home-expertise,
-.page-bcg main .faq__liste,
-.page-bcg main .faq__item { border-radius: 0 !important; }
+.page-bcg .bcg-entete--colonnes .bcg-entete__visuel { border-radius: 20px; }
+.page-bcg .bcg-illustre__photo,
+.page-bcg .bcg-duo__image { border-radius: 0; }
 
 /* Rythme : des espaces larges avant les grands blocs, serrés entre les parties d'un même récit */
 .page-bcg { --rythme: clamp(64px, 7vw, 104px); --rythme-fort: clamp(112px, 12vw, 176px); --rythme-serre: clamp(36px, 3.6vw, 52px); }
@@ -759,6 +759,38 @@ body.page-bcg { overflow-x: clip; }
 .bcg-tuile__lien { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: gap 0.3s ease; }
 .bcg-tuile:hover .bcg-tuile__lien { gap: 14px; }
 
+/* Cas clients : cartes placées une à une par bcg.js (pas de défilement natif), barre de progression */
+.bcg-cas__fond { overflow: hidden; }
+.bcg-cas__piste.is-placee { position: relative; display: block; height: 440px; overflow: visible; scroll-snap-type: none; }
+.bcg-cas__piste.is-placee .bcg-impact {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.7s cubic-bezier(0.45, 0, 0.15, 1), width 0.7s cubic-bezier(0.45, 0, 0.15, 1), opacity 0.5s ease;
+}
+.bcg-impact.sans-transition,
+.bcg-impact.sans-transition * { transition: none !important; }
+.bcg-cas__commandes { align-items: center; }
+.bcg-cas__barre,
+.bcg-defile__barre { flex: none; width: 160px; height: 2px; overflow: hidden; background: rgba(0, 0, 0, 0.12); }
+.bcg-cas__barre { margin-right: auto; }
+.bcg-defile__barre { align-self: center; margin-left: 12px; }
+.bcg-cas__barre span,
+.bcg-defile__barre span { display: block; height: 100%; background: var(--noir); transform: scaleX(0); transform-origin: left center; animation: bcg-barre 4.5s linear forwards; }
+.bcg-defile__barre span { animation-duration: 4s; }
+.is-en-pause .bcg-cas__barre span,
+.is-en-pause .bcg-defile__barre span { animation-play-state: paused; }
+@keyframes bcg-barre { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Grande carte : le texte n'apparaît qu'une fois la carte élargie (plus de débordement pendant l'agrandissement) */
+.bcg-impact .bcg-impact__texte,
+.bcg-impact .bcg-impact__btn { transition: opacity 0.15s ease; }
+.bcg-impact.is-grand .bcg-impact__texte,
+.bcg-impact.is-grand .bcg-impact__btn { transition: opacity 0.4s ease 0.55s; }
+/* Au survol, le panneau de la grande carte s'étend aussi sur toute la carte */
+.bcg-impact.is-grand .bcg-impact__carte:hover .bcg-impact__verre,
+.bcg-impact.is-grand .bcg-impact__carte:focus-visible .bcg-impact__verre { top: auto; right: 0; bottom: 0; width: 100%; height: 100%; padding: 28px; border-radius: 0; }
+
 /* ---------- Tablette et mobile ---------- */
 
 @media (max-width: 1100px) {
@@ -804,6 +836,8 @@ body.page-bcg { overflow-x: clip; }
   .bcg-enjeu-panneau__image { position: relative; height: 240px; border-radius: 16px; }
   .bcg-enjeu-panneau__verre { position: relative; left: auto; right: auto; bottom: auto; max-height: none; margin: -48px 10px 0; padding: 22px; }
   .bcg-impact { width: 78vw; max-width: 320px; height: 420px; }
+  .bcg-cas__piste.is-placee { height: 420px; }
+  .bcg-impact.is-grand .bcg-impact__texte { -webkit-line-clamp: 3; }
   .bcg-impact.is-grand { width: 86vw; max-width: 420px; }
   .bcg-impact.is-grand .bcg-impact__verre { width: calc(100% - 40px); }
   .bcg-situations { flex-direction: column; gap: 12px; }

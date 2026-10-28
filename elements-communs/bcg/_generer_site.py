@@ -2,7 +2,8 @@
 # Génère le site d'essai « version BCG » : bcg/<page>.html pour chaque page du site, plus bcg/index.html
 # (l'accueil BCG, fabriqué par _generer_accueil.py). Rien n'est modifié dans les pages d'origine.
 # En plus du thème (css/bcg.css), chaque page reçoit : une sous-navigation de rubrique encadrée,
-# un haut de page en bande beige (photo large ou deux colonnes), et finit par « Ils en parlent » puis le contact.
+# un haut de page en bande beige (photo large ou deux colonnes), et finit par le contact (« Ils en parlent » juste
+# avant sur À propos et l'accueil seulement).
 # Les pages « Vos enjeux » n'existent que dans cette version (_generer_enjeux.py).
 import os, re, subprocess, sys
 R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -86,9 +87,10 @@ def convertir(s, url='/'):
     if mode:
         s = s.replace('<section class="section section--plateau"', '<section class="section section--plateau bcg-entete bcg-entete--%s"' % mode, 1)
     s = s.replace('<main id="contenu" tabindex="-1">', '<main id="contenu" tabindex="-1">' + sousnav(url, s), 1)
-    # Fin de page : « Ils en parlent », puis le contact, et rien d'autre
-    if '<div data-include="contact"></div>' in s:
-        s = re.sub(r'\n?[ \t]*<div data-include="temoignages"></div>', '', s)
+    # Fin de page : le contact, et rien d'autre. « Ils en parlent » seulement sur À propos (et l'accueil),
+    # juste avant le contact.
+    s = re.sub(r'\n?[ \t]*<div data-include="temoignages"></div>', '', s)
+    if url == '/a-propos' and '<div data-include="contact"></div>' in s:
         s = s.replace('    <div data-include="contact"></div>', '    <div data-include="temoignages"></div>\n    <div data-include="contact"></div>', 1)
     if url.startswith('/cas-clients/') and url.count('/') == 2:
         s = illustrer_cas(s, url.split('/')[-1])

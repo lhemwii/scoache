@@ -64,10 +64,13 @@
     function aller(i) { courant = (i % n + n) % n; placer(false); relancer(); }
     function suivant() { aller(courant + 1); }
 
+    var barre = zone.querySelector('.bcg-defile__barre span');
     function relancer() {
       clearTimeout(minuteur);
-      if (enPause || survol || mouvementReduit.matches) return;
-      minuteur = setTimeout(suivant, 4000);
+      if (barre) { barre.style.animation = 'none'; void barre.offsetWidth; barre.style.animation = ''; }
+      var tourne = !(enPause || survol || mouvementReduit.matches);
+      zone.classList.toggle('is-en-pause', !tourne);
+      if (tourne) minuteur = setTimeout(suivant, 4000);
     }
 
     cartes.forEach(function (carte, i) {
@@ -161,44 +164,90 @@
 
   /* ---------- Cas clients : flèches ---------- */
 
+  /* Cartes placées une à une (comme le hero) : la première visible est grande ; au survol, la carte
+     visée s'agrandit sur place, les suivantes se poussent. Défilement seul avec barre de progression. */
   function initCas(piste) {
     var section = piste.closest('.bcg-cas');
     var cartes = toutes('.bcg-impact', piste);
-    var n = cartes.length, actif = 0;
+    var n = cartes.length;
     if (!n) return;
+    var debut = 0, actif = 0, places = cartes.map(function () { return null; });
+    var barre = section.querySelector('.bcg-cas__barre span');
+    var DUREE = 4500;
+    piste.classList.add('is-placee');
 
-    // La carte active s'agrandit (comme la première carte « client impact » de BCG) et se cale à gauche
-    function activer(i, defiler) {
-      actif = (i % n + n) % n;
-      var petite = cartes.filter(function (c, k) { return k !== actif; })[0] || cartes[0];
-      var largeurPetite = petite.getBoundingClientRect().width;
-      cartes.forEach(function (c, k) { c.classList.toggle('is-grand', k === actif); });
-      if (defiler) {
-        var ecart = parseFloat(getComputedStyle(piste).columnGap) || 24;
-        piste.scrollTo({ left: actif * (largeurPetite + ecart), behavior: mouvementReduit.matches ? 'auto' : 'smooth' });
+    function mesures() {
+      var mobile = window.innerWidth <= 900;
+      var petite = mobile ? Math.min(window.innerWidth * 0.78, 320) : 304;
+      return { petite: petite, grande: mobile ? petite : 620, ecart: mobile ? 16 : 24, gauche: parseFloat(getComputedStyle(piste).paddingLeft) || 0 };
+    }
+
+    function placer(sansTransition) {
+      var m = mesures();
+      var largeur = function (k) { return k === actif ? m.grande : m.petite; };
+      cartes.forEach(function (c, i) {
+        var d = ((i - debut) % n + n) % n;
+        if (d === n - 1 && n > 2) d = -1;           // la précédente sort par la gauche
+        var x = m.gauche;
+        if (d >= 0) { for (var k = 0; k < d; k++) x += largeur((debut + k) % n) + m.ecart; }
+        else x -= m.petite + m.ecart;
+        var saut = places[i] !== null && Math.abs(places[i] - d) > 1;
+        c.classList.toggle('sans-transition', !!sansTransition || saut);
+        c.style.width = largeur(i) + 'px';
+        c.style.transform = 'translateX(' + x + 'px)';
+        c.style.opacity = d < 0 ? '0' : '1';
+        c.classList.toggle('is-grand', i === actif);
+        c.setAttribute('aria-hidden', d < 0 ? 'true' : 'false');
+        places[i] = d;
+      });
+      if (sansTransition || cartes.some(function (c) { return c.classList.contains('sans-transition'); })) {
+        void piste.offsetWidth;
+        cartes.forEach(function (c) { c.classList.remove('sans-transition'); });
       }
     }
-    section.querySelector('[data-cas-suiv]').addEventListener('click', function () { activer(actif + 1, true); relancer(); });
-    section.querySelector('[data-cas-prec]').addEventListener('click', function () { activer(actif - 1, true); relancer(); });
 
-    // Défilement automatique, en pause au survol, au focus, après un geste ou hors de l'écran
-    var minuteur = null, arret = false, visible = false, geste = null;
+    function aller(i) { debut = actif = (i % n + n) % n; placer(false); relancer(); }
+
+    // Survol : la carte visée devient grande sur place, les cartes d'avant ne bougent pas
+    cartes.forEach(function (c, i) {
+      c.addEventListener('mouseenter', function () { if (places[i] >= 0 && actif !== i) { actif = i; placer(false); } });
+    });
+    piste.addEventListener('mouseleave', function () { if (actif !== debut) { actif = debut; placer(false); } });
+
+    section.querySelector('[data-cas-suiv]').addEventListener('click', function () { aller(debut + 1); });
+    section.querySelector('[data-cas-prec]').addEventListener('click', function () { aller(debut - 1); });
+    piste.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); aller(debut + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); aller(debut - 1); }
+    });
+    var depart = null;
+    piste.addEventListener('touchstart', function (e) { depart = e.touches[0].clientX; }, { passive: true });
+    piste.addEventListener('touchend', function (e) {
+      if (depart === null) return;
+      var dx = e.changedTouches[0].clientX - depart;
+      if (Math.abs(dx) > 40) aller(debut + (dx < 0 ? 1 : -1));
+      depart = null;
+    });
+
+    // Défilement automatique : en pause au survol, au focus ou hors de l'écran ; la barre montre le temps restant
+    var minuteur = null, arret = false, visible = false;
     function relancer() {
-      clearInterval(minuteur);
-      if (arret || geste || !visible || mouvementReduit.matches || n < 2) return;
-      minuteur = setInterval(function () { activer(actif + 1, true); }, 4500);
+      clearTimeout(minuteur);
+      if (barre) { barre.style.animation = 'none'; void barre.offsetWidth; barre.style.animation = ''; }
+      var tourne = !(arret || !visible || mouvementReduit.matches || n < 2);
+      section.classList.toggle('is-en-pause', !tourne);
+      if (tourne) minuteur = setTimeout(function () { aller(debut + 1); }, DUREE);
     }
     section.addEventListener('mouseenter', function () { arret = true; relancer(); });
     section.addEventListener('mouseleave', function () { arret = false; relancer(); });
     section.addEventListener('focusin', function () { arret = true; relancer(); });
     section.addEventListener('focusout', function () { arret = false; relancer(); });
-    piste.addEventListener('touchstart', function () {
-      clearTimeout(geste); geste = setTimeout(function () { geste = null; relancer(); }, 8000); relancer();
-    }, { passive: true });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (e) { visible = e[0].isIntersecting; relancer(); }, { threshold: 0.3 }).observe(piste);
     } else { visible = true; relancer(); }
-    activer(0, false);
+    var redim = null;
+    window.addEventListener('resize', function () { clearTimeout(redim); redim = setTimeout(function () { placer(true); }, 80); });
+    placer(true);
   }
 
   /* ---------- Navbar : la rubrique de la section affichée s'allume ---------- */
