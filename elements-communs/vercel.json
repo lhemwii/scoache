@@ -8,6 +8,11 @@
       "permanent": false
     },
     {
+      "source": "/bcg/enjeux",
+      "destination": "/bcg#enjeux",
+      "permanent": false
+    },
+    {
       "source": "/formations/confiance-leadership",
       "destination": "/formations/confiance-et-leadership",
       "permanent": true

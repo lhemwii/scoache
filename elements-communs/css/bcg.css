@@ -10,6 +10,7 @@
   --ombre-bcg: 0 1px 2px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
   --verre: rgba(255, 255, 255, 0.74);
   --rythme: clamp(96px, 10vw, 160px);
+  --texte-2: var(--noir);
 }
 
 /* ---------- Police plus fine, titres plus grands ---------- */
@@ -330,7 +331,7 @@ main > section.bcg-logos { margin-top: clamp(96px, 9vw, 150px) !important; }
 .bcg-enjeu:hover { transform: translateY(-3px); box-shadow: 0 16px 32px rgba(13, 13, 26, 0.08); }
 .bcg-enjeu[aria-selected="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 16px 32px rgba(71, 68, 193, 0.12); }
 .bcg-enjeu__haut { display: flex; align-items: flex-start; justify-content: space-between; }
-.bcg-enjeu__num { font-size: 13px; letter-spacing: 0.08em; color: var(--placeholder); transition: color 0.25s ease; }
+.bcg-enjeu__num { font-size: 13px; letter-spacing: 0.08em; color: var(--noir); transition: color 0.25s ease; }
 .bcg-enjeu[aria-selected="true"] .bcg-enjeu__num { color: var(--accent); }
 .bcg-enjeu__titre { font-size: 19px; font-weight: 400; line-height: 1.28; }
 
@@ -362,7 +363,7 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
 .bcg-enjeu-panneau.is-actif .bcg-enjeu-panneau__verre { opacity: 1; transform: none; transition: opacity 0.6s ease 0.15s, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s; }
 .bcg-enjeu-panneau__surtitre { font-size: 12.5px; font-weight: 500 !important; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 .bcg-enjeu-panneau__titre { margin: 0; font-size: clamp(24px, 1.1rem + 0.8vw, 32px); font-weight: 300; line-height: 1.15; letter-spacing: -0.015em; }
-.bcg-enjeu-panneau__texte { font-size: 16px; line-height: 1.5; color: #2b2b2b; }
+.bcg-enjeu-panneau__texte { font-size: 16px; line-height: 1.5; color: var(--noir); }
 .bcg-enjeu-panneau__label { margin-top: 4px; font-size: 12.5px; font-weight: 500 !important; letter-spacing: 0.08em; text-transform: uppercase; color: var(--texte-2); }
 .bcg-enjeu-panneau__cas { display: flex; flex-direction: column; }
 .bcg-enjeu-cas {
@@ -430,27 +431,29 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
 .bcg-impact__unite { font-size: 11.5px; font-weight: 400; letter-spacing: 0.06em; line-height: 1.25; text-transform: uppercase; }
 .bcg-impact__carte:hover .bcg-impact__puce { opacity: 0; }
 
-/* Le panneau en verre : en bas de la carte au repos, il couvre toute la carte au survol */
+/* Le panneau en verre : en bas de la carte au repos ; au survol, ses quatre bords rejoignent ensemble ceux de la
+   carte. Le marge intérieure grandit d'autant : le texte ne bouge pas de côté et ne se remet pas en page,
+   la suite apparaît en fondu. */
 .bcg-impact__verre {
   position: absolute;
+  top: calc(100% - 216px);
   right: 20px;
   bottom: 20px;
+  left: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: calc(100% - 40px);
-  height: 196px;
   overflow: hidden;
   padding: 20px;
   border-radius: 20px;
   background: var(--verre);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  transition: right 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), bottom 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), height 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), border-radius 0.45s ease, padding 0.45s ease;
+  transition: top 0.55s cubic-bezier(0.25, 0.7, 0.2, 1), right 0.55s cubic-bezier(0.25, 0.7, 0.2, 1), bottom 0.55s cubic-bezier(0.25, 0.7, 0.2, 1), left 0.55s cubic-bezier(0.25, 0.7, 0.2, 1), padding 0.55s cubic-bezier(0.25, 0.7, 0.2, 1), border-radius 0.55s cubic-bezier(0.25, 0.7, 0.2, 1);
 }
 .bcg-impact__carte:hover .bcg-impact__verre,
-.bcg-impact__carte:focus-visible .bcg-impact__verre { right: 0; bottom: 0; width: 100%; height: 100%; padding: 28px; border-radius: 0; }
-.bcg-impact__verre > * { flex-shrink: 0; }
+.bcg-impact__carte:focus-visible .bcg-impact__verre { top: 0; right: 0; bottom: 0; left: 0; padding: 40px; border-radius: 0; }
+.bcg-impact__verre > * { flex-shrink: 0; transition: opacity 0.45s ease; }
 .bcg-impact__logo img { width: auto; height: 22px; max-width: 130px; object-fit: contain; object-position: left center; }
 .bcg-impact__surtitre { font-size: 12px; font-weight: 500 !important; letter-spacing: 0.08em; text-transform: uppercase; }
 .bcg-impact__titre {
@@ -464,7 +467,7 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
   line-height: 1.2;
 }
 .bcg-impact__texte,
-.bcg-impact__btn { opacity: 0; transition: opacity 0.25s ease; }
+.bcg-impact__btn { opacity: 0; }
 .bcg-impact__texte {
   display: -webkit-box;
   overflow: hidden;
@@ -474,18 +477,19 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
   line-height: 1.45;
 }
 .bcg-impact__btn { margin-top: auto; }
-.bcg-impact__carte:hover .bcg-impact__titre { -webkit-line-clamp: 5; }
 .bcg-impact__carte:hover .bcg-impact__texte,
 .bcg-impact__carte:hover .bcg-impact__btn,
 .bcg-impact__carte:focus-visible .bcg-impact__texte,
-.bcg-impact__carte:focus-visible .bcg-impact__btn { opacity: 1; transition: opacity 0.4s ease 0.2s; }
+.bcg-impact__carte:focus-visible .bcg-impact__btn { opacity: 1; transition: opacity 0.5s ease 0.3s; }
 
-/* La grande carte montre d'emblée sa situation et son bouton, sur la moitié droite */
-.bcg-impact.is-grand .bcg-impact__verre { width: 46%; height: calc(100% - 40px); }
+/* La grande carte montre d'emblée sa situation et son bouton, sur la moitié droite ; au survol, le verre
+   s'étend à toute la carte et le texte reste à sa place */
+.bcg-impact.is-grand .bcg-impact__verre { top: 20px; left: 54%; }
+.bcg-impact.is-grand .bcg-impact__carte:hover .bcg-impact__verre,
+.bcg-impact.is-grand .bcg-impact__carte:focus-visible .bcg-impact__verre { top: 0; right: 0; bottom: 0; left: 0; padding: 40px 40px 40px calc(54% + 20px); }
 .bcg-impact.is-grand .bcg-impact__texte,
 .bcg-impact.is-grand .bcg-impact__btn { opacity: 1; }
-.bcg-impact.is-grand .bcg-impact__texte { -webkit-line-clamp: 4; }
-.bcg-impact.is-grand .bcg-impact__carte:hover .bcg-impact__texte { -webkit-line-clamp: 6; }
+.bcg-impact.is-grand .bcg-impact__texte { -webkit-line-clamp: 5; }
 
 .bcg-cas__commandes { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; padding-inline: calc(var(--page-x) + var(--bloc-x)); }
 .bcg-cas .bcg-commande { background: var(--blanc); }
@@ -545,20 +549,9 @@ html:not(.js) .bcg-enjeu-panneau:first-child { visibility: visible; opacity: 1; 
 .page-bcg .chapo,
 .page-bcg .contact__lead { font-weight: 300; }
 
-/* Haut de page : bande beige pleine largeur qui passe sous la navbar, comme les pages BCG */
+/* Haut de page : sur le fond blanc de la page (la bande crème a été retirée) */
 body.page-bcg { overflow-x: clip; }
-.page-bcg .bcg-entete { position: relative; isolation: isolate; padding-bottom: clamp(48px, 5vw, 80px) !important; }
-.page-bcg .bcg-entete::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: calc(-1 * var(--haut-bande, 0px));
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
-  background: var(--gris-clair);
-}
+.page-bcg .bcg-entete { position: relative; isolation: isolate; padding-bottom: 0 !important; }
 .page-bcg .bcg-entete > .plateau { gap: clamp(24px, 3vw, 48px); padding: 0; border-radius: 0; background: transparent; }
 .page-bcg .bcg-entete > .plateau > :first-child { padding-left: 36px; padding-right: 0; }
 .page-bcg .bcg-entete .carte { border-radius: 24px; box-shadow: none; }
@@ -741,7 +734,7 @@ body.page-bcg { overflow-x: clip; }
 .bcg-duo__texte { display: flex; flex-direction: column; gap: 20px; padding-left: 36px; }
 .bcg-duo__texte .bcg-titre--moyen { padding-inline: 0; }
 .bcg-duo__chapo { font-size: clamp(19px, 1rem + 0.4vw, 23px); line-height: 1.45; }
-.bcg-duo__suite { max-width: 60ch; font-size: 17px; line-height: 1.6; color: #2b2b2b; }
+.bcg-duo__suite { max-width: 60ch; font-size: 17px; line-height: 1.6; color: var(--noir); }
 .bcg-duo__image { aspect-ratio: 4 / 5; overflow: hidden; }
 .bcg-duo__image img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -755,7 +748,7 @@ body.page-bcg { overflow-x: clip; }
 .bcg-tuile__corps { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 22px 24px 26px; }
 .bcg-tuile__surtitre { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
 .bcg-tuile__titre { font-size: 22px; font-weight: 300; line-height: 1.2; }
-.bcg-tuile__texte { font-size: 15px; font-weight: 300; line-height: 1.5; color: #2b2b2b; }
+.bcg-tuile__texte { font-size: 15px; font-weight: 300; line-height: 1.5; color: var(--noir); }
 .bcg-tuile__lien { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 8px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: gap 0.3s ease; }
 .bcg-tuile:hover .bcg-tuile__lien { gap: 14px; }
 
@@ -782,14 +775,9 @@ body.page-bcg { overflow-x: clip; }
 .is-en-pause .bcg-defile__barre span { animation-play-state: paused; }
 @keyframes bcg-barre { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
-/* Grande carte : le texte n'apparaît qu'une fois la carte élargie (plus de débordement pendant l'agrandissement) */
-.bcg-impact .bcg-impact__texte,
-.bcg-impact .bcg-impact__btn { transition: opacity 0.15s ease; }
-.bcg-impact.is-grand .bcg-impact__texte,
-.bcg-impact.is-grand .bcg-impact__btn { transition: opacity 0.4s ease 0.55s; }
-/* Au survol, le panneau de la grande carte s'étend aussi sur toute la carte */
-.bcg-impact.is-grand .bcg-impact__carte:hover .bcg-impact__verre,
-.bcg-impact.is-grand .bcg-impact__carte:focus-visible .bcg-impact__verre { top: auto; right: 0; bottom: 0; width: 100%; height: 100%; padding: 28px; border-radius: 0; }
+/* Carte qui grandit ou rapetisse (bcg.js) : le texte s'efface pendant le changement de taille et revient en fondu
+   une fois la carte en place, sans remise en page visible */
+.bcg-impact.se-transforme .bcg-impact__verre > * { opacity: 0 !important; transition: opacity 0.15s ease !important; }
 
 /* ---------- Tablette et mobile ---------- */
 
@@ -837,9 +825,10 @@ body.page-bcg { overflow-x: clip; }
   .bcg-enjeu-panneau__verre { position: relative; left: auto; right: auto; bottom: auto; max-height: none; margin: -48px 10px 0; padding: 22px; }
   .bcg-impact { width: 78vw; max-width: 320px; height: 420px; }
   .bcg-cas__piste.is-placee { height: 420px; }
-  .bcg-impact.is-grand .bcg-impact__texte { -webkit-line-clamp: 3; }
+  .bcg-impact.is-grand .bcg-impact__texte { -webkit-line-clamp: 4; }
   .bcg-impact.is-grand { width: 86vw; max-width: 420px; }
-  .bcg-impact.is-grand .bcg-impact__verre { width: calc(100% - 40px); }
+  .bcg-impact.is-grand .bcg-impact__verre { left: 20px; }
+  .bcg-impact.is-grand .bcg-impact__carte:hover .bcg-impact__verre { left: 0; padding: 40px; }
   .bcg-situations { flex-direction: column; gap: 12px; }
 }
 

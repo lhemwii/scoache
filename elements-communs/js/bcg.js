@@ -172,6 +172,7 @@
     var n = cartes.length;
     if (!n) return;
     var debut = 0, actif = 0, places = cartes.map(function () { return null; });
+    var fondus = cartes.map(function () { return null; });
     var barre = section.querySelector('.bcg-cas__barre span');
     var DUREE = 4500;
     piste.classList.add('is-placee');
@@ -196,6 +197,12 @@
         c.style.width = largeur(i) + 'px';
         c.style.transform = 'translateX(' + x + 'px)';
         c.style.opacity = d < 0 ? '0' : '1';
+        // La carte change de taille : son texte s'efface le temps du changement, puis revient en fondu
+        if (!sansTransition && c.classList.contains('is-grand') !== (i === actif)) {
+          c.classList.add('se-transforme');
+          clearTimeout(fondus[i]);
+          fondus[i] = setTimeout(function () { c.classList.remove('se-transforme'); }, 650);
+        }
         c.classList.toggle('is-grand', i === actif);
         c.setAttribute('aria-hidden', d < 0 ? 'true' : 'false');
         places[i] = d;
@@ -324,24 +331,14 @@
     toutes('[data-bcg-cas]').forEach(initCas);
   }
 
-  /* ---------- Haut de page : la bande beige part du tout haut de la page, sans déborder au-dessus ---------- */
-
-  function caleBande() {
-    var s = document.querySelector('.bcg-entete');
-    if (s) s.style.setProperty('--haut-bande', Math.round(s.getBoundingClientRect().top + window.scrollY) + 'px');
-  }
-  window.addEventListener('resize', caleBande);
-  window.addEventListener('load', caleBande);
-
   function apresPartiels() {
-    caleBande();
     initLiensBcg();
     rubriqueDeLaPage();
     if (document.querySelector('[data-bcg-enjeux]')) initRubriques();
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { init(); caleBande(); });
-  else { init(); caleBande(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
   // La navbar et le pied de page arrivent avec les partiels
   document.addEventListener('scoache:partiels', apresPartiels);
   if (window.ScoachePartielsPrets) apresPartiels();

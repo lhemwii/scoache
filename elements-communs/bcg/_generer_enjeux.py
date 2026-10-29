@@ -1,5 +1,5 @@
-# Génère les pages « Vos enjeux » du site d'essai BCG : bcg/enjeux.html (vue d'ensemble) et
-# bcg/enjeux/<slug>.html (une page par enjeu). Textes repris mot pour mot du bloc « Vos enjeux »
+# Génère les pages « Vos enjeux » du site d'essai BCG : bcg/enjeux/<slug>.html (une page par enjeu).
+# Pas de page de vue d'ensemble : /bcg/enjeux renvoie au bloc « Vos enjeux » de l'accueil (vercel.json). Textes repris mot pour mot du bloc « Vos enjeux »
 # de index.html (les six enjeux d'Ilana) ; cas clients liés lus dans le même bloc.
 # Lancé par _generer_site.py.
 import html, json, os, re
@@ -91,8 +91,12 @@ PIED = '''
 '''
 
 
+# Libellés de la sous-navigation, raccourcis pour tenir sur une ligne
+NAV = {'posture-et-influence': 'Posture', 'pratiques-manageriales': 'Management', 'decision-sous-pression': 'Sous pression'}
+
+
 def sousnav(actif):
-    items = [('Tous les enjeux', '/bcg/enjeux')] + [(e['court'], f'/bcg/enjeux/{e["slug"]}') for e in ENJEUX]
+    items = [(NAV.get(e['slug'], e['court']), f'/bcg/enjeux/{e["slug"]}') for e in ENJEUX]
     lis = ''.join('<li><a href="%s"%s>%s</a></li>' % (h, ' aria-current="true"' if h == actif else '', t) for t, h in items)
     return f'\n    <nav class="bcg-sousnav" aria-label="Vos enjeux"><span class="bcg-sousnav__label">Vos enjeux :</span><ul>{lis}</ul></nav>\n'
 
@@ -199,37 +203,7 @@ def page_enjeu(e):
 ''' + PIED
 
 
-def page_liste():
-    tuiles = ''.join(
-        f'<a class="bcg-tuile bcg-tuile--enjeu" href="/bcg/enjeux/{e["slug"]}"><span class="bcg-tuile__image"><img src="{e["photo"]}" alt="" loading="lazy" decoding="async"></span>'
-        f'<span class="bcg-tuile__corps"><span class="bcg-tuile__surtitre">Enjeu 0{e["n"]}</span><span class="bcg-tuile__titre">{e["titre"]}</span>'
-        f'<span class="bcg-tuile__texte">{e["debut"]}</span><span class="bcg-tuile__lien">Découvrir l’enjeu {FLECHE}</span></span></a>'
-        for e in ENJEUX)
-    return tete('Vos enjeux', 'Les six enjeux que Scoaché accompagne chez les dirigeants et les équipes de direction.') + sousnav('/bcg/enjeux') + f'''
-    <section class="section section--plateau bcg-entete bcg-entete--colonnes" aria-labelledby="titre-page">
-      <div class="plateau">
-        <div class="bcg-entete__texte">
-          <p class="eyebrow">Vos enjeux</p>
-          <h1 class="inst-titre-hero" id="titre-page">Qu’est-ce qui change pour vous en ce moment&nbsp;?</h1>
-          <p class="chapo">Six situations que vivent celles et ceux qui dirigent. Choisissez la vôtre : nous vous montrons comment nous l’accompagnons, et les cas clients qui s’en rapprochent.</p>
-          <div class="bcg-entete__actions">
-            <a class="btn btn--noir btn--lg" href="/bcg/nous-contacter">Nous contacter {FLECHE}</a>
-          </div>
-        </div>
-        <div class="photo bcg-entete__visuel"><img src="/assets/visuel-offre.jpg" alt="" width="1000" height="1100" decoding="async"></div>
-      </div>
-    </section>
-
-    <section class="bcg-section bcg-tuiles" aria-labelledby="titre-six">
-      <p class="eyebrow">Six enjeux</p>
-      <h2 class="bcg-titre bcg-titre--moyen" id="titre-six">Les moments où l’on fait appel à nous</h2>
-      <div class="bcg-tuiles__grille">{tuiles}</div>
-    </section>
-''' + PIED
-
-
 os.makedirs(os.path.join(R, 'bcg', 'enjeux'), exist_ok=True)
-open(os.path.join(R, 'bcg', 'enjeux.html'), 'w', encoding='utf-8').write(page_liste())
 for e in ENJEUX:
     open(os.path.join(R, 'bcg', 'enjeux', e['slug'] + '.html'), 'w', encoding='utf-8').write(page_enjeu(e))
-print('enjeux', len(ENJEUX) + 1)
+print('enjeux', len(ENJEUX))
